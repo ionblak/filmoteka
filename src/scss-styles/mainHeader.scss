@@ -1,0 +1,118 @@
+.header-home {
+  max-width: 1600px;
+  max-height: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(./images/headerImgHome.jpg);
+}
+.header-home__conteiner {
+  padding: 46px 20px 97px 20px;
+}
+.logo {
+  display: none;
+}
+.novigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 38px;
+}
+
+.icon-film {
+  width: 24px;
+  height: 24px;
+  background-image: url(./images/film.svg);
+  fill: #818181;
+}
+.novigation-list {
+  display: flex;
+}
+
+.novigation-list__item {
+  margin-right: 39px;
+}
+
+.link {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: $primaryTextColor;
+}
+.search-form {
+  width: 100%;
+
+  display: inline-flex;
+  text-align: center;
+  padding: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+
+  outline: none;
+  color: $primaryTextColor;
+}
+.search-input::placeholder {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: $primaryTextColor;
+}
+
+.search-icon {
+  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  background-image: url(./images/search.svg);
+  background-size: cover;
+}
+
+@media screen and (min-width: 768px) {
+  .header-home__conteiner {
+    padding: 41px 76px 97px 71px;
+  }
+  .logo-block {
+    display: flex;
+    align-items: center;
+  }
+  .icon-film {
+    margin-right: 10px;
+  }
+
+  .logo {
+    display: block;
+    margin: 0;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 35px;
+    color: $primaryTextColor;
+  }
+
+  .search-form {
+    display: flex;
+    width: 336px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .header-home__conteiner {
+    padding: 41px 71px 97px 71px;
+  }
+
+  .search-form {
+    display: flex;
+    width: 336px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
