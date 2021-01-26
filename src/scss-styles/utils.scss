@@ -1,0 +1,39 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: auto;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+body {
+  margin: 0;
+  font-family: $font;
+}
+.conteiner {
+  margin: 0 auto;
+  min-width: 320px;
+}
+@media screen and (min-width: 768px) {
+  .conteiner {
+    max-width: 768px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .conteiner {
+    max-width: 1024px;
+  }
+}
