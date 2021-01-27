@@ -20,9 +20,24 @@ ul {
   padding: 0;
   margin: 0;
 }
+h2 {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
 body {
   margin: 0;
   font-family: $font;
+}
+.home-btn,
+.library-btn {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background-color: transparent;
 }
 .conteiner {
   margin: 0 auto;

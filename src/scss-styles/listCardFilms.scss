@@ -1,9 +1,19 @@
+.film-list-item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.film-card {
+  max-width: 280px;
+  margin-bottom: 10px;
+}
+
 .film-picture {
   border-radius: 5px;
 }
 
-.film-info {
+.film-info-wrap {
   display: flex;
+  align-items: center;
 }
 
 .film-name {
@@ -16,6 +26,7 @@
 
 .film-genre,
 .film-year {
+  margin-right: 3px;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -33,4 +44,16 @@
   font-size: 12px;
   line-height: 14px;
   color: $primaryTextColor;
+}
+
+@media screen and (min-width: 768px) {
+  .film-list-item:nth-last-child(-n + 2) {
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .film-list-item:nth-last-child(-n + 3) {
+    margin-bottom: 30px;
+  }
 }
