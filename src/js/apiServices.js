@@ -109,7 +109,8 @@ export class DataProccessing {
             return Promise.all(this.apiReques.map(item => {
                 item.getData().then(data => {
                     const fiteredData = data.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films)
-                    this.renderResults.push(...fiteredData);
+                    this.renderResults = Array.from(fiteredData);
+                    console.log('this.renderResults inside', this.renderResults);
                 });
             }));
         }
