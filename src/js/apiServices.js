@@ -67,6 +67,9 @@ export class DataProccessing {
         this.appCurrentPage = 1;
         this.keyWord = '';
         this.renderResults = [];
+        this.promise = new Promise((resolve, reject) => {
+            ; 
+        });
     }
 
     updData(totalResults, totalPages, currentResults) {
@@ -81,43 +84,36 @@ export class DataProccessing {
     };
 
     getPopular() {
-
         return this.getNextPage(1);
-        
     };
 
     getNextPage (newCurrentPage) {
         this.apiReques.splice(0, this.apiReques.length);
         this.renderResults.splice(0, this.renderResults.length);
-        console.log('this.renderResults', this.renderResults);
         this.appCurrentPage = newCurrentPage;
         const firstRequest = new dataRequest();
         firstRequest.apiPage = Math.ceil((this.appCurrentPage * RESULTS_PER_PAGE/ API_RESULTS_PER_PAGE));
         firstRequest.filmIndex = (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
         firstRequest.films = firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE ? API_RESULTS_PER_PAGE - firstRequest.filmIndex : RESULTS_PER_PAGE;        
-        console.log('firstRequest.films', firstRequest.films);
         this.apiReques.push(firstRequest);
         if (firstRequest.filmIndex + RESULTS_PER_PAGE > API_RESULTS_PER_PAGE) {
             const secondRequest = new dataRequest(Math.ceil((this.appCurrentPage * RESULTS_PER_PAGE) + 1, 0));
             secondRequest.apiPage = firstRequest.apiPage + 1;
             secondRequest.filmIndex = 0;
             secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;    
-            console.log('secondRequest.films', secondRequest.films);
             this.apiReques.push(secondRequest);
         }
-        const getDataPromise = async () => {
-            return Promise.all(this.apiReques.map(item => {
-                item.getData().then(data => {
-                    const fiteredData = data.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films)
-                    this.renderResults = Array.from(fiteredData);
-                    console.log('this.renderResults inside', this.renderResults);
-                });
-            }));
-        }
-        getDataPromise();
 
-        return this.renderResults;
-    
+        this.promise = new Promise ((resolve) => {
+            return Promise.all(this.apiReques.map(item => {
+                item.getData().then(data => resolve(data.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films)));
+            }));
+        });
+        return this.promise;
     };
+
+    getrenderResults() {
+        return this.renderResults;
+    }
     
 }
