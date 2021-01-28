@@ -1,31 +1,16 @@
-.film-list-item:not(:last-child) {
-  margin-bottom: 20px;
-}
-
-.film-card {
-  max-width: 280px;
-  margin-bottom: 10px;
-}
 .main-conteiner {
+  margin: 0 auto;
   padding: 20px 20px 40px 20px;
 }
-
-.film-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.film-list-item {
+  margin-bottom: 20px;
 }
 
 .film-picture {
   border-radius: 5px;
-  width: 280px;
+  max-width: 280px;
   height: 398px;
   margin-bottom: 10px;
-}
-
-.film-info-wrap {
-  display: flex;
-  align-items: center;
 }
 
 .film-info {
@@ -51,27 +36,29 @@
   color: $hoverAndIsActivebackGroundColor;
 }
 
-.vote {
-  padding-top: 1px;
-  padding-right: 6px;
-  padding-bottom: 1px;
-  padding-left: 6px;
-  background: $hoverAndIsActivebackGroundColor;
-  border-radius: 5px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 14px;
-  color: $primaryTextColor;
-}
+// .vote {
+//   padding-top: 1px;
+//   padding-right: 6px;
+//   padding-bottom: 1px;
+//   padding-left: 6px;
+//   background: $hoverAndIsActivebackGroundColor;
+//   border-radius: 5px;
+//   font-weight: 500;
+//   font-size: 12px;
+//   line-height: 14px;
+//   color: $primaryTextColor;
+// }
 
 @media screen and (min-width: 768px) {
-  .film-list-item:nth-last-child(-n + 2) {
-    margin-bottom: 30px;
-  }
   .main-conteiner {
     padding: 60px 75px 50px 75px;
   }
+  .film-list-item {
+    margin-bottom: 0;
+  }
   .film-list {
+    display: flex;
+    flex-wrap: wrap;
     gap: 30px;
   }
   .film-picture {
@@ -80,9 +67,6 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .film-list-item:nth-last-child(-n + 3) {
-    margin-bottom: 30px;
-  }
   .main-conteiner {
     padding: 60px 71px 46px 71px;
   }
