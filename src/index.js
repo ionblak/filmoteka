@@ -8,8 +8,7 @@ import { getPopular, getPage, DataProccessing } from './js/apiServices';
 // import axios from './js/apiServices';
 
 const dataProccessing = new DataProccessing();
-
-console.log(dataProccessing.getPopular());
+dataProccessing.getNextPage(1).then(data => console.log('index.js: ', data));
 
 
 
