@@ -2,7 +2,7 @@ import 'normalize.css';
 
 import './main.scss';
 import './styles.css';
-
+import './js/footerModal';
 import { getPopular, getPage, DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
