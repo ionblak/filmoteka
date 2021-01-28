@@ -52,70 +52,130 @@ class ApiData {
 }
 
 export class DataProccessing {
-  constructor(totalResults, totalPages, currentResults) {
-    this.apiData = new ApiData(totalResults, totalPages);
-    this.apiReques = [new dataRequest(1, 0, 9)];
-    this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
-    this.appCurrentPage = 1;
-    this.keyWord = '';
-    this.renderResults = [];
-  }
 
-  updData(totalResults, totalPages, currentResults) {
-    this.apiData.updateResults(totalResults, totalPages);
-    this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
-    this.appCurrentPage = 1;
-    this.currentResults.push(...currentResults);
-  }
+//   constructor(totalResults, totalPages, currentResults) {
+//     this.apiData = new ApiData(totalResults, totalPages);
+//     this.apiReques = [new dataRequest(1, 0, 9)];
+//     this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+//     this.appCurrentPage = 1;
+//     this.keyWord = '';
+//     this.renderResults = [];
+//   }
 
-  keywordSearch() {}
+//   updData(totalResults, totalPages, currentResults) {
+//     this.apiData.updateResults(totalResults, totalPages);
+//     this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+//     this.appCurrentPage = 1;
+//     this.currentResults.push(...currentResults);
+//   }
 
-  getPopular() {
-    return this.getNextPage(1);
-  }
+//   keywordSearch() {}
 
-  getNextPage(newCurrentPage) {
-    this.apiReques.splice(0, this.apiReques.length);
-    this.renderResults.splice(0, this.renderResults.length);
-    console.log('this.renderResults', this.renderResults);
-    this.appCurrentPage = newCurrentPage;
-    const firstRequest = new dataRequest();
-    firstRequest.apiPage = Math.ceil(
-      (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
-    );
-    firstRequest.filmIndex =
-      (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
-    firstRequest.films =
-      firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
-        ? API_RESULTS_PER_PAGE - firstRequest.filmIndex
-        : RESULTS_PER_PAGE;
-    console.log('firstRequest.films', firstRequest.films);
-    this.apiReques.push(firstRequest);
-    if (firstRequest.filmIndex + RESULTS_PER_PAGE > API_RESULTS_PER_PAGE) {
-      const secondRequest = new dataRequest(
-        Math.ceil(this.appCurrentPage * RESULTS_PER_PAGE + 1, 0),
-      );
-      secondRequest.apiPage = firstRequest.apiPage + 1;
-      secondRequest.filmIndex = 0;
-      secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;
-      console.log('secondRequest.films', secondRequest.films);
-      this.apiReques.push(secondRequest);
+//   getPopular() {
+//     return this.getNextPage(1);
+//   }
+
+//   getNextPage(newCurrentPage) {
+//     this.apiReques.splice(0, this.apiReques.length);
+//     this.renderResults.splice(0, this.renderResults.length);
+//     console.log('this.renderResults', this.renderResults);
+//     this.appCurrentPage = newCurrentPage;
+//     const firstRequest = new dataRequest();
+//     firstRequest.apiPage = Math.ceil(
+//       (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
+//     );
+//     firstRequest.filmIndex =
+//       (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
+//     firstRequest.films =
+//       firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
+//         ? API_RESULTS_PER_PAGE - firstRequest.filmIndex
+//         : RESULTS_PER_PAGE;
+//     console.log('firstRequest.films', firstRequest.films);
+//     this.apiReques.push(firstRequest);
+//     if (firstRequest.filmIndex + RESULTS_PER_PAGE > API_RESULTS_PER_PAGE) {
+//       const secondRequest = new dataRequest(
+//         Math.ceil(this.appCurrentPage * RESULTS_PER_PAGE + 1, 0),
+//       );
+//       secondRequest.apiPage = firstRequest.apiPage + 1;
+//       secondRequest.filmIndex = 0;
+//       secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;
+//       console.log('secondRequest.films', secondRequest.films);
+//       this.apiReques.push(secondRequest);
+//     }
+//     const getDataPromise = async () => {
+//       return Promise.all(
+//         this.apiReques.map(item => {
+//           item.getData().then(data => {
+//             const fiteredData = data.filter(
+//               (it, index) =>
+//                 index >= item.filmIndex && index < item.filmIndex + item.films,
+//             );
+//             this.renderResults.push(...fiteredData);
+//           });
+//         }),
+//       );
+
+    constructor(totalResults, totalPages, currentResults) {
+        this.apiData = new ApiData(totalResults, totalPages);
+        this.apiReques = [new dataRequest(1, 0, 9)];
+        this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+        this.appCurrentPage = 1;
+        this.keyWord = '';
+        this.renderResults = [];
+        this.promise = new Promise((resolve, reject) => {
+            ; 
+        });
     }
-    const getDataPromise = async () => {
-      return Promise.all(
-        this.apiReques.map(item => {
-          item.getData().then(data => {
-            const fiteredData = data.filter(
-              (it, index) =>
-                index >= item.filmIndex && index < item.filmIndex + item.films,
-            );
-            this.renderResults.push(...fiteredData);
-          });
-        }),
-      );
+
+    updData(totalResults, totalPages, currentResults) {
+        this.apiData.updateResults(totalResults, totalPages);
+        this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+        this.appCurrentPage = 1;
+        this.currentResults.push(...currentResults);
+    };
+
+    keywordSearch() {
+
+    };
+
+    getPopular() {
+        return this.getNextPage(1);
+
     };
     getDataPromise();
 
-    return this.renderResults;
-  }
+//     return this.renderResults;
+//   }
 }
+
+    getNextPage (newCurrentPage) {
+        this.apiReques.splice(0, this.apiReques.length);
+        this.renderResults.splice(0, this.renderResults.length);
+        this.appCurrentPage = newCurrentPage;
+        const firstRequest = new dataRequest();
+        firstRequest.apiPage = Math.ceil((this.appCurrentPage * RESULTS_PER_PAGE/ API_RESULTS_PER_PAGE));
+        firstRequest.filmIndex = (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
+        firstRequest.films = firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE ? API_RESULTS_PER_PAGE - firstRequest.filmIndex : RESULTS_PER_PAGE;        
+        this.apiReques.push(firstRequest);
+        if (firstRequest.filmIndex + RESULTS_PER_PAGE > API_RESULTS_PER_PAGE) {
+            const secondRequest = new dataRequest(Math.ceil((this.appCurrentPage * RESULTS_PER_PAGE) + 1, 0));
+            secondRequest.apiPage = firstRequest.apiPage + 1;
+            secondRequest.filmIndex = 0;
+            secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;    
+            this.apiReques.push(secondRequest);
+        }
+
+        this.promise = new Promise ((resolve) => {
+            return Promise.all(this.apiReques.map(item => {
+                item.getData().then(data => resolve(data.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films)));
+            }));
+        });
+        return this.promise;
+    };
+
+    getrenderResults() {
+        return this.renderResults;
+    }
+    
+}
+

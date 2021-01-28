@@ -4,14 +4,12 @@ import './main.scss';
 import './styles.css';
 
 import { getPopular, getPage, DataProccessing } from './js/apiServices';
+import createCards from './js/createCards';
 import refs from './js/refs';
 import galleryList from './js/updateGalleryMarkup';
 
-// import axios from './js/apiServices';
 
-const dataProccessing = new DataProccessing();
 
-console.log(dataProccessing.getPopular());
 
 refs.logo.addEventListener('click', () => {
   getPopular()
@@ -27,3 +25,7 @@ refs.homeBtn.addEventListener('click', () => {
       galleryList(data);
     });
 });
+
+
+const dataProccessing = new DataProccessing();
+dataProccessing.getNextPage(1).then(data => createCards(data));
