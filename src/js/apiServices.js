@@ -1,46 +1,59 @@
 import axios from 'axios';
 
+// Для работы с API используем объект и его методы DataProccessing
+// keywordSearch(keyword) - для поиска по сключевому слову
+// getPopular() - получить список популярных фильмов
+// getNextPage(page) - возвращает данные для страницы page 
+// Пока другие методы не юзаем. оказывается приватные свойства это экспериментальная тема, и ничего не компилится 
+
+
 const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
-export const getPopular = () => {
-  const url = `/movie/popular?api_key=${API_KEY}&language=en-US&page=1&region=UA`;
-  return axios.get(url).then(res => res.data);
+const getPopularPath = (pageNum) => {
+  return `/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
-export const getByKeyword = keyWord => {};
+const getKeywordPath = (keyword, pageNum)  => {
+  return `search/movie?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${pageNum}&include_adult=false`;
+};
 
-export const getPage = (keyWord, pageNum) => {
-  const url = `/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
-  return axios.get(url).then(res => res.data);
+const getPage = (keyword, pageNum) => {
+  let url;
+  if (keyword === '') url = getPopularPath(pageNum);
+  else url = getKeywordPath(pageNum);
+  return axios.get(url).then(res => {
+    return res.data;
+  });
 };
 
 const RESULTS_PER_PAGE = 9;
+
+
+// Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
 
-class dataRequest {
-  constructor(apiPage, filmIndex, films) {
+// Объект для формирования, отправки запроса и дальнейшей обработки данных
+class ApiRequest {
+  constructor(keyword, apiPage, filmIndex, films) {
+    this.keyword = keyword;
     this.apiPage = apiPage;
     this.filmIndex = filmIndex;
     this.films = films;
     this.promise = new Promise((resolve, reject) => {});
   }
 
-  updData(apiPage, filmIndex, films) {
-    this.apiPage = apiPage;
-    this.filmIndex = filmIndex;
-    this.films = films;
-  }
-
   getData() {
-    this.promise = getPage('', this.apiPage).then(data => data.results);
+    this.promise = getPage(this.keyword, this.apiPage);
     return this.promise;
   }
 }
 
+// Объект хранит в себе "служебные" результаты запроса (нужны для посчета кол-ва страниц)
 class ApiData {
-  constructor(totalResults, totalPages) {
+  constructor(keyword, totalResults, totalPages) {
+    this.keyword = keyword;
     this.totalResults = totalResults;
     this.totalPages = totalPages;
   }
@@ -49,145 +62,92 @@ class ApiData {
     this.totalResults = totalResults;
     this.totalPages = totalPages;
   }
+
+  updKeyword(keyword) {
+    this.keyword = keyword;
+  }
 }
 
 export class DataProccessing {
-  //   constructor(totalResults, totalPages, currentResults) {
-  //     this.apiData = new ApiData(totalResults, totalPages);
-  //     this.apiReques = [new dataRequest(1, 0, 9)];
-  //     this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
-  //     this.appCurrentPage = 1;
-  //     this.keyWord = '';
-  //     this.renderResults = [];
-  //   }
-
-  //   updData(totalResults, totalPages, currentResults) {
-  //     this.apiData.updateResults(totalResults, totalPages);
-  //     this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
-  //     this.appCurrentPage = 1;
-  //     this.currentResults.push(...currentResults);
-  //   }
-
-  //   keywordSearch() {}
-
-  //   getPopular() {
-  //     return this.getNextPage(1);
-  //   }
-
-  //   getNextPage(newCurrentPage) {
-  //     this.apiReques.splice(0, this.apiReques.length);
-  //     this.renderResults.splice(0, this.renderResults.length);
-  //     console.log('this.renderResults', this.renderResults);
-  //     this.appCurrentPage = newCurrentPage;
-  //     const firstRequest = new dataRequest();
-  //     firstRequest.apiPage = Math.ceil(
-  //       (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
-  //     );
-  //     firstRequest.filmIndex =
-  //       (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
-  //     firstRequest.films =
-  //       firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
-  //         ? API_RESULTS_PER_PAGE - firstRequest.filmIndex
-  //         : RESULTS_PER_PAGE;
-  //     console.log('firstRequest.films', firstRequest.films);
-  //     this.apiReques.push(firstRequest);
-  //     if (firstRequest.filmIndex + RESULTS_PER_PAGE > API_RESULTS_PER_PAGE) {
-  //       const secondRequest = new dataRequest(
-  //         Math.ceil(this.appCurrentPage * RESULTS_PER_PAGE + 1, 0),
-  //       );
-  //       secondRequest.apiPage = firstRequest.apiPage + 1;
-  //       secondRequest.filmIndex = 0;
-  //       secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;
-  //       console.log('secondRequest.films', secondRequest.films);
-  //       this.apiReques.push(secondRequest);
-  //     }
-  //     const getDataPromise = async () => {
-  //       return Promise.all(
-  //         this.apiReques.map(item => {
-  //           item.getData().then(data => {
-  //             const fiteredData = data.filter(
-  //               (it, index) =>
-  //                 index >= item.filmIndex && index < item.filmIndex + item.films,
-  //             );
-  //             this.renderResults.push(...fiteredData);
-  //           });
-  //         }),
-  //       );
-
-  constructor(totalResults, totalPages, currentResults) {
-    this.apiData = new ApiData(totalResults, totalPages);
-    this.apiReques = [new dataRequest(1, 0, 9)];
-    this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+  constructor(keyword = '', totalResults, totalPages) {
+    this.apiData = new ApiData(keyword, totalResults, totalPages);
+    this.apiRequests = [];
+    this.appPages = 1;
     this.appCurrentPage = 1;
-    this.keyWord = '';
-    this.renderResults = [];
     this.promise = new Promise((resolve, reject) => {});
   }
 
-  updData(totalResults, totalPages, currentResults) {
-    this.apiData.updateResults(totalResults, totalPages);
-    this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
-    this.appCurrentPage = 1;
-    this.currentResults.push(...currentResults);
-  }
 
-  keywordSearch() {}
+  keywordSearch(keyword) {
+    // update keyword
+    this.apiData.updKeyword(keyword);
+    return this.getNextPage(1);
+  }
 
   getPopular() {
     return this.getNextPage(1);
   }
-  getDataPromise() {}
 
-  //     return this.renderResults;
-  //   }
-  // }
 
-  getNextPage(newCurrentPage) {
-    this.apiReques.splice(0, this.apiReques.length);
-    this.renderResults.splice(0, this.renderResults.length);
-    this.appCurrentPage = newCurrentPage;
-    const firstRequest = new dataRequest();
-    firstRequest.apiPage = Math.ceil(
-      (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
-    );
-    firstRequest.filmIndex =
-      (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
-    firstRequest.films =
-      firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
-        ? API_RESULTS_PER_PAGE - firstRequest.filmIndex
-        : RESULTS_PER_PAGE;
-    this.apiReques.push(firstRequest);
-    if (firstRequest.filmIndex + RESULTS_PER_PAGE > API_RESULTS_PER_PAGE) {
-      const secondRequest = new dataRequest(
-        Math.ceil(this.appCurrentPage * RESULTS_PER_PAGE + 1, 0),
-      );
-      secondRequest.apiPage = firstRequest.apiPage + 1;
-      secondRequest.filmIndex = 0;
-      secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;
-      this.apiReques.push(secondRequest);
-    }
-
+  getNextPage(page) {
+    this.apiRequests.splice(0, this.apiRequests.length);
+    this.appCurrentPage = page;
+    this.apiRequests = this.defineApiRequests();
+    
     this.promise = new Promise(resolve => {
       return Promise.all(
-        this.apiReques.map(item => {
-          item
-            .getData()
-            .then(data =>
-              resolve(
-                data.filter(
-                  (it, index) =>
-                    index >= item.filmIndex &&
-                    index < item.filmIndex + item.films,
-                ),
-              ),
-            );
+        this.apiRequests.map(item => {
+          item.getData()
+            .then(data => {
+                this.updPageData(data.total_results, data.total_pages);
+                resolve(data.results.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films))
+              });
         }),
       );
     });
     return this.promise;
   }
 
-  getrenderResults() {
-    return this.renderResults;
+
+  // ------ PRIVATE ------
+  
+  updPageData(totalResults, totalPages) {
+    this.apiData.updData(totalResults, totalPages);
+    this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
   }
+
+   defineApiRequests() {
+    // Создаем объект запроса
+    const firstRequest = new ApiRequest(this.apiData.keyword);
+    const resArray = [];
+    // Рассчитываем какую страницу от API нужно запросить 
+    firstRequest.apiPage = Math.ceil(
+      (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
+    );
+    // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо  
+    firstRequest.filmIndex =
+      (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
+    // Сколько фильмов из этой страницы API заберем (не больше RESULTS_PER_PAGE)
+    firstRequest.films =
+      firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
+        ? API_RESULTS_PER_PAGE - firstRequest.filmIndex
+        : RESULTS_PER_PAGE;
+    // Добавляем созданный объект в массив данных для запроса
+    resArray.push(firstRequest);
+
+    // Если количество фильмов на странице будет меньше RESULTS_PER_PAGE - нам нужен второй запрос
+    if (firstRequest.films < RESULTS_PER_PAGE) {
+      const secondRequest = new ApiRequest(this.apiData.keyword);
+      secondRequest.apiPage = firstRequest.apiPage + 1;
+      secondRequest.filmIndex = 0;
+      secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;
+      // Добавляем созданный объект в массив данных для запроса
+      resArray.push(secondRequest);
+    }
+    
+    return resArray;
+  }
+
+  
+
 }

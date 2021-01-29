@@ -2,13 +2,15 @@ import 'normalize.css';
 
 import './main.scss';
 import './styles.css';
-
-import { getPopular, getPage, DataProccessing } from './js/apiServices';
+import './js/footerModal';
+import { DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
 import './js/myLibrary';
+import _ from 'lodash';
+
 const dataProccessing = new DataProccessing();
-dataProccessing.getNextPage(1).then(data => createCards(data));
+dataProccessing.getPopular().then(data => createCards(data));
 
 refs.logo.addEventListener('click', () => {
   dataProccessing.getNextPage(1).then(data => createCards(data));
