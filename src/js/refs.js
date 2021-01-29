@@ -5,7 +5,8 @@ const refs = {
   target: document.getElementById('spinner'),
   libraryBtn: document.querySelector('.library-btn'),
   modalStudents: document.querySelector('.link-footer'),
-  searchForm: document.querySelector('.search-input'),
+  searchForm: document.querySelector('.search-form'),
+  searchInput: document.querySelector('.search-input'),
 };
 
 export default refs;

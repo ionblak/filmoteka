@@ -18,5 +18,18 @@ const getHomePage = function () {
 };
 getHomePage();
 
+
+
+
+refs.searchForm.addEventListener('submit', (event) => event.preventDefault());
+
+refs.searchInput.addEventListener('input',
+  _.debounce(() => {
+    if (refs.searchInput.value === '') dataProccessing.getPopular().then(data => createCards(data));
+    else dataProccessing.keywordSearch(refs.searchInput.value).then(data => createCards(data));
+    }, 500)
+);
+
 refs.logo.addEventListener('click', getHomePage);
 refs.homeBtn.addEventListener('click', getHomePage);
+

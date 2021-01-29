@@ -22,7 +22,7 @@ const getKeywordPath = (keyword, pageNum)  => {
 const getPage = (keyword, pageNum) => {
   let url;
   if (keyword === '') url = getPopularPath(pageNum);
-  else url = getKeywordPath(pageNum);
+  else url = getKeywordPath(keyword, pageNum);
   return axios.get(url).then(res => {
     return res.data;
   });
