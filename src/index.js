@@ -6,7 +6,7 @@ import './styles.css';
 import { getPopular, getPage, DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
-
+import './js/myLibrary';
 const dataProccessing = new DataProccessing();
 dataProccessing.getNextPage(1).then(data => createCards(data));
 
