@@ -49,6 +49,18 @@ module.exports = env => ({
         useShortDoctype: true,
       },
     }),
+    new HtmlWebpackPlugin({
+      filename: 'myLib.html',
+      template: './myLib.html',
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+      },
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[name].[id].[contenthash].css',
