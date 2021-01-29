@@ -10,13 +10,13 @@ import spinner from './js/utils/spiner';
 import './js/myLibrary';
 import _ from 'lodash';
 
+const getHomePage = function () {
+  if (refs.filmsList.innerHTML === '') {
+    const dataProccessing = new DataProccessing();
+    dataProccessing.getPopular().then(data => createCards(data));
+  }
+};
+getHomePage();
 
-const dataProccessing = new DataProccessing();
-dataProccessing.getPopular().then(data => createCards(data));
-
-refs.logo.addEventListener('click', () => {
-  dataProccessing.getNextPage(1).then(data => createCards(data));
-});
-refs.homeBtn.addEventListener('click', () => {
-  dataProccessing.getNextPage(1).then(data => createCards(data));
-});
+refs.logo.addEventListener('click', getHomePage);
+refs.homeBtn.addEventListener('click', getHomePage);
