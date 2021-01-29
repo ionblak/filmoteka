@@ -6,6 +6,7 @@ import './js/footerModal';
 import { DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
+import './js/myLibrary';
 import _ from 'lodash';
 
 const dataProccessing = new DataProccessing();
