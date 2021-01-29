@@ -6,8 +6,10 @@ import './js/footerModal';
 import { DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
+import spinner from './js/utils/spiner';
 import './js/myLibrary';
 import _ from 'lodash';
+
 
 const dataProccessing = new DataProccessing();
 dataProccessing.getPopular().then(data => createCards(data));

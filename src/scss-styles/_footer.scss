@@ -22,21 +22,18 @@
 @media screen and (max-width: 768px) {
   .coperate-text {
     margin-top: 0;
+    margin-bottom: 10px;
     padding-top: 28px;
   }
 }
 
-.footer-svg {
-  display: inline-flex;
-  align-items: baseline;
+.favorite {
   margin-left: 10px;
   margin-right: 10px;
 
   width: 14px;
-  height: 12.75px;
-  background-image: url(./images/Group.svg);
-
-  background-size: cover;
+  height: 12px;
+  fill: #ff6b08;
 }
 
 @media screen and (min-width: 768px) {
