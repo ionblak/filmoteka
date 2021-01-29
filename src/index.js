@@ -12,16 +12,17 @@ import _ from 'lodash';
 import './js/add-to-watch.js';
 const dataProccessing = new DataProccessing();
 const getHomePage = function () {
-  if (refs.filmsList.innerHTML === '') {
-    dataProccessing.getPopular().then(data => createCards(data));
+  if (location.pathname !== '/index.html') {
+    return;
   }
+  dataProccessing.getPopular().then(data => createCards(data));
 };
 getHomePage();
 
 const searchFilm = function (event) {
   event.preventDefault();
   if (refs.searchInput.value === '') {
-    dataProccessing.getPopular().then(data => createCards(data));
+    getHomePage();
   } else {
     refs.filmsList.innerHTML = '';
     dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
@@ -30,8 +31,10 @@ const searchFilm = function (event) {
     });
   }
 };
+if (location.pathname === '/index.html') {
+  refs.searchForm.addEventListener('submit', searchFilm);
+  refs.searchInput.addEventListener('input', _.debounce(searchFilm, 500));
+}
 
-refs.searchForm.addEventListener('submit', searchFilm);
-refs.searchInput.addEventListener('input', _.debounce(searchFilm, 500));
-refs.logo.addEventListener('click', getHomePage);
-refs.homeBtn.addEventListener('click', getHomePage);
+// refs.logo.addEventListener('click', getHomePage);
+// refs.homeBtn.addEventListener('click', getHomePage);
