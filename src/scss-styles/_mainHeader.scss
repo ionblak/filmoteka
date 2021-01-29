@@ -37,6 +37,15 @@
   margin-right: 39px;
 }
 
+.home-btn-active::after,
+.library-btn-active::after{
+  content: "";
+  display: grid;
+  width: 100%;
+  height: 3px;
+  background-color: $hoverAndIsActivebackGroundColor;
+}
+
 .link {
   font-weight: 500;
   font-size: 12px;
