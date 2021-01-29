@@ -9,6 +9,7 @@ import refs from './js/refs';
 import spinner from './js/utils/spiner';
 import './js/myLibrary';
 import _ from 'lodash';
+import './js/add-to-watch.js';
 
 const getHomePage = function () {
   if (refs.filmsList.innerHTML === '') {
