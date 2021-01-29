@@ -17,3 +17,12 @@ refs.logo.addEventListener('click', () => {
 refs.homeBtn.addEventListener('click', () => {
   dataProccessing.getNextPage(1).then(data => createCards(data));
 });
+
+refs.searchForm.addEventListener('submit', (event) => event.preventDefault());
+
+refs.searchInput.addEventListener('input',
+  _.debounce(() => {
+    if (refs.searchInput.value === '') dataProccessing.getPopular().then(data => createCards(data));
+    else dataProccessing.keywordSearch(refs.searchInput.value).then(data => createCards(data));
+    }, 500)
+);
