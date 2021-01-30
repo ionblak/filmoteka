@@ -1,7 +1,8 @@
 const refs = {
   logo: document.querySelector('.logo-block'),
   homeBtn: document.querySelector('.home-btn'),
-  filmsList: document.querySelector('.film-list'),
+  filmsListHome: document.querySelector('.film-list__home'),
+  filmListMyLibrary: document.querySelector('.film-list__my-library'),
   target: document.getElementById('spinner'),
   libraryBtn: document.querySelector('.library-btn'),
   modalStudents: document.querySelector('.link-footer'),

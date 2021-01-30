@@ -3,7 +3,7 @@ import refs from './refs';
 
 export default function createCards(data) {
   // перед созданием карточек чистим filmsList
-  refs.filmsList.innerHTML = '';
+  refs.filmsListHome.innerHTML = '';
   const markup = itemsTemplate(data);
-  refs.filmsList.insertAdjacentHTML('beforeend', markup);
+  refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
 }
