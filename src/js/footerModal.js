@@ -2,7 +2,8 @@ import refs from './refs';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 
-const showModalFooter = function () {
+const showModalFooter = function (event) {
+  event.preventDefault();
   const instance = basicLightbox.create(
     ` <div class="modal">
       <h2>Our Team</h2>
@@ -92,11 +93,11 @@ const showModalFooter = function () {
         </li>
       </ul>
     </div>`,
-    // {
-    //   onShow: instance => {
-    //     instance.element().querySelector('a').onclick = instance.close;
-    //   },
-    // },
+    {
+      onShow: instance => {
+        instance.element().querySelector('a').onclick = instance.close;
+      },
+    },
   );
 
   instance.show();
