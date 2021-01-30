@@ -17,7 +17,10 @@
       <div class="conteiner header-home__conteiner">
         <nav class="novigation">
           <a class="logo-block" href="#">
-            <div class="icon-film"></div>
+            <!-- <div class="icon-film"></div> -->
+            <svg class="icon-film">
+              <use href="./images/sprite.svg#film"></use>
+            </svg>
             <p class="logo">Filmoteka</p>
           </a>
 
@@ -42,7 +45,10 @@
             autocomplete="on"
             placeholder="Поиск фильмов"
           />
-          <div class="search-icon"></div>
+          <!-- <div class="search-icon"></div> -->
+          <svg class="search-icon">
+            <use href="./images/sprite.svg#search"></use>
+          </svg>
 
           <div class="modal-card" data-action="{{id}}"></div>
         </form>
@@ -62,6 +68,7 @@
             <use href="./images/sprite.svg#favorite"></use>
           </svg>
           by
+
           <a class="link-footer" href="">GoIT Students</a>
         </p>
       </div>
