@@ -16,7 +16,7 @@ const getPopularPath = (pageNum) => {
 };
 
 const getKeywordPath = (keyword, pageNum)  => {
-  return `search/movie?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${pageNum}&include_adult=false`;
+  return `search/movie?api_key=${API_KEY}&language=en-US&query=${keyword.replace(' ', '+')}&page=${pageNum}&include_adult=false`;
 };
 
 const getPage = (keyword, pageNum) => {
