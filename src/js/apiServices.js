@@ -3,20 +3,22 @@ import axios from 'axios';
 // Для работы с API используем объект и его методы DataProccessing
 // keywordSearch(keyword) - для поиска по сключевому слову
 // getPopular() - получить список популярных фильмов
-// getNextPage(page) - возвращает данные для страницы page 
-// Пока другие методы не юзаем. оказывается приватные свойства это экспериментальная тема, и ничего не компилится 
-
+// getNextPage(page) - возвращает данные для страницы page
+// Пока другие методы не юзаем. оказывается приватные свойства это экспериментальная тема, и ничего не компилится
 
 const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
-const getPopularPath = (pageNum) => {
+const getPopularPath = pageNum => {
   return `/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
-const getKeywordPath = (keyword, pageNum)  => {
-  return `search/movie?api_key=${API_KEY}&language=en-US&query=${keyword.replace(' ', '+')}&page=${pageNum}&include_adult=false`;
+const getKeywordPath = (keyword, pageNum) => {
+  return `search/movie?api_key=${API_KEY}&language=en-US&query=${keyword.replace(
+    ' ',
+    '+',
+  )}&page=${pageNum}&include_adult=false`;
 };
 
 const getPage = (keyword, pageNum) => {
@@ -27,12 +29,11 @@ const getPage = (keyword, pageNum) => {
 };
 
 const getGenres = () => {
-   const url = `/genre/movie/list?api_key=${API_KEY}&language=en-US`;
+  const url = `/genre/movie/list?api_key=${API_KEY}&language=en-US`;
   return axios.get(url).then(res => res.data);
-}
+};
 
 const RESULTS_PER_PAGE = 9;
-
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -78,15 +79,12 @@ export class DataProccessing {
     this.appPages = 1;
     this.appCurrentPage = 1;
     this.genresList = [];
-    this.promise = new Promise((resolve, reject) => { });
+    this.promise = new Promise((resolve, reject) => {});
   }
-
-  
 
   getGenresArray(ids) {
     return ids.map(item => this.getGenreById(item));
   }
-
 
   keywordSearch(keyword) {
     // update keyword
@@ -96,57 +94,65 @@ export class DataProccessing {
 
   async getPopular() {
     if (this.genresList.length === 0) {
-      await getGenres().then(data => this.genresList = Array.from(data.genres));
-    };
+      await getGenres().then(
+        data => (this.genresList = Array.from(data.genres)),
+      );
+    }
     return await this.getNextPage(1);
   }
-
 
   getNextPage(page) {
     this.apiRequests.splice(0, this.apiRequests.length);
     this.appCurrentPage = page;
     this.apiRequests = this.defineApiRequests();
-    
+
     this.promise = new Promise(resolve => {
       return Promise.all(
         this.apiRequests.map(item => {
-          item.getData()
-            .then(data => {
-                this.updPageData(data.total_results, data.total_pages);
-              resolve(() => {
-                const filteredArray = data.results.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films);
-                filteredArray.forEach(item => item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)));
-                return filteredArray;
-              });
-              });
+          item.getData().then(data => {
+            this.updPageData(data.total_results, data.total_pages);
+            resolve(() => {
+              const filteredArray = data.results.filter(
+                (it, index) =>
+                  index >= item.filmIndex &&
+                  index < item.filmIndex + item.films,
+              );
+              filteredArray.forEach(
+                item =>
+                  (item.genre_ids = Array.from(
+                    this.getGenresArray(item.genre_ids),
+                  )),
+              );
+              return filteredArray;
+            });
+          });
         }),
       );
     });
     return this.promise;
   }
 
-
   // ------ PRIVATE ------
   getGenreById(id) {
-    const searchGenre = this.genresList.find(item => item.id === id); 
+    const searchGenre = this.genresList.find(item => item.id === id);
     if (searchGenre) return searchGenre.name;
     else return '';
   }
-  
+
   updPageData(totalResults, totalPages) {
     this.apiData.updData(totalResults, totalPages);
     this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
   }
 
-   defineApiRequests() {
+  defineApiRequests() {
     // Создаем объект запроса
     const firstRequest = new ApiRequest(this.apiData.keyword);
     const resArray = [];
-    // Рассчитываем какую страницу от API нужно запросить 
+    // Рассчитываем какую страницу от API нужно запросить
     firstRequest.apiPage = Math.ceil(
       (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
     );
-    // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо  
+    // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
       (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
     // Сколько фильмов из этой страницы API заберем (не больше RESULTS_PER_PAGE)
@@ -166,10 +172,7 @@ export class DataProccessing {
       // Добавляем созданный объект в массив данных для запроса
       resArray.push(secondRequest);
     }
-    
+
     return resArray;
   }
-
-  
-
 }
