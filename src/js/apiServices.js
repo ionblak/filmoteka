@@ -95,9 +95,7 @@ export class DataProccessing {
   }
 
   async getPopular() {
-    console.log('IN getPopular');
     if (this.genresList.length === 0) {
-      console.log('Call getGenres');
       await getGenres().then(data => this.genresList = Array.from(data.genres));
     };
     return await this.getNextPage(1);
