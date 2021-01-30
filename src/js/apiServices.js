@@ -82,11 +82,11 @@ export class DataProccessing {
     this.promise = new Promise((resolve, reject) => {});
   }
 
-  get appPages() {
+  get getAppPages() {
     return this.appPages();
   }
   
-  get appCurrentPage() {
+  get getAppCurrentPage() {
     return this.appCurrentPage();
   }
 
@@ -132,7 +132,6 @@ export class DataProccessing {
                 )),
               );
               filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
-              console.log(filteredArray);
               return filteredArray;
             });
           });
