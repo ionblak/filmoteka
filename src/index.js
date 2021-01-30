@@ -9,27 +9,41 @@ import refs from './js/refs';
 import spinner from './js/utils/spiner';
 import './js/myLibrary';
 import _ from 'lodash';
+import './js/add-to-watch.js';
+
 
 // дожлен быть только один объект для всех запросов
+
 const dataProccessing = new DataProccessing();
-
-
 const getHomePage = function () {
-  if (refs.filmsList.innerHTML === '') {  
-    dataProccessing.getPopular().then(data => createCards(data));
+  // для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/myLib.html
+  if (location.pathname !== '/index.html' && location.pathname !== '/') {
+    return;
+n
   }
+  dataProccessing.getPopular().then(data => createCards(data));
 };
 getHomePage();
 
-refs.searchForm.addEventListener('submit', (event) => event.preventDefault());
 
-refs.searchInput.addEventListener('input',
-  _.debounce(() => {
-    if (refs.searchInput.value === '') dataProccessing.getPopular().then(data => createCards(data));
-    else dataProccessing.keywordSearch(refs.searchInput.value).then(data => createCards(data));
-    }, 500)
-);
 
-refs.logo.addEventListener('click', getHomePage);
-refs.homeBtn.addEventListener('click', getHomePage);
+const searchFilm = function (event) {
+  event.preventDefault();
+  if (refs.searchInput.value === '') {
+    getHomePage();
+  } else {
+    refs.filmsList.innerHTML = '';
+    dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
+      createCards(data);
+      refs.searchInput.value = '';
+    });
+  }
+};
+if (location.pathname === '/index.html' || location.pathname === '/') {
+  refs.searchForm.addEventListener('submit', searchFilm);
+  refs.searchInput.addEventListener('input', _.debounce(searchFilm, 500));
+}
+
+// refs.logo.addEventListener('click', getHomePage);
+// refs.homeBtn.addEventListener('click', getHomePage);
 

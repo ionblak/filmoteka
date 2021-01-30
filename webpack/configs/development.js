@@ -22,6 +22,10 @@ module.exports = env => ({
     new HtmlWebpackPlugin({
       template: './index.html',
     }),
+    new HtmlWebpackPlugin({
+      filename: 'myLib.html',
+      template: './myLib.html',
+    }),
   ],
   devServer: {
     contentBase: paths.BUILD_DIR,

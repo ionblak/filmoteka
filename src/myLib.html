@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Filmoteka</title>
+    <title>My Library</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
@@ -13,10 +13,10 @@
   </head>
   <body>
     <div id="spinner"></div>
-    <header class="header-home">
-      <div class="conteiner header-home__conteiner">
+    <header class="header__My-libbrary">
+      <div class="conteiner my-library__conteiner">
         <nav class="novigation">
-          <a class="logo-block" href="#">
+          <a class="logo-block" href="./index.html">
             <div class="icon-film"></div>
             <p class="logo">Filmoteka</p>
           </a>
@@ -24,33 +24,27 @@
           <ul class="novigation-list">
             <li class="novigation-list__item">
               <!-- <button type="button" class="home-btn"> -->
-              <a class="link focus">Home</a>
+              <a class="link" href="./index.html">Home</a>
               <!-- </button> -->
             </li>
             <li>
               <!-- <button type="button" class="library-btn"> -->
-              <a class="link" href="./myLib.html">my library</a>
+              <a class="link focus" href="./myLib.html">my library</a>
               <!-- </button> -->
             </li>
           </ul>
         </nav>
-        <form class="search-form" id="search-form">
-          <input
-            class="search-input"
-            type="text"
-            name="query"
-            autocomplete="on"
-            placeholder="Поиск фильмов"
-          />
-          <div class="search-icon"></div>
-
-          <div class="modal-card" data-action="{{id}}"></div>
-        </form>
+        <div class="button-block">
+          <button type="button" class="my-Library-button is-active">
+            Watched
+          </button>
+          <button type="button" class="my-Library-button">queue</button>
+        </div>
       </div>
     </header>
     <main>
       <div class="conteiner main-conteiner">
-        <ul class="film-list"></ul>
+        <ul class="my-library__film-list"></ul>
       </div>
     </main>
     <footer class="footer">
