@@ -1,11 +1,10 @@
 const refs = {
-  btnWatched: document.querySelector('.btn-watched'),
   btnQueue: document.querySelector('.btn-favorite'),
 };
 
 // На место нее будет прилетать ID
 const idElement = 464052;
-
+const parseElement = getObjectFavorite();
 // Потом удалится
 fetch(
   `https://api.themoviedb.org/3/search/movie?api_key=15ccc9a8c676c1c9b5477fb06b4d7b82&language=en-US&query=Wonder%20Woman%201984&page=1&include_adult=false`,
@@ -17,7 +16,7 @@ fetch(
 
 // Получает ID добавляемого в коллекцию элемента
 function addWatched(id) {
-  refs.btnWatched.addEventListener('click', onAddWatched);
+  refs.btnQueue.addEventListener('click', onAddWatched);
 
   function onAddWatched(e) {
     if (e.target.nodeName === 'BUTTON') {
@@ -27,16 +26,16 @@ function addWatched(id) {
 }
 
 function getSaveData(idEl) {
-  const parseObj = getObject();
+  const parseObj = getObjectFavorite();
   const obj = {
-    id: [],
+    id: [532865, 399566, 531876],
   };
 
   // Если данных нет, то запушить в новый объект с массивом первый ID.
   if (parseObj === null) {
     obj.id.push(idEl);
     const str = JSON.stringify(obj);
-    localStorage.setItem('watched', str);
+    localStorage.setItem('favorite', str);
 
     return;
   }
@@ -58,23 +57,24 @@ function getUniqueId({ id }, idEl) {
 }
 
 // Забирает данные с LS
-function getObject() {
-  const save = localStorage.getItem('watched');
+function getObjectFavorite() {
+  const save = localStorage.getItem('favorite');
   const parse = JSON.parse(save);
+
   return parse;
 }
 
 // Пример запроса на backend по ID для дальнейшего рендеринга
 
-//  function getMovieByID( id) {
-//   obj.id.forEach(arrayId => {
-//
-//
-//       fetch(
-//         `https://api.themoviedb.org/3/movie/${ID}?api_key=15ccc9a8c676c1c9b5477fb06b4d7b82&language=en-US&external_source=imdb_id`,
-//       )
-//         .then(response => response.json())
-//         .then(data => console.log(data));
-//
+// function getMovieByID({ id }) {
+//   id.forEach(id => {
+//     fetch(
+//       `https://api.themoviedb.org/3/movie/${id}?api_key=15ccc9a8c676c1c9b5477fb06b4d7b82&language=en-US&external_source=imdb_id`,
+//     )
+//       .then(response => response.json())
+
+// Тут получаем данные после перебора
+//       .then(data => console.log(data.original_title));
 //   });
 // }
+// getMovieByID(parseElement);

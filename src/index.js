@@ -10,6 +10,7 @@ import spinner from './js/utils/spiner';
 import './js/myLibrary';
 import _ from 'lodash';
 import './js/add-to-watch.js';
+import './js/add-to-favorite.js';
 
 // дожлен быть только один объект для всех запросов
 
