@@ -10,9 +10,11 @@ import spinner from './js/utils/spiner';
 import './js/myLibrary';
 import _ from 'lodash';
 import './js/add-to-watch.js';
+
 const dataProccessing = new DataProccessing();
 const getHomePage = function () {
-  if (location.pathname !== '/index.html') {
+  // для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/myLib.html
+  if (location.pathname !== '/index.html' && location.pathname !== '/') {
     return;
   }
   dataProccessing.getPopular().then(data => createCards(data));
@@ -31,7 +33,7 @@ const searchFilm = function (event) {
     });
   }
 };
-if (location.pathname === '/index.html') {
+if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', _.debounce(searchFilm, 500));
 }
