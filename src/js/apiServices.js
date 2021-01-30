@@ -82,6 +82,14 @@ export class DataProccessing {
     this.promise = new Promise((resolve, reject) => {});
   }
 
+  get appPages() {
+    return this.appPages();
+  }
+  
+  get appCurrentPage() {
+    return this.appCurrentPage();
+  }
+
   getGenresArray(ids) {
     return ids.map(item => this.getGenreById(item));
   }
@@ -119,10 +127,12 @@ export class DataProccessing {
               );
               filteredArray.forEach(
                 item =>
-                  (item.genre_ids = Array.from(
-                    this.getGenresArray(item.genre_ids),
-                  )),
+                (item.genre_ids = Array.from(
+                  this.getGenresArray(item.genre_ids),
+                )),
               );
+              filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
+              console.log(filteredArray);
               return filteredArray;
             });
           });
@@ -172,7 +182,6 @@ export class DataProccessing {
       // Добавляем созданный объект в массив данных для запроса
       resArray.push(secondRequest);
     }
-
     return resArray;
   }
 }
