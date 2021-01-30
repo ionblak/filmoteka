@@ -3,7 +3,7 @@ import 'normalize.css';
 import './main.scss';
 import './styles.css';
 import './js/footerModal';
-import { DataProccessing } from './js/apiServices';
+import { DataProccessing, getGenresList } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
 import spinner from './js/utils/spiner';
@@ -11,15 +11,21 @@ import './js/myLibrary';
 import _ from 'lodash';
 import './js/add-to-watch.js';
 
+
+// дожлен быть только один объект для всех запросов
+
 const dataProccessing = new DataProccessing();
 const getHomePage = function () {
   // для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/myLib.html
   if (location.pathname !== '/index.html' && location.pathname !== '/') {
     return;
+n
   }
   dataProccessing.getPopular().then(data => createCards(data));
 };
 getHomePage();
+
+
 
 const searchFilm = function (event) {
   event.preventDefault();
@@ -40,3 +46,4 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 
 // refs.logo.addEventListener('click', getHomePage);
 // refs.homeBtn.addEventListener('click', getHomePage);
+
