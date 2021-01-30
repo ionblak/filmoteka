@@ -1,67 +1,45 @@
-      <ul class="film-gallery"></ul>
+      {{#each this}}
+    <div class="container_modal">
+  <div class="lightbox__content">
 
-      <div class="modal-card" data-action="{{id}}">
-        <div class="cardItem__image">
-          <img
-            class="image"
-            src="https://image.tmdb.org/t/p/w500{{poster_path}}"
-            alt="{{title}}"
-            
-          />
-        </div>
+    <img class="film-image" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="{{original_title}}">
+  </div>
 
-        <div class="cardItem__wrapper">
-          <h2 class="cardItem__name">{{title}}</h2>
-          <p class="cadrItem__vote cardItem_text">
-            Vote / Votes<span class="cardItem__vote_average"
-              >{{vote_average}}</span
-            >/<span class="cardItem__vote_count">{{vote_count}}</span>
-          </p>
-          <p class="cardItem__popularity cardItem_text">
-            Popularity<span class="cardItem___data">{{popularity}}</span>
-          </p>
-          <p class="cardItem-Title cardItem_text">
-            Original Title<span class="cardItem__title_data"
-              >{{original_title}}</span
-            >
-          </p>
-          <div class="genres">
-            <p class="cardItem__genre cardItem_text">Genre</p>
-            <p class="cardItem__genreList">
-              {{#each genres}}
-              <span class="cardItem__genre_data">{{this.name}}</span>
-              {{/each}}
-            </p>
-          </div>
+   
+  <div class="options-film-inform">
 
-          <p class="cardItem__about">About</p>
-          <p class="cardItem__description">{{overview}}</p>
-          <div class="cardItem__listButton">
-            <ul class="storage">
-              <li>
-                <label>
-                  <input
-                    type=""
-                    value=""
-                    class=""
-                  />
-                  <span class = "" id="js-WatchedButton"
-                    >Watched</span
-                  >
-                </label>
-              </li>
-              <li>
-                <label >
-                  <input
-                    type=""
-                    value=""
-                    class=""
-                  />
-                  <span class = "" id="js-QueueButton">Queue</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="modal-close-btn">Close</div>
-      </div>
+  <h2 class="title_modal uppercase"> {{original_title}}</h2>
+  
+  <div class="modal_options">
+        
+ <ul class="modal-options-list">
+     <li class="modal-options-list-film">Vote / Votes  </li>
+     <li class="modal-options-list-film" >Popularity </li>
+     <li class="modal-options-list-film " >Original Title  </li>
+     <li  class="modal-options-list-film" >Genre</li>
+ </ul>
+
+ <ul class="modal-options-inform">
+     <li class="modal-options-list-film "> <span class="highlight">{{vote_average}}</span>  / <span class="selection">{{vote_count}}</span>  </li>
+     <li class="modal-options-inform-films">{{popularity}}</li>
+     <li class="modal-options-inform-films uppercase">{{original_title}}</li>
+     <li class="modal-options-inform-films" >{{genre_ids}} </li>
+ </ul>
+
+
+</div>
+
+ <h4 class="title_about">ABOUT</h4>
+
+ <p class="modal_article"> {{overview}}</p>
+
+ 
+<div class="btn_modal">
+
+  <button type="button" class="btn_modal_add">ADD TO WATCHED</button>
+  <button type="button" class="btn_modal_add" >ADD TO QUEUE</button>
+
+</div>
+</div>
+
+ {{/each}}
