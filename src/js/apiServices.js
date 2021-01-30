@@ -23,10 +23,13 @@ const getPage = (keyword, pageNum) => {
   let url;
   if (keyword === '') url = getPopularPath(pageNum);
   else url = getKeywordPath(keyword, pageNum);
-  return axios.get(url).then(res => {
-    return res.data;
-  });
+  return axios.get(url).then(res => res.data);
 };
+
+const getGenres = () => {
+   const url = `/genre/movie/list?api_key=${API_KEY}&language=en-US`;
+  return axios.get(url).then(res => res.data);
+}
 
 const RESULTS_PER_PAGE = 9;
 
@@ -74,7 +77,14 @@ export class DataProccessing {
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
-    this.promise = new Promise((resolve, reject) => {});
+    this.genresList = [];
+    this.promise = new Promise((resolve, reject) => { });
+  }
+
+  
+
+  getGenresArray(ids) {
+    return ids.map(item => this.getGenreById(item));
   }
 
 
@@ -84,8 +94,13 @@ export class DataProccessing {
     return this.getNextPage(1);
   }
 
-  getPopular() {
-    return this.getNextPage(1);
+  async getPopular() {
+    console.log('IN getPopular');
+    if (this.genresList.length === 0) {
+      console.log('Call getGenres');
+      await getGenres().then(data => this.genresList = Array.from(data.genres));
+    };
+    return await this.getNextPage(1);
   }
 
 
@@ -100,7 +115,11 @@ export class DataProccessing {
           item.getData()
             .then(data => {
                 this.updPageData(data.total_results, data.total_pages);
-                resolve(data.results.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films))
+              resolve(() => {
+                const filteredArray = data.results.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films);
+                filteredArray.forEach(item => item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)));
+                return filteredArray;
+              });
               });
         }),
       );
@@ -110,6 +129,11 @@ export class DataProccessing {
 
 
   // ------ PRIVATE ------
+  getGenreById(id) {
+    const searchGenre = this.genresList.find(item => item.id === id); 
+    if (searchGenre) return searchGenre.name;
+    else return '';
+  }
   
   updPageData(totalResults, totalPages) {
     this.apiData.updData(totalResults, totalPages);
