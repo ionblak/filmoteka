@@ -1,6 +1,5 @@
 import axios from 'axios';
-import _ from 'lodash';
-
+import spinner from '../js/utils/spiner';
 // Для работы с API используем объект и его методы DataProccessing
 // keywordSearch(keyword) - для поиска по сключевому слову
 // getPopular() - получить список популярных фильмов
