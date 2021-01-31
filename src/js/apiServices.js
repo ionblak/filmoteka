@@ -10,9 +10,13 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
+
+
 const getPopularPath = pageNum => {
   spinner.stop();
-  return `/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
+
+  return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
+
 };
 
 const getKeywordPath = (keyword, pageNum) => {
@@ -34,6 +38,11 @@ const getGenres = () => {
   return axios.get(url).then(res => res.data);
 };
 
+export const getMovieById = (id) => {
+  const url = `movie/${id}?api_key=${apiKey}`;
+  return axios.get(url).then(res => res.data);
+}
+
 const RESULTS_PER_PAGE = 9;
 
 // Константа кол-во фильмов на каждой странице от API
@@ -46,7 +55,7 @@ class ApiRequest {
     this.apiPage = apiPage;
     this.filmIndex = filmIndex;
     this.films = films;
-    this.promise = new Promise((resolve, reject) => {});
+    this.promise = new Promise((resolve, reject) => { });    
   }
 
   getData() {
@@ -74,13 +83,20 @@ class ApiData {
 }
 
 export class DataProccessing {
+  //#resultsPerPage;
+  #promise;
+  //#listener;
+
   constructor(keyword = '', totalResults, totalPages) {
     this.apiData = new ApiData(keyword, totalResults, totalPages);
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
     this.genresList = [];
-    this.promise = new Promise((resolve, reject) => {});
+    this.#promise = new Promise((resolve, reject) => { });
+    //this.#listener = window.addEventListener("resize", _.debounce(this.defineResultsPerPage, 500), false);
+    //this.defineResultsPerPage();
+    
   }
 
   get getAppPages() {
@@ -121,10 +137,10 @@ export class DataProccessing {
           item.getData().then(data => {
             this.updPageData(data.total_results, data.total_pages);
             resolve(() => {
+              console.log('data', data);
+              console.log('this.apiData', this.apiData);
               const filteredArray = data.results.filter(
-                (it, index) =>
-                  index >= item.filmIndex &&
-                  index < item.filmIndex + item.films,
+                (it, index) => index >= item.filmIndex && index < item.filmIndex + item.films
               );
               filteredArray.forEach(
                 item =>
@@ -135,6 +151,10 @@ export class DataProccessing {
               filteredArray.forEach(
                 item => (item.release_date = item.release_date.slice(0, 4)),
               );
+
+              filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
+              console.log('filteredArray', filteredArray);
+
               return filteredArray;
             });
           });
@@ -145,6 +165,7 @@ export class DataProccessing {
   }
 
   // ------ PRIVATE ------
+
   getGenreById(id) {
     const searchGenre = this.genresList.find(item => item.id === id);
     if (searchGenre) return searchGenre.name;
@@ -166,7 +187,9 @@ export class DataProccessing {
     );
     // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
-      (this.appCurrentPage * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
+      ((this.appCurrentPage - 1) * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
+    
+    console.log('firstRequest.filmIndex', firstRequest.filmIndex);
     // Сколько фильмов из этой страницы API заберем (не больше RESULTS_PER_PAGE)
     firstRequest.films =
       firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
@@ -186,4 +209,26 @@ export class DataProccessing {
     }
     return resArray;
   }
+
+
+
+  
+  // defineResultsPerPage() {
+  //   let updResults = 0;
+  //   if (window.innerWidth >= 1024) {
+  //     updResults = 9;
+  //   } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+  //     updResults = 8;
+  //   }  else if (window.innerWidth < 768) {
+  //     updResults = 4;
+  //   }
+  //   if (this.resultsPerPage !== updResults) {
+      
+  //     this.resultsPerPage = updResults;
+  //     console.log('this.resultsPerPage', this.resultsPerPage);
+  //   }
+
+  //   this.updPageData();
+    
+  // }
 }
