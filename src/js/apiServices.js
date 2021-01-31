@@ -11,7 +11,6 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 
-
 const getPopularPath = pageNum => {
   spinner.stop();
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
@@ -40,8 +39,6 @@ export const getMovieById = (id) => {
   const url = `movie/${id}?api_key=${apiKey}`;
   return axios.get(url).then(res => res.data);
 }
-
-const RESULTS_PER_PAGE = 9;
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -81,19 +78,16 @@ class ApiData {
 }
 
 export class DataProccessing {
-  //#resultsPerPage;
-  #promise;
-  //#listener;
-
+   
   constructor(keyword = '', totalResults, totalPages) {
     this.apiData = new ApiData(keyword, totalResults, totalPages);
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
     this.genresList = [];
-    this.#promise = new Promise((resolve, reject) => { });
-    //this.#listener = window.addEventListener("resize", _.debounce(this.defineResultsPerPage, 500), false);
-    //this.defineResultsPerPage();
+    this.promise = new Promise((resolve, reject) => { });
+    this.resultsPerPage = 0;
+    this.defineNewPageNumber();
     
   }
 
@@ -128,15 +122,12 @@ export class DataProccessing {
     this.apiRequests.splice(0, this.apiRequests.length);
     this.appCurrentPage = page;
     this.apiRequests = this.defineApiRequests();
-
     this.promise = new Promise(resolve => {
       return Promise.all(
         this.apiRequests.map(item => {
           item.getData().then(data => {
             this.updPageData(data.total_results, data.total_pages);
             resolve(() => {
-              console.log('data', data);
-              console.log('this.apiData', this.apiData);
               const filteredArray = data.results.filter(
                 (it, index) => index >= item.filmIndex && index < item.filmIndex + item.films
               );
@@ -147,7 +138,6 @@ export class DataProccessing {
                 )),
               );
               filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
-              console.log('filteredArray', filteredArray);
               return filteredArray;
             });
           });
@@ -155,6 +145,10 @@ export class DataProccessing {
       );
     });
     return this.promise;
+  }
+
+  isResolutionChanged() {
+    return this.resultsPerPage !== this.defineResultsPerPage();
   }
 
   // ------ PRIVATE ------
@@ -167,7 +161,16 @@ export class DataProccessing {
 
   updPageData(totalResults, totalPages) {
     this.apiData.updData(totalResults, totalPages);
-    this.appPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
+    this.appPages = Math.ceil(totalResults / this.resultsPerPage);
+  }
+
+
+  async updResolution() {
+    const newPageNumber = this.defineNewPageNumber();
+    if (newPageNumber) {
+      return this.getNextPage(newPageNumber);
+    }
+
   }
 
   defineApiRequests() {
@@ -176,52 +179,57 @@ export class DataProccessing {
     const resArray = [];
     // Рассчитываем какую страницу от API нужно запросить
     firstRequest.apiPage = Math.ceil(
-      (this.appCurrentPage * RESULTS_PER_PAGE) / API_RESULTS_PER_PAGE,
+      (this.appCurrentPage * this.resultsPerPage) / API_RESULTS_PER_PAGE,
     );
     // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
-      ((this.appCurrentPage - 1) * RESULTS_PER_PAGE) % API_RESULTS_PER_PAGE;
+      ((this.appCurrentPage - 1) * this.resultsPerPage) % API_RESULTS_PER_PAGE;
     
-    console.log('firstRequest.filmIndex', firstRequest.filmIndex);
-    // Сколько фильмов из этой страницы API заберем (не больше RESULTS_PER_PAGE)
+    // Сколько фильмов из этой страницы API заберем (не больше this.resultsPerPage)
     firstRequest.films =
-      firstRequest.filmIndex > API_RESULTS_PER_PAGE - RESULTS_PER_PAGE
+      firstRequest.filmIndex > API_RESULTS_PER_PAGE - this.resultsPerPage
         ? API_RESULTS_PER_PAGE - firstRequest.filmIndex
-        : RESULTS_PER_PAGE;
+        : this.resultsPerPage;
     // Добавляем созданный объект в массив данных для запроса
     resArray.push(firstRequest);
 
-    // Если количество фильмов на странице будет меньше RESULTS_PER_PAGE - нам нужен второй запрос
-    if (firstRequest.films < RESULTS_PER_PAGE) {
+    // Если количество фильмов на странице будет меньше this.resultsPerPage - нам нужен второй запрос
+    if (firstRequest.films < this.resultsPerPage) {
       const secondRequest = new ApiRequest(this.apiData.keyword);
       secondRequest.apiPage = firstRequest.apiPage + 1;
       secondRequest.filmIndex = 0;
-      secondRequest.films = RESULTS_PER_PAGE - firstRequest.films;
+      secondRequest.films = this.resultsPerPage - firstRequest.films;
       // Добавляем созданный объект в массив данных для запроса
       resArray.push(secondRequest);
     }
     return resArray;
   }
 
+  defineResultsPerPage() {
+    if (window.innerWidth >= 1024) {
+      return 9;
+    } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+      return 8;
+    } else if (window.innerWidth < 768){
+      return 4;
+    }
+  }
+
+  
+  defineNewPageNumber() {
+      const updResults = this.defineResultsPerPage();
+      if (this.resultsPerPage === 0) this.resultsPerPage = updResults;
+      if (this.resultsPerPage !== updResults) {
+        // Индекс второго эл-та на текущей странице начиная с 1го (второго, потому что)
+        const currentPageElemId = (this.appCurrentPage * this.resultsPerPage) - (this.resultsPerPage - 1);       
+        // Определяем на какой странице с новым расширением будет первый элемент текущей страницы
+        const pageNumWithCurrElem = Math.ceil(currentPageElemId / updResults);
+        // Обновить номер текущей страницы
+        this.resultsPerPage = updResults;
+        return pageNumWithCurrElem;
+    }
+  }
 
 
   
-  // defineResultsPerPage() {
-  //   let updResults = 0;
-  //   if (window.innerWidth >= 1024) {
-  //     updResults = 9;
-  //   } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
-  //     updResults = 8;
-  //   }  else if (window.innerWidth < 768) {
-  //     updResults = 4;
-  //   }
-  //   if (this.resultsPerPage !== updResults) {
-      
-  //     this.resultsPerPage = updResults;
-  //     console.log('this.resultsPerPage', this.resultsPerPage);
-  //   }
-
-  //   this.updPageData();
-    
-  // }
 }

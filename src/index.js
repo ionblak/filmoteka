@@ -38,3 +38,10 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', _.debounce(searchFilm, 1000));
 }
+
+
+// Слушатель на изменение окна
+window.addEventListener("resize", _.debounce(() =>
+{
+  if (dataProccessing.isResolutionChanged()) dataProccessing.updResolution().then(data => createCards(data)).catch();
+}, 1000), false);
