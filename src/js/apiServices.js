@@ -14,7 +14,9 @@ axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 const getPopularPath = pageNum => {
   spinner.stop();
+
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
+
 };
 
 const getKeywordPath = (keyword, pageNum) => {
@@ -100,7 +102,7 @@ export class DataProccessing {
   get getAppPages() {
     return this.appPages();
   }
-  
+
   get getAppCurrentPage() {
     return this.appCurrentPage();
   }
@@ -142,12 +144,17 @@ export class DataProccessing {
               );
               filteredArray.forEach(
                 item =>
-                (item.genre_ids = Array.from(
-                  this.getGenresArray(item.genre_ids),
-                )),
+                  (item.genre_ids = Array.from(
+                    this.getGenresArray(item.genre_ids),
+                  )),
               );
+              filteredArray.forEach(
+                item => (item.release_date = item.release_date.slice(0, 4)),
+              );
+
               filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
               console.log('filteredArray', filteredArray);
+
               return filteredArray;
             });
           });
