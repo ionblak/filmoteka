@@ -21,6 +21,7 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
 }
 function getHomePage() {
+  spinner.spin(refs.target);
   dataProccessing.getPopular().then(data => {
     createCards(data);
     console.dir(data);
@@ -28,9 +29,11 @@ function getHomePage() {
 }
 
 const searchFilm = function (event) {
+  spinner.spin(refs.target);
   event.preventDefault();
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
     createCards(data);
+    spinner.stop();
   });
 };
 

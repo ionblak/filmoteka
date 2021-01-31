@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import spinner from '../js/utils/spiner';
 // Для работы с API используем объект и его методы DataProccessing
 // keywordSearch(keyword) - для поиска по сключевому слову
 // getPopular() - получить список популярных фильмов
@@ -11,6 +11,7 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 const getPopularPath = pageNum => {
+  spinner.stop();
   return `/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
@@ -85,7 +86,7 @@ export class DataProccessing {
   get getAppPages() {
     return this.appPages();
   }
-  
+
   get getAppCurrentPage() {
     return this.appCurrentPage();
   }
@@ -127,11 +128,13 @@ export class DataProccessing {
               );
               filteredArray.forEach(
                 item =>
-                (item.genre_ids = Array.from(
-                  this.getGenresArray(item.genre_ids),
-                )),
+                  (item.genre_ids = Array.from(
+                    this.getGenresArray(item.genre_ids),
+                  )),
               );
-              filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
+              filteredArray.forEach(
+                item => (item.release_date = item.release_date.slice(0, 4)),
+              );
               return filteredArray;
             });
           });
