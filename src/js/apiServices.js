@@ -11,12 +11,9 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 
-export const getMovieById = (id) => {
-  const url = `movie/${id}?api_key=${apiKey}`;
-  return axios.get(url).then(res => res.data);
-}
 
 const getPopularPath = pageNum => {
+  spinner.stop();
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
@@ -38,6 +35,11 @@ const getGenres = () => {
   const url = `/genre/movie/list?api_key=${API_KEY}&language=en-US`;
   return axios.get(url).then(res => res.data);
 };
+
+export const getMovieById = (id) => {
+  const url = `movie/${id}?api_key=${apiKey}`;
+  return axios.get(url).then(res => res.data);
+}
 
 const RESULTS_PER_PAGE = 9;
 
