@@ -25,7 +25,7 @@ function getHomePage() {
   spinner.spin(refs.target);
   dataProccessing.getPopular().then(data => {
     // createCards(data);
-     toPaginate(data);
+    toPaginate(data);
     console.dir(data);
   });
 }
@@ -45,9 +45,15 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchInput.addEventListener('input', _.debounce(searchFilm, 1000));
 }
 
-
 // Слушатель на изменение окна
-window.addEventListener("resize", _.debounce(() =>
-{
-  if (dataProccessing.isResolutionChanged()) dataProccessing.updResolution().then(data => createCards(data)).catch();
-}, 1000), false);
+window.addEventListener(
+  'resize',
+  _.debounce(() => {
+    if (dataProccessing.isResolutionChanged())
+      dataProccessing
+        .updResolution()
+        .then(data => createCards(data))
+        .catch();
+  }, 1000),
+  false,
+);
