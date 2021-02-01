@@ -1,6 +1,6 @@
 .main-conteiner {
   margin: 0 auto;
-  padding: 20px 13px 40px 20px;
+  padding: 20px 20px 40px 20px;
 }
 .film-list {
   margin-bottom: 40px;
@@ -22,6 +22,10 @@
   display: block;
 }
 
+.film-info-wrap {
+  display: flex;
+}
+
 .film-name {
   font-weight: 500;
   font-size: 12px;
@@ -31,6 +35,7 @@
   margin: 0;
 }
 .film-genre,
+.film-info-mark,
 .film-year {
   margin-right: 3px;
 
