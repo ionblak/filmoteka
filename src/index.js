@@ -27,7 +27,7 @@ function getHomePage() {
   dataProccessing.getPopular().then(data => {
     createCards(data);
     // toPaginate(data);
-    // console.dir(data);
+    console.dir(data);
   });
 }
 
@@ -59,4 +59,3 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 //   }, 1000),
 //   false,
 // );
-
