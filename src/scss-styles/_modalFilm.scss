@@ -1,7 +1,6 @@
-.modal-card {
-  padding: 20px 20px 40px;
-  background-color: #fff;
-}
+// .modal-card {
+//   margin: 0 auto;
+// }
 
 .image {
   width: 280px;
@@ -44,7 +43,7 @@
   padding-left: 4px;
   padding-right: 4px;
   border-radius: 5px;
-  background-color: #8c8c8c;
+  background-color: #f7f7f7;
   color: #000000;
 }
 
@@ -72,6 +71,8 @@
   margin-bottom: 10px;
 }
 .cardItem__description {
+  max-width: 279px;
+  margin: 0;
   margin-bottom: 40px;
   font-weight: 500;
   font-size: 12px;
@@ -79,9 +80,33 @@
 
   color: #000000;
 }
+// .history-btn-wrapper {
+//   text-align: center;
+// }
+.btn-watched,
+.btn-favorite {
+  font-family: inherit;
+  width: 136px;
+  height: 44px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #ffffff;
+  background: #ff6b01;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+.btn-watched {
+  margin-right: 11px;
+  border: none;
+}
+.btn-favorite {
+  background: transparent;
+  color: #000000;
+}
 @media screen and (min-width: 768px) {
   .modal-card {
-    padding: 60px 75px;
     display: flex;
     gap: 30px;
   }
@@ -92,8 +117,6 @@
 
 @media screen and (min-width: 1024px) {
   .modal-card {
-    padding-left: 71px;
-    padding-right: 71px;
     display: flex;
     gap: 30px;
   }
