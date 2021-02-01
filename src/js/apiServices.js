@@ -88,7 +88,7 @@ export class DataProccessing {
     this.promise = new Promise((resolve, reject) => { });
     this.resultsPerPage = 0;
     this.defineNewPageNumber();
-    
+
   }
 
   get getAppPages() {
@@ -169,9 +169,15 @@ export class DataProccessing {
     const matchFilms = this.apiRequests[ApiIndex].films;
     const filteredArray = item.filter((it, index) => index >= matchFilmIndex && index < matchFilmIndex + matchFilms);
     // Названия жанров получить по ID и собрать в строку через запятую
-    filteredArray.forEach(item => (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(', ')));
-    // Дату обрезать (только год релиза)
-    filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
+     filteredArray.forEach(item => (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(', ')));
+    // Дату обрезать (только год релиза, если он не underfined)
+     filteredArray.forEach(item => {
+       if (item.release_date) {
+         item.release_date = item.release_date.slice(0, 4)
+       }
+       
+       
+     });
      return filteredArray;
   }
 
