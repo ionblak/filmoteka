@@ -11,6 +11,7 @@ import './js/myLibrary';
 import _ from 'lodash';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
+import toPaginate from './js/toPaginate';
 
 // дожлен быть только один объект для всех запросов
 
@@ -21,16 +22,21 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
 }
 function getHomePage() {
+  spinner.spin(refs.target);
   dataProccessing.getPopular().then(data => {
-    createCards(data);
+    // createCards(data);
+     toPaginate(data);
     console.dir(data);
   });
 }
 
 const searchFilm = function (event) {
+  spinner.spin(refs.target);
   event.preventDefault();
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
-    createCards(data);
+    // createCards(data);
+    toPaginate(data);
+    spinner.stop();
   });
 };
 
