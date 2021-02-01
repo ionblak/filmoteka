@@ -21,11 +21,13 @@ const dataProccessing = new DataProccessing();
 if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
 }
+let pageNumber;
 function getHomePage() {
   spinner.spin(refs.target);
   dataProccessing.getPopular().then(data => {
     // createCards(data);
-     toPaginate(data);
+pageNumber=dataProccessing.getAppPages;
+    toPaginate(data);
     console.dir(data);
   });
 }
@@ -44,3 +46,5 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', _.debounce(searchFilm, 1000));
 }
+console.log(pageNumber);
+export { pageNumber};

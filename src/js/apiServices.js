@@ -100,11 +100,11 @@ export class DataProccessing {
   }
 
   get getAppPages() {
-    return this.appPages();
+    return this.appPages;
   }
 
   get getAppCurrentPage() {
-    return this.appCurrentPage();
+    return this.appCurrentPage;
   }
 
   getGenresArray(ids) {
