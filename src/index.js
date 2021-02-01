@@ -44,7 +44,6 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 window.addEventListener("resize", _.debounce(() =>
 {
   if (dataProccessing.isResolutionChanged()) dataProccessing.updResolution().then(data => {
-    console.log('getAppPages',dataProccessing.getAppPages);
     createCards(data)
   }).catch();
 }, 1000), false);
