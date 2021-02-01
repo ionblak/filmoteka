@@ -10,9 +10,9 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
-
 const getPopularPath = pageNum => {
   spinner.stop();
+
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
@@ -35,10 +35,10 @@ const getGenres = () => {
   return axios.get(url).then(res => res.data);
 };
 
-export const getMovieById = (id) => {
+export const getMovieById = id => {
   const url = `movie/${id}?api_key=${apiKey}`;
   return axios.get(url).then(res => res.data);
-}
+};
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -50,7 +50,7 @@ class ApiRequest {
     this.apiPage = apiPage;
     this.filmIndex = filmIndex;
     this.films = films;
-    this.promise = new Promise((resolve, reject) => { });    
+    this.promise = new Promise((resolve, reject) => {});
   }
 
   getData() {
@@ -78,23 +78,21 @@ class ApiData {
 }
 
 export class DataProccessing {
-   
   constructor(keyword = '', totalResults, totalPages) {
     this.apiData = new ApiData(keyword, totalResults, totalPages);
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
     this.genresList = [];
-    this.promise = new Promise((resolve, reject) => { });
+    this.promise = new Promise((resolve, reject) => {});
     this.resultsPerPage = 0;
     this.defineNewPageNumber();
-    
   }
 
   get getAppPages() {
     return this.appPages;
   }
-  
+
   get getAppCurrentPage() {
     return this.appCurrentPage;
   }
@@ -127,10 +125,12 @@ export class DataProccessing {
         this.apiRequests.map(item => {
           item.getData().then(data => {
             this.updPageData(data.total_results, data.total_pages);
+
             const filteredArray = data.results.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films);
             filteredArray.forEach(item => (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids))));
             filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
             resolve(filteredArray); 
+
           });
         }),
       );
@@ -155,13 +155,11 @@ export class DataProccessing {
     this.appPages = Math.ceil(totalResults / this.resultsPerPage);
   }
 
-
   async updResolution() {
     const newPageNumber = this.defineNewPageNumber();
     if (newPageNumber) {
       return this.getNextPage(newPageNumber);
     }
-
   }
 
   defineApiRequests() {
@@ -175,7 +173,7 @@ export class DataProccessing {
     // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
       ((this.appCurrentPage - 1) * this.resultsPerPage) % API_RESULTS_PER_PAGE;
-    
+
     // Сколько фильмов из этой страницы API заберем (не больше this.resultsPerPage)
     firstRequest.films =
       firstRequest.filmIndex > API_RESULTS_PER_PAGE - this.resultsPerPage
@@ -201,26 +199,23 @@ export class DataProccessing {
       return 9;
     } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
       return 8;
-    } else if (window.innerWidth < 768){
+    } else if (window.innerWidth < 768) {
       return 4;
     }
   }
 
-  
   defineNewPageNumber() {
-      const updResults = this.defineResultsPerPage();
-      if (this.resultsPerPage === 0) this.resultsPerPage = updResults;
-      if (this.resultsPerPage !== updResults) {
-        // Индекс второго эл-та на текущей странице начиная с 1го (второго, потому что)
-        const currentPageElemId = (this.appCurrentPage * this.resultsPerPage) - (this.resultsPerPage - 1);       
-        // Определяем на какой странице с новым расширением будет первый элемент текущей страницы
-        const pageNumWithCurrElem = Math.ceil(currentPageElemId / updResults);
-        // Обновить номер текущей страницы
-        this.resultsPerPage = updResults;
-        return pageNumWithCurrElem;
+    const updResults = this.defineResultsPerPage();
+    if (this.resultsPerPage === 0) this.resultsPerPage = updResults;
+    if (this.resultsPerPage !== updResults) {
+      // Индекс второго эл-та на текущей странице начиная с 1го (второго, потому что)
+      const currentPageElemId =
+        this.appCurrentPage * this.resultsPerPage - (this.resultsPerPage - 1);
+      // Определяем на какой странице с новым расширением будет первый элемент текущей страницы
+      const pageNumWithCurrElem = Math.ceil(currentPageElemId / updResults);
+      // Обновить номер текущей страницы
+      this.resultsPerPage = updResults;
+      return pageNumWithCurrElem;
     }
   }
-
-
-  
 }

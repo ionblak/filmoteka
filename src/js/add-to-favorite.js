@@ -16,7 +16,7 @@ fetch(
 
 // Получает ID добавляемого в коллекцию элемента
 function addWatched(id) {
-  refs.btnQueue.addEventListener('click', onAddWatched);
+  // refs.btnQueue.addEventListener('click', onAddWatched);
 
   function onAddWatched(e) {
     if (e.target.nodeName === 'BUTTON') {

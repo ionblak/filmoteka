@@ -8,6 +8,7 @@ const refs = {
   modalStudents: document.querySelector('.link-footer'),
   searchForm: document.querySelector('.search-form'),
   searchInput: document.querySelector('.search-input'),
+  cardFilm: document.querySelector('.card__colection'),
 };
 
 export default refs;

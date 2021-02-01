@@ -1,0 +1,65 @@
+#pagination-container {
+  text-align: center;
+}
+
+.paginationjs-pages ul {
+  display: flex;
+  justify-content: center;
+}
+.paginationjs-pages ul li:not(:first-child) {
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginationjs-page a,
+.paginationjs-prev a,
+.paginationjs-next a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.paginationjs-page.active a,
+.paginationjs-prev a,
+.paginationjs-next a {
+  height: 40px;
+  width: 40px;
+}
+.favorite-test {
+  width: 16px;
+  height: 16px;
+  color: black;
+}
+
+// .arrow-icon {
+//   width: 16px;
+//   height: 16px;
+//   color: black;
+// // }
+// .prev-a {
+//   background-image: url(../images/arrow-left.svg);
+//   //   width: 16px;
+//   //   height: 16px;
+//   //   color: black;
+// }
+
+.paginationjs-page.active,
+.paginationjs-prev,
+.paginationjs-next {
+  display: flex;
+  border-radius: 5px;
+  margin-left: 0px;
+}
+
+.paginationjs-page.active {
+  background-color: $hoverAndIsActivebackGroundColor;
+  color: $primaryTextColor;
+}
+.paginationjs-prev,
+.paginationjs-next {
+  background-color: $paginationPrevNextColor;
+}
