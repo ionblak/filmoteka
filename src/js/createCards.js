@@ -2,7 +2,6 @@ import itemsTemplate from '../templates/cardsTemplate.hbs';
 import modalCard from '../templates/modalCard.hbs';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
-import openModal from './modalCardFilm';
 import refs from './refs';
 
 export default function createCards(data) {
@@ -19,6 +18,7 @@ export default function createCards(data) {
       return;
     }
     const arrayIndex = currentCard.dataset.index;
+    // console.log(data.then);
 
     const markup = modalCard(data[arrayIndex]);
     const modal = basicLightbox.create(markup);
