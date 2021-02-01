@@ -47,6 +47,7 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 }
 
 // Слушатель на изменение окна
+
 // window.addEventListener(
 //   'resize',
 //   _.debounce(() => {
@@ -58,3 +59,4 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 //   }, 1000),
 //   false,
 // );
+

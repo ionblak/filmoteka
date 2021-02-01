@@ -90,11 +90,11 @@ export class DataProccessing {
   }
 
   get getAppPages() {
-    return this.appPages();
+    return this.appPages;
   }
 
   get getAppCurrentPage() {
-    return this.appCurrentPage();
+    return this.appCurrentPage;
   }
 
   getGenresArray(ids) {
@@ -125,30 +125,12 @@ export class DataProccessing {
         this.apiRequests.map(item => {
           item.getData().then(data => {
             this.updPageData(data.total_results, data.total_pages);
-            resolve(() => {
-              const filteredArray = data.results.filter(
-                (it, index) =>
-                  index >= item.filmIndex &&
-                  index < item.filmIndex + item.films,
-              );
-              filteredArray.forEach(
-                item =>
-                  (item.genre_ids = Array.from(
-                    this.getGenresArray(item.genre_ids),
-                  )),
-              );
-              filteredArray.forEach(
-                item => (item.release_date = item.release_date.slice(0, 4)),
-              );
 
-              filteredArray.forEach(
-                item => (item.release_date = item.release_date.slice(0, 4)),
-              );
+            const filteredArray = data.results.filter((it, index) => index >= item.filmIndex && index < item.filmIndex + item.films);
+            filteredArray.forEach(item => (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids))));
+            filteredArray.forEach(item => item.release_date = item.release_date.slice(0, 4));
+            resolve(filteredArray); 
 
-              console.log('filteredArray', filteredArray);
-
-              return filteredArray;
-            });
           });
         }),
       );
