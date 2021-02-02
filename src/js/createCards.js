@@ -1,16 +1,18 @@
 import itemsTemplate from '../templates/cardsTemplate.hbs';
 import modalCard from '../templates/modalCard.hbs';
+import { addWatchedFilm } from './add-to-watch.js';
+import { addFavoriteFilm } from './add-to-favorite.js';
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/dist/basicLightbox.min.css';
 import refs from './refs';
-
 export default function createCards(data) {
   // перед созданием карточек чистим filmsList
   refs.filmsListHome.innerHTML = '';
   const markup = itemsTemplate(data);
   refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
-
   refs.cardFilm.addEventListener('click', openModal);
+  addWatchedFilm();
+  addFavoriteFilm();
   function openModal(e) {
     e.preventDefault();
     const currentCard = e.target;
