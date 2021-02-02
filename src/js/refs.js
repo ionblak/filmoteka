@@ -10,6 +10,8 @@ const refs = {
   searchInput: document.querySelector('.search-input'),
   cardFilm: document.querySelector('.card__colection'),
   blockModalFilm: document.querySelector('.modal-card'),
+  lightboxDiv: document.querySelector(".backdrop_close"),
+  mainConteiner: document.querySelector(".main-conteiner"),
 };
 
 export default refs;
