@@ -54,6 +54,7 @@
     "basiclightbox": "^5.0.4",
     "core-js": "^3.6.5",
     "handlebars": "^4.7.6",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
     "spin.js": "^4.1.0"
   }

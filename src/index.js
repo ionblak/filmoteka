@@ -3,12 +3,12 @@ import 'normalize.css';
 import './main.scss';
 import './styles.css';
 import './js/footerModal';
-import { DataProccessing, getGenresList } from './js/apiServices';
+import { DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
 import spinner from './js/utils/spiner';
 import './js/myLibrary';
-import _ from 'lodash';
+import debounce from 'lodash.debounce';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
 
@@ -36,12 +36,12 @@ const searchFilm = function (event) {
 
 if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
-  refs.searchInput.addEventListener('input', _.debounce(searchFilm, 1000));
+  refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
 }
 
 
 // Слушатель на изменение окна
-window.addEventListener("resize", _.debounce(() =>
+window.addEventListener("resize", debounce(() =>
 {
   if (dataProccessing.isResolutionChanged()) dataProccessing.updResolution().then(data => {
     createCards(data)
