@@ -61,3 +61,4 @@ window.addEventListener(
   }, 1000),
   false,
 );
+
