@@ -1,3 +1,5 @@
+import {dataProccessing } from '../toPaginateWithApi';
+import createCards from '../createCards';
 /*
  * pagination.js 2.1.5
  * A jQuery plugin to provide simple yet fully customisable pagination.
@@ -9,8 +11,8 @@
  * Released under the MIT license.
  */
 
-(function(global, $) {
-
+(function (global, $) {
+  
   if (typeof $ === 'undefined') {
     throwError('Pagination requires jQuery.');
   }
@@ -67,7 +69,7 @@
 
           // Currently in asynchronous mode
           self.isAsync = Helpers.isString(dataSource);
-          if (Helpers.isArray(dataSource)) {
+            if (Helpers.isArray(dataSource)) {
             model.totalNumber = attributes.totalNumber = dataSource.length;
           }
 
@@ -107,9 +109,9 @@
 
         var currentPage = model.pageNumber || attributes.pageNumber;
         var pageRange = attributes.pageRange || 0;
-        var totalPage = self.getTotalPage();
-
-        var rangeStart = currentPage - pageRange;
+        // var totalPage = self.getTotalPage();
+        var totalPage = dataProccessing.getAppPages;
+         var rangeStart = currentPage - pageRange;
         var rangeEnd = currentPage + pageRange;
 
         if (rangeEnd > totalPage) {
@@ -144,7 +146,8 @@
       generatePageNumbersHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
-        var totalPage = self.getTotalPage();
+        // var totalPage = self.getTotalPage();
+        var totalPage = dataProccessing.getAppPages;
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
         var html = '';
@@ -212,8 +215,11 @@
         var self = this;
         var currentPage = args.currentPage;
         var totalPage = self.getTotalPage();
-
+//  var totalPage =dataProccessing.getAppPages;
         var totalNumber = self.getTotalNumber();
+        
+        // var totalNumber = dataProccessing.getData.length;
+        // var totalNumber = 2340;
 
         var showPrevious = attributes.showPrevious;
         var showNext = attributes.showNext;
@@ -361,14 +367,14 @@
 
         var pageNumber = number;
         pageNumber = parseInt(pageNumber);
-
+       
         // Page number is out of bounds
         if (!pageNumber || pageNumber < 1) return;
 
         var pageSize = attributes.pageSize;
         var totalNumber = self.getTotalNumber();
-        var totalPage = self.getTotalPage();
-
+        // var totalPage = self.getTotalPage();
+        var totalPage = dataProccessing.getAppPages;
         // Page number is out of bounds
         if (totalNumber > 0) {
           if (pageNumber > totalPage) return;
@@ -385,55 +391,67 @@
         postData[alias.pageSize ? alias.pageSize : 'pageSize'] = pageSize;
         postData[alias.pageNumber ? alias.pageNumber : 'pageNumber'] = pageNumber;
 
-        var ajaxParams = $.isFunction(attributes.ajax) ? attributes.ajax() : attributes.ajax;
-        var formatAjaxParams = {
-          type: 'get',
-          cache: false,
-          data: {},
-          contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-          dataType: 'json',
-          async: true
-        };
+        // var ajaxParams = $.isFunction(attributes.ajax) ? attributes.ajax() : attributes.ajax;
+        // var formatAjaxParams = {
+        //   type: 'get',
+        //   cache: false,
+        //   data: {},
+        //   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        //   dataType: 'json',
+        //   async: true
+        // };
 
-        $.extend(true, formatAjaxParams, ajaxParams);
-        $.extend(formatAjaxParams.data, postData);
+        // $.extend(true, formatAjaxParams, ajaxParams);
+        // $.extend(formatAjaxParams.data, postData);
 
-        formatAjaxParams.url = attributes.dataSource;
-        formatAjaxParams.success = function(response) {
-          if (self.isDynamicTotalNumber) {
-            self.findTotalNumberFromRemoteResponse(response);
-          } else {
-            self.model.totalNumber = attributes.totalNumber;
-          }
+        // formatAjaxParams.url = attributes.dataSource;
+        // formatAjaxParams.success = function(response) {
+        //   if (self.isDynamicTotalNumber) {
+        //     self.findTotalNumberFromRemoteResponse(response);
+        //   } else {
+        //     self.model.totalNumber = attributes.totalNumber;
+        //   }
 
-          var finalData = self.filterDataByLocator(response);
-          render(finalData);
-        };
-        formatAjaxParams.error = function(jqXHR, textStatus, errorThrown) {
-          attributes.formatAjaxError && attributes.formatAjaxError(jqXHR, textStatus, errorThrown);
-          self.enable();
-        };
+        //   var finalData = self.filterDataByLocator(response);
+        //   render(finalData);
+        // };
+        //  var finalData =   data;
+        //  render(finalData);
+        // };
+        // formatAjaxParams.error = function(jqXHR, textStatus, errorThrown) {
+        //   attributes.formatAjaxError && attributes.formatAjaxError(jqXHR, textStatus, errorThrown);
+        //   self.enable();
+        // };
 
         self.disable();
 
-        $.ajax(formatAjaxParams);
+        // $.ajax(formatAjaxParams);
 
-        function render(data) {
-          // Will be invoked before paging
-          if (self.callHook('beforePaging', pageNumber) === false) return false;
+           
+        dataProccessing.getNextPage(pageNumber).then(data => {
+        // dataProccessing.getPopular().then(data => {
+          var finalData = data;
+          render(finalData);
+          return;
+        });
 
-          // Pagination direction
-          model.direction = typeof model.pageNumber === 'undefined' ? 0 : (pageNumber > model.pageNumber ? 1 : -1);
+          function render(data) {
+            // Will be invoked before paging
+            if (self.callHook('beforePaging', pageNumber) === false) return false;
 
-          model.pageNumber = pageNumber;
+            // Pagination direction
+            model.direction = typeof model.pageNumber === 'undefined' ? 0 : (pageNumber > model.pageNumber ? 1 : -1);
 
-          self.render();
+            model.pageNumber = pageNumber;
 
-          if (self.disabled && self.isAsync) {
-            // enable pagination
-            self.enable();
-          }
+            self.render();
 
+            if (self.disabled && self.isAsync) {
+              // enable pagination
+              self.enable();
+            }
+
+          
           // cache model data
           container.data('pagination').model = model;
 
@@ -458,7 +476,8 @@
           }
 
           // pageNumber now is the last page
-          if (pageNumber == self.getTotalPage()) {
+          // if (pageNumber == self.getTotalPage()) {
+            if (pageNumber == dataProccessing.getAppPages) { 
             self.callHook('afterIsLastPage');
           }
         }
@@ -640,13 +659,15 @@
           if (/^https?|file:/.test(dataSource)) {
             attributes.ajaxDataType = 'jsonp';
           }
-          callback(dataSource);
+          
+            callback(dataSource);
         } else {
           throwError('Unexpected type of "dataSource".');
         }
       },
 
-      callHook: function(hook) {
+        callHook: function (hook) {
+        
         var paginationData = container.data('pagination');
         var result;
 
@@ -813,7 +834,8 @@
         });
 
         // Whether to load the default page
-        var validTotalPage = Math.max(self.getTotalPage(), 1)
+        // var validTotalPage = Math.max(self.getTotalPage(), 1)
+         var validTotalPage = Math.max(dataProccessing.getAppPages, 1)
         var defaultPageNumber = attributes.pageNumber;
         // Default pageNumber should be 1 when totalNumber is dynamic
         if (self.isDynamicTotalNumber) {
@@ -856,8 +878,8 @@
               return container.data('pagination').attributes.pageNumber;
             }
           // Get total page
-          case 'getTotalPage':
-            return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
+          // case 'getTotalPage':
+          //   return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
           // Get data of selected page
           case 'getSelectedPageData':
             return container.data('pagination').currentPageData;
@@ -889,14 +911,14 @@
 
     // Data source
     // Array | String | Function | Object
-    //dataSource: '',
+    dataSource: '',
 
     // String | Function
-    //locator: 'data',
+    locator: 'data',
 
     // Find totalNumber from remote response, the totalNumber will be ignored when totalNumberLocator is specified
     // Function
-    //totalNumberLocator: function() {},
+    totalNumberLocator: function() {},
 
     // Total entries
     totalNumber: 0,

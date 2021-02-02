@@ -11,7 +11,7 @@ import './js/myLibrary';
 import _ from 'lodash';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
-import toPaginate from './js/toPaginate';
+import toPaginateWithApi from './js/toPaginateWithApi';
 
 // дожлен быть только один объект для всех запросов
 
@@ -22,22 +22,26 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
 }
 let pageNumber;
+// function getHomePage() {
+//   spinner.spin(refs.target);
+//   dataProccessing.getPopular().then(data => {
+    // createCards(data);
+//     console.dir(data);
+//   });
+// }
+
 function getHomePage() {
   spinner.spin(refs.target);
-  dataProccessing.getPopular().then(data => {
-    // createCards(data);
-pageNumber=dataProccessing.getAppPages;
-    toPaginate(data);
-    console.dir(data);
-  });
-}
+   toPaginateWithApi();
+    // console.dir(data);
+  }
+
 
 const searchFilm = function (event) {
   spinner.spin(refs.target);
   event.preventDefault();
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
-    // createCards(data);
-    toPaginate(data);
+  createCards(data);
     spinner.stop();
   });
 };
@@ -46,5 +50,4 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', _.debounce(searchFilm, 1000));
 }
-console.log(pageNumber);
-export { pageNumber};
+export { dataProccessing};
