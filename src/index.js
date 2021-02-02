@@ -24,6 +24,7 @@ function getHomePage() {
   spinner.spin(refs.target);
   dataProccessing.getPopular().then(data => {
     createCards(data);
+    spinner.stop();
     console.dir(data);
   });
 }
