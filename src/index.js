@@ -37,7 +37,7 @@ const searchFilm = function (event) {
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
     createCards(data);
     // toPaginate(data);
-    // spinner.stop();
+    spinner.stop();
   });
 };
 
