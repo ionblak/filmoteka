@@ -87,7 +87,6 @@ export class DataProccessing {
     this.promise = new Promise((resolve, reject) => {});
     this.resultsPerPage = 0;
     this.defineNewPageNumber();
-
   }
 
   get getAppPages() {
@@ -120,21 +119,20 @@ export class DataProccessing {
   getNextPage(page) {
     this.apiRequests.splice(0, this.apiRequests.length);
     this.appCurrentPage = page;
-t
-    this.apiRequests = this.defineApiRequests();   
+
+    this.apiRequests = this.defineApiRequests();
     const resultDataArr = [];
     this.promise = new Promise((resolve, reject) => {
-      resolve(Promise.all(this.apiRequests.map(item => item.getData())).then(data => {
-        this.updPageData(data.total_results, data.total_pages);
-        data.map((it, index) => {
-          
-          const filtered = this.filterDataArray(it.results, index);
-          resultDataArr.push(...filtered);
-        });
-        return resultDataArr;
-      }
-      ))
-
+      resolve(
+        Promise.all(this.apiRequests.map(item => item.getData())).then(data => {
+          this.updPageData(data.total_results, data.total_pages);
+          data.map((it, index) => {
+            const filtered = this.filterDataArray(it.results, index);
+            resultDataArr.push(...filtered);
+          });
+          return resultDataArr;
+        }),
+      );
     });
     return this.promise;
   }
@@ -163,21 +161,27 @@ t
     }
   }
 
-   filterDataArray(item, ApiIndex) {
+  filterDataArray(item, ApiIndex) {
     const matchFilmIndex = this.apiRequests[ApiIndex].filmIndex;
     const matchFilms = this.apiRequests[ApiIndex].films;
-    const filteredArray = item.filter((it, index) => index >= matchFilmIndex && index < matchFilmIndex + matchFilms);
+    const filteredArray = item.filter(
+      (it, index) =>
+        index >= matchFilmIndex && index < matchFilmIndex + matchFilms,
+    );
     // Названия жанров получить по ID и собрать в строку через запятую
-     filteredArray.forEach(item => (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(', ')));
+    filteredArray.forEach(
+      item =>
+        (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(
+          ', ',
+        )),
+    );
     // Дату обрезать (только год релиза, если он не underfined)
-     filteredArray.forEach(item => {
-       if (item.release_date) {
-         item.release_date = item.release_date.slice(0, 4)
-       }
-       
-       
-     });
-     return filteredArray;
+    filteredArray.forEach(item => {
+      if (item.release_date) {
+        item.release_date = item.release_date.slice(0, 4);
+      }
+    });
+    return filteredArray;
   }
 
   defineApiRequests() {
@@ -186,7 +190,8 @@ t
     const resArray = [];
     // Рассчитываем какую страницу от API нужно запросить
     firstRequest.apiPage = Math.ceil(
-      (((this.appCurrentPage - 1) * this.resultsPerPage) + 1)  / API_RESULTS_PER_PAGE,
+      ((this.appCurrentPage - 1) * this.resultsPerPage + 1) /
+        API_RESULTS_PER_PAGE,
     );
     // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
@@ -235,8 +240,5 @@ t
       this.resultsPerPage = updResults;
       return pageNumWithCurrElem;
     }
-
-  } 
+  }
 }
-
-
