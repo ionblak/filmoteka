@@ -24,3 +24,17 @@ var opts = {
 var spinner = new Spinner(opts);
 
 export default spinner;
+
+// =============================================
+// ДЛЯ ИСПОЛЬЗОВАНИЯ СПИНЕРА
+
+// import refs from './js/refs';
+// import spinner from './js/utils/spiner';
+
+// запускаем спинер
+
+// spinner.spin(refs.target);
+
+// останавливаем спинер
+
+// spinner.stop();

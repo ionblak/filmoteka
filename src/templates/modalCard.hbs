@@ -1,11 +1,11 @@
  {{!-- <div class="modal-card">  --}}
    <div class="container_modal">
       <div class="cardItem__image">
-        <img
-          class="image"
-          src="https://image.tmdb.org/t/p/w500/{{poster_path}}"
-          alt="{{title}}"
-        />
+            {{#if poster_path}}
+  <img class="image" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="{{title}}" />
+{{else}}
+<img  class="image" src="../images/1fe4275159989b1b96c166aec797b5cb.jpg" alt="content photo">
+{{/if}}
       </div>
 
       <div class="cardItem__wrapper">

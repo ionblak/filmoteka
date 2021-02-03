@@ -8,10 +8,14 @@ const refs = {
   modalStudents: document.querySelector('.link-footer'),
   searchForm: document.querySelector('.search-form'),
   searchInput: document.querySelector('.search-input'),
+  paginatorWrapper: document.querySelector('#pagination-container'),
   cardFilm: document.querySelector('.card__colection'),
   blockModalFilm: document.querySelector('.modal-card'),
   lightboxDiv: document.querySelector(".backdrop_close"),
   mainConteiner: document.querySelector(".main-conteiner"),
+
+
+
 };
 
 export default refs;
