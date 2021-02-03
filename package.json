@@ -38,7 +38,8 @@
     "mini-css-extract-plugin": "^0.11.2",
     "node-sass": "^4.14.1",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "postcss-loader": "^4.0.2",
+    "postcss": "^8.2.4",
+    "postcss-loader": "^4.2.0",
     "sass": "^1.32.5",
     "sass-loader": "^10.1.1",
     "style-loader": "^1.2.1",
@@ -54,8 +55,8 @@
     "basiclightbox": "^5.0.4",
     "core-js": "^3.6.5",
     "handlebars": "^4.7.6",
-    "lodash.debounce": "^4.0.8",
     "jquery": "^3.5.1",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
     "spin.js": "^4.1.0"
   }

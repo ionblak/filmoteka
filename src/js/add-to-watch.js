@@ -1,7 +1,7 @@
 import refs from './refs.js';
 
 export function addWatchedFilm() {
-  refs.filmsListHome.addEventListener('click', handlerAddToLs);
+  refs.lightboxDiv.addEventListener('click', handlerAddToLs);
 }
 function handlerAddToLs(e) {
   if (e.target.classList.contains('btn-watched')) {

@@ -1,7 +1,11 @@
 {{#each this}}
 <li class="film-list-item">
   <div class="film-card">
+    {{#if poster_path}}
   <img class="film-picture" data-index="{{@index}}" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="film card" />
+{{else}}
+<img  class="film-picture" data-index="{{@index}}" src="./images/1fe4275159989b1b96c166aec797b5cb.jpg" alt="content photo">
+{{/if}}
 </div>
 <div class="film-info">
 
