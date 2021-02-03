@@ -143,8 +143,13 @@ export class DataProccessing {
     return this.getNextPage(1);
   }
 
-  getNextPage(page) {
-
+  async getNextPage(page) {
+    // Если массив жанров пуст - запросить его у api
+     if (this.genresList.length === 0) {
+      await getGenres().then(
+        data => (this.genresList = Array.from(data.genres)),
+      );
+    }
     // создаю массив с объектами для запроса (это объект ApiRequest у которого есть метод getData() он возвращает промис запроса от axious)
     // Запрос мб один, если все объекты отображаемой страницы на одной странице api
     // запроса мб два, если часть объектов отображаемой страницы на одной странице api, а другие на следующей
@@ -168,16 +173,12 @@ export class DataProccessing {
 
       // говорим, что наш промис this.promise разрешится успешно, если оба запроса из api будут выполнены успешно
       resolve(Promise.all(this.apiRequests.map(item => item.getData())).then(data => {
-        data.forEach(it => {
-
-          return this.updPageData(it.total_results, it.total_pages)
-        });
+        data.forEach(it => this.updPageData(it.total_results, it.total_pages));
         // здесь просто фильтрация массива - нужно жанры перобразоват в строку, обрезать дату 
         data.map((it, index) => {
           const filtered = this.filterDataArray(it.results, index);
           resultDataArr.push(...filtered);
         });
-
         // возвращаем отфильтрованный массив
         return resultDataArr;
       }
