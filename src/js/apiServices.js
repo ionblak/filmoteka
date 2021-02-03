@@ -39,7 +39,7 @@ export const getMovieById = id => {
   const url = `movie/${id}?api_key=${API_KEY}`;
   return axios.get(url).then(res => res.data);
 };
-  // ======= удалить
+  
   export const getMovieByIdArray = (idArray) => {
   const promiseRes = new Promise((resolve, reject) => {
     resolve(Promise.all(idArray.map(item => getMovieById(item))).then(data => data));
