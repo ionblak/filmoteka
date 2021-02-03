@@ -251,7 +251,10 @@ export class DataProccessing {
         index >= matchFilmIndex && index < matchFilmIndex + matchFilms,
      );
     // Названия жанров получить по ID и собрать в строку через запятую
+
+
      genreIdsConverting(filteredArray);
+
     // Дату обрезать (только год релиза, если он не underfined)
      releaseDataCut(filteredArray);
      return filteredArray;
