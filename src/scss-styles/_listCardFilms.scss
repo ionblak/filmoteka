@@ -2,8 +2,13 @@
   margin: 0 auto;
   padding: 20px 20px 40px 20px;
 }
+.film-list {
+  margin-bottom: 40px;
+}
+
 .film-list-item {
   margin-bottom: 20px;
+  max-width: 280px;
 }
 
 .film-picture {
@@ -17,6 +22,11 @@
   display: block;
 }
 
+.film-info-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .film-name {
   font-weight: 500;
   font-size: 12px;
@@ -26,6 +36,7 @@
   margin: 0;
 }
 .film-genre,
+.film-info-mark,
 .film-year {
   margin-right: 3px;
 
@@ -55,11 +66,13 @@
   }
   .film-list-item {
     margin-bottom: 0;
+    width: 294px;
   }
   .film-list {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
+    margin-bottom: 50px;
   }
   .film-picture {
     width: 294px;
@@ -69,6 +82,9 @@
 @media screen and (min-width: 1024px) {
   .main-conteiner {
     padding: 60px 71px 46px 71px;
+  }
+  .film-list-item {
+    width: 274px;
   }
   .film-picture {
     width: 274px;

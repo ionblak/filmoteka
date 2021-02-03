@@ -10,9 +10,12 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
+
 // Сформировать путь запроса к популярным
+
 const getPopularPath = pageNum => {
   spinner.stop();
+
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
@@ -39,11 +42,15 @@ const getGenres = () => {
 };
 
 
+
 // Получить данные о фильму по id
 export const getMovieById = (id) => {
   const url = `movie/${id}?api_key=${API_KEY}`;
+
+
+
   return axios.get(url).then(res => res.data);
-}
+};
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -55,7 +62,7 @@ class ApiRequest {
     this.apiPage = apiPage;
     this.filmIndex = filmIndex;
     this.films = films;
-    this.promise = new Promise((resolve, reject) => { });    
+    this.promise = new Promise((resolve, reject) => {});
   }
 
   getData() {
@@ -88,23 +95,21 @@ class ApiData {
 // количество выводимых объектов на страницу для текущего расширения 
 
 export class DataProccessing {
-   
   constructor(keyword = '', totalResults, totalPages) {
     this.apiData = new ApiData(keyword, totalResults, totalPages);
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
     this.genresList = [];
-    this.promise = new Promise((resolve, reject) => { });
+    this.promise = new Promise((resolve, reject) => {});
     this.resultsPerPage = 0;
     this.defineNewPageNumber();
-
   }
 
   get getAppPages() {
     return this.appPages;
   }
-  
+
   get getAppCurrentPage() {
     return this.appCurrentPage;
   }
@@ -138,13 +143,18 @@ export class DataProccessing {
     // запроса мб два, если часть объектов отображаемой страницы на одной странице api, а другие на следующей
     this.apiRequests.splice(0, this.apiRequests.length);
     this.appCurrentPage = page;
+
     // Формируем объекты с данными запроса
     this.apiRequests = this.defineApiRequests();   
     // массив объектов инфо о фильме
+
+
+
     const resultDataArr = [];
     // функция getNextPage должна вернуть промис, но только после того как оба запроса (если их 2) будут выполнены
     // Для этого использую Promise.all([массив промисов])
     this.promise = new Promise((resolve, reject) => {
+
       // говорим, что наш промис this.promise разрешится успешно, если оба запроса из api будут выполнены успешно
       resolve(Promise.all(this.apiRequests.map(item => item.getData())).then(data => {
         data.forEach(it => {
@@ -159,6 +169,7 @@ export class DataProccessing {
         return resultDataArr;
       }
       ))
+
     });
 
     return this.promise;
@@ -184,28 +195,41 @@ export class DataProccessing {
     this.appPages = Math.ceil(totalResults / this.resultsPerPage);
   }
 
+
   // Обновить данные в соотвествии с новым расширением
+
   async updResolution() {
     // Определить новый номер показываемой страницы (опираюсь на первый элемент на странице до изменения расширения)
     const newPageNumber = this.defineNewPageNumber();
     if (newPageNumber) {
       return this.getNextPage(newPageNumber);
     }
-
   }
+
 
   // Фильтровать массив 
    filterDataArray(item, ApiIndex) {
+
     const matchFilmIndex = this.apiRequests[ApiIndex].filmIndex;
     const matchFilms = this.apiRequests[ApiIndex].films;
-    const filteredArray = item.filter((it, index) => index >= matchFilmIndex && index < matchFilmIndex + matchFilms);
+    const filteredArray = item.filter(
+      (it, index) =>
+        index >= matchFilmIndex && index < matchFilmIndex + matchFilms,
+    );
     // Названия жанров получить по ID и собрать в строку через запятую
-     filteredArray.forEach(item => (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(', ')));
+    filteredArray.forEach(
+      item =>
+        (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(
+          ', ',
+        )),
+    );
     // Дату обрезать (только год релиза, если он не underfined)
+
      filteredArray.forEach(item => {
        if (item.release_date) item.release_date = item.release_date.slice(0, 4)
      });
      return filteredArray;
+
   }
 
   defineApiRequests() {
@@ -214,12 +238,13 @@ export class DataProccessing {
     const resArray = [];
     // Рассчитываем какую страницу от API нужно запросить
     firstRequest.apiPage = Math.ceil(
-      (((this.appCurrentPage - 1) * this.resultsPerPage) + 1)  / API_RESULTS_PER_PAGE,
+      ((this.appCurrentPage - 1) * this.resultsPerPage + 1) /
+        API_RESULTS_PER_PAGE,
     );
     // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
       ((this.appCurrentPage - 1) * this.resultsPerPage) % API_RESULTS_PER_PAGE;
-    
+
     // Сколько фильмов из этой страницы API заберем (не больше this.resultsPerPage)
     firstRequest.films =
       firstRequest.filmIndex > API_RESULTS_PER_PAGE - this.resultsPerPage
@@ -242,23 +267,26 @@ export class DataProccessing {
 
   // По расширению экрана определить количество выводимых элементов 
   defineResultsPerPage() {
+
     if (window.innerWidth >= 1024) return 9;
     else if (window.innerWidth >= 768 && window.innerWidth < 1024) return 8;
     else if (window.innerWidth < 768) return 4;
   }
 
   // Определить страницу нового расширения учитывая текущие элементы на странице
+
   defineNewPageNumber() {
-      const updResults = this.defineResultsPerPage();
-      if (this.resultsPerPage === 0) this.resultsPerPage = updResults;
-      if (this.resultsPerPage !== updResults) {
-        // Индекс второго эл-та на текущей странице начиная с 1го (второго, потому что)
-        const currentPageElemId = (this.appCurrentPage * this.resultsPerPage) - (this.resultsPerPage - 1);       
-        // Определяем на какой странице с новым расширением будет первый элемент текущей страницы
-        const pageNumWithCurrElem = Math.ceil(currentPageElemId / updResults);
-        // Обновить номер текущей страницы
-        this.resultsPerPage = updResults;
-        return pageNumWithCurrElem;
+    const updResults = this.defineResultsPerPage();
+    if (this.resultsPerPage === 0) this.resultsPerPage = updResults;
+    if (this.resultsPerPage !== updResults) {
+      // Индекс второго эл-та на текущей странице начиная с 1го (второго, потому что)
+      const currentPageElemId =
+        this.appCurrentPage * this.resultsPerPage - (this.resultsPerPage - 1);
+      // Определяем на какой странице с новым расширением будет первый элемент текущей страницы
+      const pageNumWithCurrElem = Math.ceil(currentPageElemId / updResults);
+      // Обновить номер текущей страницы
+      this.resultsPerPage = updResults;
+      return pageNumWithCurrElem;
     }
-  } 
+  }
 }
