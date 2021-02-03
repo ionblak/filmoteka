@@ -22,6 +22,8 @@ const dataProccessing = new DataProccessing();
 // для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/myLib.html
 if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
+  refs.searchForm.addEventListener('submit', searchFilm);
+  refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
 }
 // let pageNumber;
 // function getHomePage() {
@@ -45,7 +47,7 @@ function getHomePage() {
 //   });
 // }
 
-const searchFilm = function (event) {
+function searchFilm(event) {
   spinner.spin(refs.target);
   event.preventDefault();
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
@@ -57,11 +59,6 @@ const searchFilm = function (event) {
 
     spinner.stop();
   });
-};
-
-if (location.pathname === '/index.html' || location.pathname === '/') {
-  refs.searchForm.addEventListener('submit', searchFilm);
-  refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
 }
 
 export { dataProccessing };

@@ -1,8 +1,10 @@
 .main-conteiner {
-  margin: 0 auto;
   padding: 20px 20px 40px 20px;
 }
 .film-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 40px;
 }
 
