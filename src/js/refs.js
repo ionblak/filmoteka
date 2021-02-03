@@ -11,7 +11,7 @@ const refs = {
   paginatorWrapper: document.querySelector('#pagination-container'),
   cardFilm: document.querySelector('.card__colection'),
   blockModalFilm: document.querySelector('.modal-card'),
-
+  errorNotafication: document.querySelector('.film-name-error'),
 };
 
 export default refs;
