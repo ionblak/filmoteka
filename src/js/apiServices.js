@@ -11,11 +11,11 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 
+
 // Сформировать путь запроса к популярным
 
 const getPopularPath = pageNum => {
   spinner.stop();
-
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
 };
 
@@ -49,8 +49,10 @@ export const getMovieById = (id) => {
 
 
 
+
   return axios.get(url).then(res => res.data);
 };
+
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -89,6 +91,9 @@ class ApiData {
   }
 }
 
+
+   
+
 // Объект хранит в себе данные о запросе в API (ключевое слово, общее кол-во результатов, кол-во страниц по запросу в API)
 // Инфо о текущей странице для нашего приложения, и кол-во страниц для него
 // массив жанров от API в представлении id : Name
@@ -104,12 +109,13 @@ export class DataProccessing {
     this.promise = new Promise((resolve, reject) => {});
     this.resultsPerPage = 0;
     this.defineNewPageNumber();
+
   }
 
   get getAppPages() {
     return this.appPages;
   }
-
+  
   get getAppCurrentPage() {
     return this.appCurrentPage;
   }
@@ -138,15 +144,19 @@ export class DataProccessing {
   }
 
   getNextPage(page) {
+
     // создаю массив с объектами для запроса (это объект ApiRequest у которого есть метод getData() он возвращает промис запроса от axious)
     // Запрос мб один, если все объекты отображаемой страницы на одной странице api
     // запроса мб два, если часть объектов отображаемой страницы на одной странице api, а другие на следующей
     this.apiRequests.splice(0, this.apiRequests.length);
+    // нужно для формирования данных запроса
     this.appCurrentPage = page;
+
 
     // Формируем объекты с данными запроса
     this.apiRequests = this.defineApiRequests();   
     // массив объектов инфо о фильме
+
 
 
 
@@ -155,9 +165,11 @@ export class DataProccessing {
     // Для этого использую Promise.all([массив промисов])
     this.promise = new Promise((resolve, reject) => {
 
+
       // говорим, что наш промис this.promise разрешится успешно, если оба запроса из api будут выполнены успешно
       resolve(Promise.all(this.apiRequests.map(item => item.getData())).then(data => {
         data.forEach(it => {
+
           return this.updPageData(it.total_results, it.total_pages)
         });
         // здесь просто фильтрация массива - нужно жанры перобразоват в строку, обрезать дату 
@@ -165,17 +177,19 @@ export class DataProccessing {
           const filtered = this.filterDataArray(it.results, index);
           resultDataArr.push(...filtered);
         });
+
         // возвращаем отфильтрованный массив
         return resultDataArr;
       }
       ))
-
     });
 
     return this.promise;
   }
 
+
   // Отслеживает изменилось ли разрешение экрана 
+
   isResolutionChanged() {
     return this.resultsPerPage !== this.defineResultsPerPage();
   }
@@ -196,14 +210,18 @@ export class DataProccessing {
   }
 
 
+
+ 
   // Обновить данные в соотвествии с новым расширением
 
   async updResolution() {
     // Определить новый номер показываемой страницы (опираюсь на первый элемент на странице до изменения расширения)
+
     const newPageNumber = this.defineNewPageNumber();
     if (newPageNumber) {
       return this.getNextPage(newPageNumber);
     }
+
   }
 
 
@@ -230,6 +248,7 @@ export class DataProccessing {
      });
      return filteredArray;
 
+
   }
 
   defineApiRequests() {
@@ -238,8 +257,10 @@ export class DataProccessing {
     const resArray = [];
     // Рассчитываем какую страницу от API нужно запросить
     firstRequest.apiPage = Math.ceil(
+
       ((this.appCurrentPage - 1) * this.resultsPerPage + 1) /
         API_RESULTS_PER_PAGE,
+
     );
     // Рассчитываем начиная с какого объекста из ответа API будем забирать инфо
     firstRequest.filmIndex =
@@ -264,6 +285,7 @@ export class DataProccessing {
     }
     return resArray;
   }
+
 
   // По расширению экрана определить количество выводимых элементов 
   defineResultsPerPage() {
@@ -290,3 +312,4 @@ export class DataProccessing {
     }
   }
 }
+
