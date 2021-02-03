@@ -3,15 +3,17 @@ import 'normalize.css';
 import './main.scss';
 import './styles.css';
 import './js/footerModal';
-import { DataProccessing, getGenresList } from './js/apiServices';
+import { DataProccessing } from './js/apiServices';
 import createCards from './js/createCards';
 import refs from './js/refs';
 import spinner from './js/utils/spiner';
 import './js/myLibrary';
-import _ from 'lodash';
+import debounce from 'lodash.debounce';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
+
 import toPaginateWithApi from './js/toPaginateWithApi';
+
 
 // дожлен быть только один объект для всех запросов
 
@@ -36,18 +38,43 @@ function getHomePage() {
     // console.dir(data);
   }
 
+//   dataProccessing.getPopular().then(data => {
+//     createCards(data);
+//     // toPaginate(data);
+//     console.dir(data);
+//   });
+// }
+
 
 const searchFilm = function (event) {
   spinner.spin(refs.target);
   event.preventDefault();
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
+
   createCards(data);
+
+//     createCards(data);
+    // toPaginate(data);
+
     spinner.stop();
   });
 };
 
 if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
-  refs.searchInput.addEventListener('input', _.debounce(searchFilm, 1000));
+  refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
 }
+
 export { dataProccessing};
+
+
+// Слушатель на изменение окна
+
+window.addEventListener("resize", debounce(() =>
+{
+  if (dataProccessing.isResolutionChanged()) dataProccessing.updResolution().then(data => {
+    createCards(data)
+  }).catch();
+}, 1000), false);
+
+

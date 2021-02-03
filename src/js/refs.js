@@ -9,6 +9,9 @@ const refs = {
   searchForm: document.querySelector('.search-form'),
   searchInput: document.querySelector('.search-input'),
   paginatorWrapper: document.querySelector('#pagination-container'),
+  cardFilm: document.querySelector('.card__colection'),
+  blockModalFilm: document.querySelector('.modal-card'),
+
 };
 
 export default refs;

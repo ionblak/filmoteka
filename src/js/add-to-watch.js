@@ -1,28 +1,12 @@
-const refs = {
-  btnWatched: document.querySelector('.btn-watched'),
-  btnQueue: document.querySelector('.btn-favorite'),
-};
+import refs from './refs.js';
 
-// На место нее будет прилетать ID
-const idElement = 464052;
-
-// Потом удалится
-fetch(
-  `https://api.themoviedb.org/3/search/movie?api_key=15ccc9a8c676c1c9b5477fb06b4d7b82&language=en-US&query=Wonder%20Woman%201984&page=1&include_adult=false`,
-)
-  .then(response => response.json())
-  .then(data => {
-    data.results.forEach(({ id }) => addWatched(id));
-  });
-
-// Получает ID добавляемого в коллекцию элемента
-function addWatched(id) {
-  refs.btnWatched.addEventListener('click', onAddWatched);
-
-  function onAddWatched(e) {
-    if (e.target.nodeName === 'BUTTON') {
-      getSaveData(idElement);
-    }
+export function addWatchedFilm() {
+  refs.filmsListHome.addEventListener('click', handlerAddToLs);
+}
+function handlerAddToLs(e) {
+  if (e.target.classList.contains('btn-watched')) {
+    const id = e.target.dataset.action;
+    getSaveData(id);
   }
 }
 
@@ -35,9 +19,7 @@ function getSaveData(idEl) {
   // Если данных нет, то запушить в новый объект с массивом первый ID.
   if (parseObj === null) {
     obj.id.push(idEl);
-    const str = JSON.stringify(obj);
-    localStorage.setItem('watched', str);
-
+    pushToLs(obj);
     return;
   }
 
@@ -47,14 +29,13 @@ function getSaveData(idEl) {
 
 // Проверка при клике на кнопку, если добавляемый фильм уже есть в массиве.
 function getUniqueId({ id }, idEl) {
-  console.log(id, idEl);
-  id.forEach(id => {
-    if (id === idEl) {
-      console.log('Такой фильм уже добавлен в список просмотренных');
-
-      return;
-    }
-  });
+  if (id.includes(idEl)) {
+    console.log('Такой фильм уже добавлен в список просмотренных');
+    return;
+  }
+  const parseObj = getObject();
+  parseObj.id.push(idEl);
+  pushToLs(parseObj);
 }
 
 // Забирает данные с LS
@@ -64,6 +45,11 @@ function getObject() {
   return parse;
 }
 
+// Пушит объект в LS
+function pushToLs(obj) {
+  const str = JSON.stringify(obj);
+  localStorage.setItem('watched', str);
+}
 // Пример запроса на backend по ID для дальнейшего рендеринга
 
 //  function getMovieByID( id) {
