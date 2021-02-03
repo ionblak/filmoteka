@@ -11,9 +11,9 @@ import './js/myLibrary';
 import debounce from 'lodash.debounce';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
+import './images/1fe4275159989b1b96c166aec797b5cb.jpg';
 
 import toPaginateWithApi from './js/toPaginateWithApi';
-
 
 // дожлен быть только один объект для всех запросов
 
@@ -23,20 +23,20 @@ const dataProccessing = new DataProccessing();
 if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
 }
-let pageNumber;
+// let pageNumber;
 // function getHomePage() {
 //   spinner.spin(refs.target);
 //   dataProccessing.getPopular().then(data => {
-    // createCards(data);
+// createCards(data);
 //     console.dir(data);
 //   });
 // }
 
 function getHomePage() {
   spinner.spin(refs.target);
-   toPaginateWithApi();
-    // console.dir(data);
-  }
+  toPaginateWithApi();
+  // console.dir(data);
+}
 
 //   dataProccessing.getPopular().then(data => {
 //     createCards(data);
@@ -45,15 +45,14 @@ function getHomePage() {
 //   });
 // }
 
-
 const searchFilm = function (event) {
   spinner.spin(refs.target);
   event.preventDefault();
   dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
+    createCards(data);
+    console.log(data);
 
-  createCards(data);
-
-//     createCards(data);
+    //     createCards(data);
     // toPaginate(data);
 
     spinner.stop();
@@ -65,16 +64,20 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
 }
 
-export { dataProccessing};
-
+export { dataProccessing };
 
 // Слушатель на изменение окна
 
-window.addEventListener("resize", debounce(() =>
-{
-  if (dataProccessing.isResolutionChanged()) dataProccessing.updResolution().then(data => {
-    createCards(data)
-  }).catch();
-}, 1000), false);
-
-
+window.addEventListener(
+  'resize',
+  debounce(() => {
+    if (dataProccessing.isResolutionChanged())
+      dataProccessing
+        .updResolution()
+        .then(data => {
+          createCards(data);
+        })
+        .catch();
+  }, 1000),
+  false,
+);
