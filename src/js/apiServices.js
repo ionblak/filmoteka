@@ -175,6 +175,11 @@ export class DataProccessing {
           ', ',
         )),
     );
+    // Рейтинг фильмов виводить с одним значением после точки(0.0)
+    filteredArray.forEach(
+      item => (item.vote_average = item.vote_average.toFixed(1)),
+    );
+
     // Дату обрезать (только год релиза, если он не underfined)
     filteredArray.forEach(item => {
       if (item.release_date) {
