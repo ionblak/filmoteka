@@ -11,9 +11,9 @@ const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 
+// ------ Запросы к API ------
 
 // Сформировать путь запроса к популярным
-
 const getPopularPath = pageNum => {
   spinner.stop();
   return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
@@ -46,16 +46,46 @@ const getGenres = () => {
 // Получить данные о фильму по id
 export const getMovieById = (id) => {
   const url = `movie/${id}?api_key=${API_KEY}`;
-
-
-
-
   return axios.get(url).then(res => res.data);
 };
 
+// ------------
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
+
+
+let genresList = [];
+
+// ------ Функции для обработки массива жанров ------
+
+// Получить массив жанров
+function getGenresArray(ids) {
+    return ids.map(item => getGenreById(item));
+  }
+  
+// Из массива жанров объекта возвращет строковое название жанра
+function getGenreById(id) {
+    const searchGenre = genresList.find(item => item.id === id);
+    if (searchGenre) return searchGenre.name;
+    else return '';
+}
+  
+// ------ Функции для обработки объектов с инфо о фильмах от API ------
+function genreIdsConverting(filteringArray) {
+  filteringArray.forEach(
+      item =>(item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(
+          ', ',
+      ))
+    );
+}
+
+function releaseDataCut(filteringArray) {
+  filteringArray.forEach(item => {
+       if (item.release_date) item.release_date = item.release_date.slice(0, 4)
+     });
+}
+
 
 // Объект для формирования, отправки запроса и дальнейшей обработки данных
 class ApiRequest {
@@ -90,22 +120,18 @@ class ApiData {
     this.keyword = keyword;
   }
 }
-
-
    
 
 // Объект хранит в себе данные о запросе в API (ключевое слово, общее кол-во результатов, кол-во страниц по запросу в API)
 // Инфо о текущей странице для нашего приложения, и кол-во страниц для него
 // массив жанров от API в представлении id : Name
 // количество выводимых объектов на страницу для текущего расширения 
-
 export class DataProccessing {
   constructor(keyword = '', totalResults, totalPages) {
     this.apiData = new ApiData(keyword, totalResults, totalPages);
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
-    this.genresList = [];
     this.promise = new Promise((resolve, reject) => {});
     this.resultsPerPage = 0;
     this.defineNewPageNumber();
@@ -119,10 +145,6 @@ export class DataProccessing {
   get getAppCurrentPage() {
     return this.appCurrentPage;
   }
-  // Получить массив жанров
-  getGenresArray(ids) {
-    return ids.map(item => this.getGenreById(item));
-  }
 
   // Поиск по ключевому слову
   keywordSearch(keyword) {    
@@ -134,9 +156,9 @@ export class DataProccessing {
 
   async getPopular() {
     // Если массив жанров пуст - запросить его у api
-    if (this.genresList.length === 0) {
+    if (genresList.length === 0) {
       await getGenres().then(
-        data => (this.genresList = Array.from(data.genres)),
+        data => (genresList = Array.from(data.genres)),
       );
     }
     // Затем отправить запрос на получение 1й страницы 
@@ -145,9 +167,9 @@ export class DataProccessing {
 
   async getNextPage(page) {
     // Если массив жанров пуст - запросить его у api
-     if (this.genresList.length === 0) {
+     if (genresList.length === 0) {
       await getGenres().then(
-        data => (this.genresList = Array.from(data.genres)),
+        data => genresList = Array.from(data.genres),
       );
     }
     // создаю массив с объектами для запроса (это объект ApiRequest у которого есть метод getData() он возвращает промис запроса от axious)
@@ -197,13 +219,6 @@ export class DataProccessing {
 
   // ------ PRIVATE ------
 
-
-  // Из массива жанров объекта возвращет строковое название жанра
-  getGenreById(id) {
-    const searchGenre = this.genresList.find(item => item.id === id);
-    if (searchGenre) return searchGenre.name;
-    else return '';
-  }
   // Новые данные от api - обновить кол-во результатов и страниц с результатами для нашего отображения
   updPageData(totalResults, totalPages) {
     this.apiData.updData(totalResults, totalPages);
@@ -234,19 +249,11 @@ export class DataProccessing {
     const filteredArray = item.filter(
       (it, index) =>
         index >= matchFilmIndex && index < matchFilmIndex + matchFilms,
-    );
+     );
     // Названия жанров получить по ID и собрать в строку через запятую
-    filteredArray.forEach(
-      item =>
-        (item.genre_ids = Array.from(this.getGenresArray(item.genre_ids)).join(
-          ', ',
-        )),
-    );
+     genreIdsConverting(filteredArray);
     // Дату обрезать (только год релиза, если он не underfined)
-
-     filteredArray.forEach(item => {
-       if (item.release_date) item.release_date = item.release_date.slice(0, 4)
-     });
+     releaseDataCut(filteredArray);
      return filteredArray;
 
 
@@ -313,4 +320,6 @@ export class DataProccessing {
     }
   }
 }
+
+
 
