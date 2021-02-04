@@ -10,10 +10,16 @@ function markQueue(lokalStorage) {
   const idListQueue = queueList.id;
   // for (const id of idListQueue) {
   // getMovieById(id);
-  getMoviesByIdArray(idListQueue).then(data => {
-    console.log(data);
-    createCards(data);
-  });
+  getMoviesByIdArray(idListQueue)
+    .then(data => {
+      console.log(data);
+      data.forEach(item => (item.vote_average = item.vote_average.toFixed(1)));
+      return data;
+    })
+    .then(data => {
+      console.log(data);
+      createCards(data);
+    });
 
   // export default function createCards(data) {
   //   // перед созданием карточек чистим filmsList
