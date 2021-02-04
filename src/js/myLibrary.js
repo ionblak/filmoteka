@@ -1,7 +1,7 @@
 // import itemsTemplate from '../templates/cardsTemplate.hbs';
 const { default: refs } = require('./refs');
 // import { getMovieById } from '../js/apiServices';
-import { getMovieByIdArray } from '../js/apiServices';
+import { getMoviesByIdArray } from '../js/apiServices';
 import createCards from './createCards';
 
 function markQueue(lokalStorage) {
@@ -10,7 +10,7 @@ function markQueue(lokalStorage) {
   const idListQueue = queueList.id;
   // for (const id of idListQueue) {
   // getMovieById(id);
-  getMovieByIdArray(idListQueue).then(data => {
+  getMoviesByIdArray(idListQueue).then(data => {
     console.log(data);
     createCards(data);
   });
