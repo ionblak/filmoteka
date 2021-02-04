@@ -1,5 +1,4 @@
 import 'normalize.css';
-
 import './main.scss';
 import './styles.css';
 import './js/footerModal';
@@ -13,7 +12,9 @@ import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
 import './images/1fe4275159989b1b96c166aec797b5cb.jpg';
 
-import toPaginateWithApi from './js/toPaginateWithApi';
+
+// import toPaginateWithApi from './js/toPaginateWithApi';
+import { paginateObj } from './js/toPaginateWithApi';
 
 // дожлен быть только один объект для всех запросов
 
@@ -25,6 +26,7 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
 }
+let keySearch = 0;
 // let pageNumber;
 // function getHomePage() {
 //   spinner.spin(refs.target);
@@ -36,32 +38,23 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 
 function getHomePage() {
   spinner.spin(refs.target);
-  toPaginateWithApi();
+  paginateObj.paginate();
   // console.dir(data);
 }
 
-//   dataProccessing.getPopular().then(data => {
-//     createCards(data);
-//     // toPaginate(data);
-//     console.dir(data);
-//   });
-// }
-
 function searchFilm(event) {
+  keySearch = 1;
   spinner.spin(refs.target);
   event.preventDefault();
-  dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
-    createCards(data);
-    console.log(data);
-
-    //     createCards(data);
-    // toPaginate(data);
-
-    spinner.stop();
-  });
+  paginateObj.paginate();
+  // dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
+  //   createCards(data);
+  spinner.stop();
+  keySearch = 0;
+  // });
 }
 
-export { dataProccessing };
+export { dataProccessing, keySearch };
 
 // Слушатель на изменение окна
 

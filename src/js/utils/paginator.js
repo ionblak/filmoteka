@@ -10,6 +10,7 @@ import createCards from '../createCards';
  * Copyright 2014-2100, superRaytin
  * Released under the MIT license.
  */
+import { paginateObj } from '../toPaginateWithApi';
 
 (function (global, $) {
   
@@ -214,8 +215,8 @@ import createCards from '../createCards';
       generateHTML: function(args) {
         var self = this;
         var currentPage = args.currentPage;
-        var totalPage = self.getTotalPage();
-//  var totalPage =dataProccessing.getAppPages;
+        // var totalPage = self.getTotalPage();
+ var totalPage =dataProccessing.getAppPages;
         var totalNumber = self.getTotalNumber();
         
         // var totalNumber = dataProccessing.getData.length;
@@ -427,9 +428,10 @@ import createCards from '../createCards';
 
         // $.ajax(formatAjaxParams);
 
-           
-        dataProccessing.getNextPage(pageNumber).then(data => {
-        // dataProccessing.getPopular().then(data => {
+        paginateObj.chooseFn(pageNumber)
+        // dataProccessing.getNextPage(pageNumber)
+        .then(data => {
+        // // dataProccessing.getPopular().then(data => {
           var finalData = data;
           render(finalData);
           return;
@@ -596,9 +598,9 @@ import createCards from '../createCards';
       },
 
       // Get total page
-      getTotalPage: function() {
-        return Math.ceil(this.getTotalNumber() / attributes.pageSize);
-      },
+      // getTotalPage: function() {
+      //   return Math.ceil(this.getTotalNumber() / attributes.pageSize);
+      // },
 
       // Get locator
       getLocator: function(locator) {

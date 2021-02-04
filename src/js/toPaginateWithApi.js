@@ -1,17 +1,17 @@
-import itemsTemplate from '../templates/cardsTemplate.hbs';
+// import itemsTemplate from '../templates/cardsTemplate.hbs';
 import refs from './refs';
 import "jquery/dist/jquery";
 import "jquery/src/jquery";
 import './utils/paginator';
-import {dataProccessing } from '../index';
+import {dataProccessing, keySearch } from '../index';
 import createCards from './createCards';
           
-export default function paginate() {
+export const paginateObj = {
+   paginate() {
    $(refs.paginatorWrapper).pagination({
          dataSource: `https://#`, //заглушка
     //    locator: 'results',
-    //   locator: 'data',
-    //   totalNumberLocator: function (response) {
+    //    totalNumberLocator: function (response) {
     //         return response.total_results;
     //   },
     pageSize: 1, //заглушка
@@ -23,14 +23,17 @@ export default function paginate() {
     // },
       callback: function (data, pagination) {
        createCards(data);
-            // console.log(pageNumber);
-            // console.log(this.totalNumber);
-            // console.log(refs.filmsListHome.pagination('getSelectedPageNum'));
-      }
+                 }
       
   });
-  // console.log(pagination.getSelectedPageNum);
-    //   refs.paginationPageList.addEventListener('click', onPageClick);
+  },
+  chooseFn(pageNumber) {
+       if (!keySearch)
+    { return dataProccessing.getNextPage(pageNumber) }
+    else {
+      return dataProccessing.keywordSearch(refs.searchInput.value)
+    }
+  }
 }
 
 export {dataProccessing };
