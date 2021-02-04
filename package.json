@@ -56,6 +56,7 @@
     "core-js": "^3.6.5",
     "handlebars": "^4.7.6",
     "jquery": "^3.5.1",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
     "spin.js": "^4.1.0"
   }

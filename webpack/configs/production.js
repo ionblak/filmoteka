@@ -50,8 +50,8 @@ module.exports = env => ({
       },
     }),
     new HtmlWebpackPlugin({
-      filename: 'myLib.html',
-      template: './myLib.html',
+      filename: 'my-lib.html',
+      template: './my-lib.html',
       minify: {
         collapseWhitespace: true,
         removeComments: true,
