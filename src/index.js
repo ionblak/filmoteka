@@ -36,7 +36,9 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
 // }
 
 function getHomePage() {
+  refs.filmsListHome.innerHTML = '';
   spinner.spin(refs.target);
+
   toPaginateWithApi();
   // console.dir(data);
 }
