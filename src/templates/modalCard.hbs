@@ -1,4 +1,5 @@
- <div class="modal-card">
+ {{!-- <div class="modal-card">  --}}
+   <div class="container_modal">
       <div class="cardItem__image">
             {{#if poster_path}}
   <img class="image" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="{{title}}" />
@@ -11,7 +12,7 @@
         <h2 class="cardItem__name">{{title}}</h2>
         <p class="cadrItem__vote cardItem_text">
           Vote / Votes
-          <span class="cardItem__vote_average">{{vote_average}}</span>/<span
+          <span class="cardItem__vote_average">{{vote_average}}</span> / <span
             class="cardItem__vote_count"
           >{{vote_count}}</span
           >
@@ -34,8 +35,9 @@
         </p>
         <div class="history-btn-wrapper">
           <button class="btn-watched" data-action="{{id}}">ADD TO WATCHED</button>
-          <button class="btn-favorite" data-action="{{id}}">ADD TO QUEUE</button>
+          <button class="btn-watched" data-action="{{id}}">ADD TO QUEUE</button>
+        </div>
         </div>
       </div>
       <!-- <div class="modal-close-btn">Close</div> -->
-    </div>
+     {{!-- </div> --}}
