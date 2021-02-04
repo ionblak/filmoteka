@@ -46,7 +46,13 @@ export const getMovieById = id => {
   return axios.get(url).then(res => res.data);
 };
 
-// ------------
+  
+  export const getMovieByIdArray = (idArray) => {
+  const promiseRes = new Promise((resolve, reject) => {
+    resolve(Promise.all(idArray.map(item => getMovieById(item))).then(data => data));
+  });
+  return promiseRes; 
+}
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
