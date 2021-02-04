@@ -12,11 +12,8 @@ const refs = {
   cardFilm: document.querySelector('.card__colection'),
   blockModalFilm: document.querySelector('.modal-card'),
   errorNotafication: document.querySelector('.film-name-error'),
-  lightboxDiv: document.querySelector(".backdrop_close"),
-  mainConteiner: document.querySelector(".main-conteiner"),
 
-
-
+  mainConteiner: document.querySelector('.main-conteiner'),
 };
 
 export default refs;

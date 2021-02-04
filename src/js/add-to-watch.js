@@ -5,7 +5,8 @@ const favorSucsess = 'Movies has been added to watched';
 const favorWarn = 'Movie has already been added to watched';
 
 export function addWatchedFilm() {
-  refs.lightboxDiv.addEventListener('click', handlerAddToLs);
+  const lightboxDiv = document.querySelector('.container_modal');
+  lightboxDiv.addEventListener('click', handlerAddToLs);
 }
 function handlerAddToLs(e) {
   if (e.target.classList.contains('btn-watched')) {

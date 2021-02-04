@@ -1,14 +1,22 @@
 import itemsTemplate from '../templates/cardsTemplate.hbs';
+import itemsTemplateMyLibrary from '../templates/cardsTemplatesMyLibrary.hbs';
 import modalCard from '../templates/modalCard.hbs';
 import { addWatchedFilm } from './add-to-watch.js';
 import { addFavoriteFilm } from './add-to-favorite.js';
-// import * as basicLightbox from 'basiclightbox';
-// import 'basiclightbox/dist/basicLightbox.min.css';
+import * as basicLightbox from 'basiclightbox';
+import 'basiclightbox/dist/basicLightbox.min.css';
 import refs from './refs';
+
 export default function createCards(data) {
   // перед созданием карточек чистим filmsList
   refs.filmsListHome.innerHTML = '';
-  const markup = itemsTemplate(data);
+  let markup = '';
+  if (location.pathname === '/my-lib.html') {
+    markup = itemsTemplateMyLibrary(data);
+  } else {
+    markup = itemsTemplate(data);
+  }
+
   refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
   refs.cardFilm.addEventListener('click', openModal);
 
@@ -20,39 +28,41 @@ export default function createCards(data) {
     }
     // refs.filmsListHome.innerHTML = '';
     const arrayIndex = currentCard.dataset.index;
-    refs.lightboxDiv.classList.add('is-open');
-    refs.mainConteiner.classList.add('backdrop_close');
+    // refs.lightboxDiv.classList.add('is-open');
+    // refs.mainConteiner.classList.add('backdrop_close');
 
     const markup = modalCard(data[arrayIndex]);
-    refs.lightboxDiv.innerHTML = markup;
+    // refs.lightboxDiv.innerHTML = markup;
+    const instance = basicLightbox.create(markup);
+    instance.show();
 
     addWatchedFilm();
     addFavoriteFilm();
 
-    window.addEventListener('keydown', onEscapePress);
+    // window.addEventListener('keydown', onEscapePress);
     // document.addEventListener('click', closeModal);
   }
 
-  refs.lightboxDiv.addEventListener('click', events => {
-    if (events.target === events.currentTarget) {
-      onCloseModal();
-    }
-  });
+  // refs.lightboxDiv.addEventListener('click', events => {
+  //   if (events.target === events.currentTarget) {
+  //     onCloseModal();
+  //   }
+  // });
 
-  function onCloseModal() {
-    // refs.filmsListHome.innerHTML = '';
-    const markup = itemsTemplate(data);
-    // refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
-    window.removeEventListener('keydown', onEscapePress);
-    refs.lightboxDiv.classList.remove('is-open');
-    refs.mainConteiner.classList.remove('backdrop_close');
-  }
+  // function onCloseModal() {
+  //   // refs.filmsListHome.innerHTML = '';
+  //   // const markup = itemsTemplate(data);
+  //   // refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
+  //   window.removeEventListener('keydown', onEscapePress);
+  //   refs.lightboxDiv.classList.remove('is-open');
+  //   refs.mainConteiner.classList.remove('backdrop_close');
+  // }
 
-  function onEscapePress(event) {
-    if (event.code === 'Escape') {
-      onCloseModal();
-    }
-  }
+  // function onEscapePress(event) {
+  //   if (event.code === 'Escape') {
+  //     onCloseModal();
+  //   }
+  // }
 }
 
 // function closeModalHandler(e) {

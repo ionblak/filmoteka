@@ -1,7 +1,8 @@
-import itemsTemplate from '../templates/cardsTemplate.hbs';
+// import itemsTemplate from '../templates/cardsTemplate.hbs';
 const { default: refs } = require('./refs');
-import { getMovieById } from '../js/apiServices';
+// import { getMovieById } from '../js/apiServices';
 import { getMovieByIdArray } from '../js/apiServices';
+import createCards from './createCards';
 
 function markQueue(lokalStorage) {
   const queueListId = localStorage.getItem(lokalStorage);
@@ -9,7 +10,10 @@ function markQueue(lokalStorage) {
   const idListQueue = queueList.id;
   // for (const id of idListQueue) {
   // getMovieById(id);
-  getMovieByIdArray(idListQueue).then(data => console.log(data));
+  getMovieByIdArray(idListQueue).then(data => {
+    console.log(data);
+    createCards(data);
+  });
 
   // export default function createCards(data) {
   //   // перед созданием карточек чистим filmsList
@@ -17,15 +21,11 @@ function markQueue(lokalStorage) {
   //   const markup = itemsTemplate(data);
   //   refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
   // }
-  
 }
 let lokalStorageValue = 'favorite'; //'watched'
-if (location.pathname === '/myLib.html') {
+if (location.pathname === '/my-lib.html') {
   markQueue(lokalStorageValue);
 }
-
-
-
 
 // export default function createCards(data) {
 //   // перед созданием карточек чистим filmsList

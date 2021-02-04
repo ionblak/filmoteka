@@ -2,7 +2,8 @@ import refs from './refs.js';
 import { renderNotyfi, renderNotyfiWarn, resetNotify } from './notification.js';
 
 export function addFavoriteFilm() {
-  refs.lightboxDiv.addEventListener('click', handlerAddToLs);
+  const lightboxDiv = document.querySelector('.container_modal');
+  lightboxDiv.addEventListener('click', handlerAddToLs);
 }
 
 const favorSucsess = 'Movies has been added to favorite';
