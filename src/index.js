@@ -50,15 +50,19 @@ function getHomePage() {
 function searchFilm(event) {
   spinner.spin(refs.target);
   event.preventDefault();
-  dataProccessing.keywordSearch(refs.searchInput.value).then(data => {
-    createCards(data);
-    console.log(data);
-
-    //     createCards(data);
-    // toPaginate(data);
-
-    spinner.stop();
-  });
+  refs.errorNotafication.classList.add('is-hidden');
+  dataProccessing
+    .keywordSearch(refs.searchInput.value)
+    .then(data => {
+      createCards(data);
+      spinner.stop();
+      console.log('data.length', data.length);
+      if (data.length === 0) throw new Error('Whoops!');
+    })
+    .catch(function (e) {
+      console.log('catch e', e);
+      refs.errorNotafication.classList.remove('is-hidden');
+    });
 }
 
 export { dataProccessing };
