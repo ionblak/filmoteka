@@ -12,6 +12,7 @@ import debounce from 'lodash.debounce';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
 import './images/1fe4275159989b1b96c166aec797b5cb.jpg';
+import './js/notification.js';
 
 import toPaginateWithApi from './js/toPaginateWithApi';
 
@@ -19,7 +20,7 @@ import toPaginateWithApi from './js/toPaginateWithApi';
 
 const dataProccessing = new DataProccessing();
 
-// для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/myLib.html
+// для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/my-lib.html
 if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
   refs.searchForm.addEventListener('submit', searchFilm);
