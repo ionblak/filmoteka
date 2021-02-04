@@ -40,6 +40,10 @@ body {
   background-color: transparent;
 }
 
+.is-hidden {
+  opacity: 0;
+}
+
 .conteiner {
   margin: 0 auto;
   min-width: 320px;
