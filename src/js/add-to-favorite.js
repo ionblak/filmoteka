@@ -1,13 +1,15 @@
 import refs from './refs.js';
 import { renderNotyfi, renderNotyfiWarn, resetNotify } from './notification.js';
+import { changeBtnText } from './btn-ctrl';
 
 export function addFavoriteFilm() {
+  idMovieInList();
   const lightboxDiv = document.querySelector('.container_modal');
   lightboxDiv.addEventListener('click', handlerAddToLs);
 }
 
 const favorSucsess = 'Movies has been added to favorite';
-const favorWarn = 'Movie has already been added to favorite';
+const favorWarn = 'Movie has been removed from favorite';
 
 function handlerAddToLs(e) {
   if (e.target.classList.contains('btn-favorite')) {
@@ -40,7 +42,12 @@ function getUniqueId({ id }, idEl, e) {
   if (id.includes(idEl)) {
     resetNotify();
     renderNotyfiWarn(favorWarn);
-    console.log('Такой фильм уже добавлен в список избранных');
+    if (id.indexOf(idEl) !== -1) id.splice(id.indexOf(idEl), 1);
+    const obj = {
+      id: id,
+    };
+    changeBtnText('favorite', 'add');
+    updLS(obj);
     return;
   }
   resetNotify();
@@ -48,6 +55,7 @@ function getUniqueId({ id }, idEl, e) {
   const parseObj = getObject();
   parseObj.id.push(idEl);
   pushToLs(parseObj);
+  changeBtnText('favorite', 'remove');
 }
 
 // Забирает данные с LS
@@ -61,6 +69,27 @@ function getObject() {
 function pushToLs(obj) {
   const str = JSON.stringify(obj);
   localStorage.setItem('favorite', str);
+}
+
+// Обновляет LS
+function updLS(obj) {
+  localStorage.removeItem('favorite');
+  const str = JSON.stringify(obj);
+  localStorage.setItem('favorite', str);
+}
+
+function idMovieInList() {
+  const addToListBtnRef = document.querySelector('.btn-favorite');
+  if (isIDAlreadyInList(addToListBtnRef.dataset.action)) changeBtnText('favorite', 'remove')
+  else changeBtnText('favorite', 'add');
+
+  }
+
+// Проверить объект уже в списке
+function isIDAlreadyInList(id) {
+  const data = getObject();
+  if (data !== null && data.id.indexOf(id) !== -1) return true;
+ return false;
 }
 // Пример запроса на backend по ID для дальнейшего рендеринга
 

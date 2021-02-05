@@ -1,12 +1,16 @@
 import { renderNotyfi, renderNotyfiWarn, resetNotify } from './notification.js';
 import refs from './refs.js';
+import { changeBtnText } from './btn-ctrl';
 
 const favorSucsess = 'Movies has been added to watched';
-const favorWarn = 'Movie has already been added to watched';
+const favorWarn = 'Movie has been removed from watched';
 
 export function addWatchedFilm() {
+  idMovieInList();
   const lightboxDiv = document.querySelector('.container_modal');
   lightboxDiv.addEventListener('click', handlerAddToLs);
+  
+
 }
 function handlerAddToLs(e) {
   if (e.target.classList.contains('btn-watched')) {
@@ -40,15 +44,20 @@ function getUniqueId({ id }, idEl) {
   if (id.includes(idEl)) {
     resetNotify();
     renderNotyfiWarn(favorWarn);
-    console.log('Такой фильм уже добавлен в список просмотренных');
+    if (id.indexOf(idEl) !== -1) id.splice(id.indexOf(idEl), 1);
+    const obj = {
+      id: id,
+    };
+    changeBtnText('watched', 'add');
+    updLS(obj);
     return;
   }
-
   resetNotify();
   renderNotyfi(favorSucsess);
   const parseObj = getObject();
   parseObj.id.push(idEl);
   pushToLs(parseObj);
+  changeBtnText('watched', 'remove');
 }
 
 // Забирает данные с LS
@@ -63,6 +72,28 @@ function pushToLs(obj) {
   const str = JSON.stringify(obj);
   localStorage.setItem('watched', str);
 }
+
+// Обновляет LS
+function updLS(obj) {
+  localStorage.removeItem('watched');
+  const str = JSON.stringify(obj);
+  localStorage.setItem('watched', str);
+}
+
+function idMovieInList() {
+  const addToListBtnRef = document.querySelector('.btn-watched');
+  if (isIDAlreadyInList(addToListBtnRef.dataset.action)) changeBtnText('watched', 'remove')
+  else changeBtnText('watched', 'add');
+
+  }
+
+// Проверить объект уже в списке
+function isIDAlreadyInList(id) {
+  const data = getObject();
+  if (data !== null) if (data.id.indexOf(id) !== -1) return true;
+ return false;
+}
+
 // Пример запроса на backend по ID для дальнейшего рендеринга
 
 //  function getMovieByID( id) {
