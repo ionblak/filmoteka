@@ -95,6 +95,9 @@ img.image {
   color: #000000;
   border-radius: 5px;
   outline: none;
+  border: 1px solid #000000;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 .btn-watched:hover,
 .btn-watched:focus,
@@ -183,4 +186,15 @@ img.image {
     margin: auto;
     padding-bottom: 60px;
   }
+}
+
+
+
+span {
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+span.fade {
+  opacity: 1;
 }

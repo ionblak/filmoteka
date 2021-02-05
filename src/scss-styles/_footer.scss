@@ -19,6 +19,30 @@
   cursor: pointer;
 }
 
+.up-button-container{
+ display: flex;
+ justify-content: center;
+padding-bottom: 20px;
+}
+
+.up-button{
+  width: 75px;
+  height: 75px;
+  border: none;
+  border-radius: 40px;
+  background: url(/images/circle-up.svg);
+  background-repeat: no-repeat;
+  background-size: 75px 75px;
+  transition: box-shadow 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover{
+    cursor: pointer;
+    box-shadow: 7px 6px 12px -4px rgba(108,108,108,0.74);
+  }
+  &:focus{
+    outline: none;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .coperate-text {
     margin-top: 0;
@@ -46,4 +70,16 @@
     max-width: 1600px;
     margin: auto;
   }
+  .up-button-container{
+     max-width: 1600px;
+     margin: auto;
+  }
 }
+
+@media screen and (min-width: 1024px) {
+  .up-button-container{
+     justify-content: flex-end;
+     padding-right: 50px;
+  }
+}
+
