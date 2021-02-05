@@ -26,6 +26,7 @@ module.exports = env => ({
               name: '[path][name].[ext]',
               limit: 8192,
               esModule: false,
+              publicPath: '/',
             },
           },
           'img-loader',
@@ -59,11 +60,11 @@ module.exports = env => ({
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: ['html-loader'],
       },
       {
         test: /\.hbs$/,
-        use: 'handlebars-loader',
+        use: ['handlebars-loader'],
       },
     ],
   },

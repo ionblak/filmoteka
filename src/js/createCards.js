@@ -48,7 +48,7 @@ export default function createCards(data) {
 
   function onCloseModal() {
     // refs.filmsListHome.innerHTML = '';
-    const markup = itemsTemplate(data);
+    // const markup = itemsTemplate(data);
     // refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
