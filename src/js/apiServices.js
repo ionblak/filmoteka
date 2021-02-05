@@ -47,18 +47,19 @@ export const getMovieById = id => {
 };
 
   // 
-  export const getMoviesByIdArray = (idArray) => {
-  const promiseRes = new Promise((resolve, reject) => {
-    resolve(Promise.all(idArray.map(item => getMovieById(item))).then(data => {
+  export const getMovieByIdArray = idArray => {
+    const promiseRes = new Promise((resolve, reject) => {
+      resolve(
+        Promise.all(idArray.map(item => getMovieById(item))).then(data => {
+          genreIdsConverting(data);
+          releaseDataCut(data);
 
-      genreIdsConverting(data);
-      releaseDataCut(data);
-      
-      return data;
-    }));
-  });
-  return promiseRes; 
-}
+          return data;
+        }),
+      );
+    });
+    return promiseRes;
+  };
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
