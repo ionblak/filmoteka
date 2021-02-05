@@ -11,6 +11,7 @@ import debounce from 'lodash.debounce';
 import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
 import './js/notification.js';
+import './js/our-students.js';
 
 // import toPaginateWithApi from './js/toPaginateWithApi';
 import { paginateObj } from './js/toPaginateWithApi';
