@@ -28,7 +28,11 @@ export default function createCards(data) {
     // refs.filmsListHome.innerHTML = '';
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
-    refs.mainConteiner.classList.add('backdrop_close');
+    refs.lightboxDiv.classList.add('lightbox');
+   
+
+    // refs.lightboxDiv.classList.remove('close');
+    // refs.mainConteiner.classList.add('backdrop_close');
 
     const markup = modalCard(data[arrayIndex]);
     refs.lightboxDiv.innerHTML = markup;
@@ -38,6 +42,7 @@ export default function createCards(data) {
 
     window.addEventListener('keydown', onEscapePress);
     // document.addEventListener('click', closeModal);
+    
   }
 
   refs.lightboxDiv.addEventListener('click', events => {
@@ -46,13 +51,17 @@ export default function createCards(data) {
     }
   });
 
-  function onCloseModal() {
+   
+    function onCloseModal() {
+    
     // refs.filmsListHome.innerHTML = '';
-    const markup = itemsTemplate(data);
+    // const markup = itemsTemplate(data);
     // refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
-    refs.mainConteiner.classList.remove('backdrop_close');
+    // refs.mainConteiner.classList.remove('backdrop_close');
+    refs.lightboxDiv.classList.remove('lightbox');
+    refs.lightboxDiv.classList.add('close');
   }
 
   function onEscapePress(event) {
@@ -60,25 +69,8 @@ export default function createCards(data) {
       onCloseModal();
     }
   }
+
+  
 }
 
-// function closeModalHandler(e) {
-//   // if (e.code === 'Escape') {
-//     refs.filmsListHome.innerHTML = '';
-//     const markup = itemsTemplate(data);
-//     refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
-//     window.removeEventListener('keydown', closeModalHandler);
-//     refs.mainConteiner.classList.remove("backdrop_close");
-//     refs.lightboxDiv.classList.remove("is-open");
-//   // }
 
-// }
-
-// function closeModal(e) {
-//   if (e.target !== refs.blockModalFilm) {
-//     refs.filmsListHome.innerHTML = '';
-//     const markup = itemsTemplate(data);
-//     refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
-//     window.removeEventListener('keydown', closeModalHandler);
-//   }
-// }

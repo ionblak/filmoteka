@@ -14,6 +14,8 @@ const refs = {
   errorNotafication: document.querySelector('.film-name-error'),
   lightboxDiv: document.querySelector('.backdrop_close'),
   mainConteiner: document.querySelector('.main-conteiner'),
+  butClose:document.querySelector('button[data-action="close-lightbox"]')
+  
 };
 
 export default refs;
