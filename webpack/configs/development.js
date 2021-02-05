@@ -23,8 +23,8 @@ module.exports = env => ({
       template: './index.html',
     }),
     new HtmlWebpackPlugin({
-      filename: 'myLib.html',
-      template: './myLib.html',
+      filename: 'my-lib.html',
+      template: './my-lib.html',
     }),
   ],
   devServer: {

@@ -46,7 +46,20 @@ export const getMovieById = id => {
   return axios.get(url).then(res => res.data);
 };
 
-// ------------
+  // 
+  export const getMovieByIdArray = idArray => {
+    const promiseRes = new Promise((resolve, reject) => {
+      resolve(
+        Promise.all(idArray.map(item => getMovieById(item))).then(data => {
+          genreIdsConverting(data);
+          releaseDataCut(data);
+
+          return data;
+        }),
+      );
+    });
+    return promiseRes;
+  };
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -68,11 +81,16 @@ function getGenreById(id) {
 }
 
 // ------ Функции для обработки объектов с инфо о фильмах от API ------
-function genreIdsConverting(filteringArray) {
-  filteringArray.forEach(
+function genreIdsConverting(data) {
+  try {
+    data.forEach(
     item =>
       (item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(', ')),
   );
+  } catch {
+    return data.forEach(item => (item.genres = Array.from(item.genres.map(item => item.name)).join(', ')));
+  }
+  
 }
 
 function releaseDataCut(filteringArray) {

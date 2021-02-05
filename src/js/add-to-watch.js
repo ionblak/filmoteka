@@ -1,10 +1,16 @@
+import { renderNotyfi, renderNotyfiWarn, resetNotify } from './notification.js';
 import refs from './refs.js';
 
+const favorSucsess = 'Movies has been added to watched';
+const favorWarn = 'Movie has already been added to watched';
+
 export function addWatchedFilm() {
-  refs.lightboxDiv.addEventListener('click', handlerAddToLs);
+  const lightboxDiv = document.querySelector('.container_modal');
+  lightboxDiv.addEventListener('click', handlerAddToLs);
 }
 function handlerAddToLs(e) {
   if (e.target.classList.contains('btn-watched')) {
+    console.log('watched');
     const id = e.target.dataset.action;
     getSaveData(id);
   }
@@ -18,6 +24,8 @@ function getSaveData(idEl) {
 
   // Если данных нет, то запушить в новый объект с массивом первый ID.
   if (parseObj === null) {
+    resetNotify();
+    renderNotyfi(favorSucsess);
     obj.id.push(idEl);
     pushToLs(obj);
     return;
@@ -30,9 +38,14 @@ function getSaveData(idEl) {
 // Проверка при клике на кнопку, если добавляемый фильм уже есть в массиве.
 function getUniqueId({ id }, idEl) {
   if (id.includes(idEl)) {
+    resetNotify();
+    renderNotyfiWarn(favorWarn);
     console.log('Такой фильм уже добавлен в список просмотренных');
     return;
   }
+
+  resetNotify();
+  renderNotyfi(favorSucsess);
   const parseObj = getObject();
   parseObj.id.push(idEl);
   pushToLs(parseObj);

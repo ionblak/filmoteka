@@ -28,7 +28,7 @@
               <a href="./index.html" class="link focus">Home</a>
             </li>
             <li>
-              <a class="link" href="./myLib.html">my library</a>
+              <a class="link" href="./my-lib.html">my library</a>
             </li>
           </ul>
         </nav>
@@ -38,12 +38,15 @@
             type="text"
             name="query"
             autocomplete="on"
-            placeholder="Поиск фильмов"
+            placeholder="Search film"
           />
 
           <svg class="search-icon">
             <use href="./images/sprite.svg#search"></use>
           </svg>
+          <p class="film-name-error is-hidden">
+            Search result not successful. Enter the correct movie name.
+          </p>
         </form>
       </div>
     </header>
@@ -52,10 +55,7 @@
         <ul class="film-list film-list__home card__colection"></ul>
         <div id="pagination-container"></div>
       </div>
-      <div class="backdrop_close">
-        </div>
-
-
+      <div class="backdrop_close"></div>
     </main>
     <footer class="footer">
       <div class="footer-container">
@@ -72,7 +72,5 @@
       </div>
     </footer>
     <!-- SINER -->
-    <!-- Кнопки созданы для теста работы добавления в списоск просмотренных, 
-    когда будут сверстаны нужные кнопки - перепривяжу -->
   </body>
 </html>

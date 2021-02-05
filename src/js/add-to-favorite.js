@@ -1,16 +1,22 @@
 import refs from './refs.js';
+import { renderNotyfi, renderNotyfiWarn, resetNotify } from './notification.js';
 
 export function addFavoriteFilm() {
-  refs.lightboxDiv.addEventListener('click', handlerAddToLs);
+  const lightboxDiv = document.querySelector('.container_modal');
+  lightboxDiv.addEventListener('click', handlerAddToLs);
 }
+
+const favorSucsess = 'Movies has been added to favorite';
+const favorWarn = 'Movie has already been added to favorite';
+
 function handlerAddToLs(e) {
   if (e.target.classList.contains('btn-favorite')) {
     const id = e.target.dataset.action;
-    getSaveData(id);
+    getSaveData(id, e);
   }
 }
 
-function getSaveData(idEl) {
+function getSaveData(idEl, e) {
   const parseObj = getObject();
   const obj = {
     id: [],
@@ -18,21 +24,27 @@ function getSaveData(idEl) {
 
   // Если данных нет, то запушить в новый объект с массивом первый ID.
   if (parseObj === null) {
+    resetNotify();
+    renderNotyfi(favorSucsess);
     obj.id.push(idEl);
     pushToLs(obj);
     return;
   }
 
   // Если данные есть, то проверить на уникальность добавляемого элемента.
-  getUniqueId(parseObj, idEl);
+  getUniqueId(parseObj, idEl, e);
 }
 
 // Проверка при клике на кнопку, если добавляемый фильм уже есть в массиве.
-function getUniqueId({ id }, idEl) {
+function getUniqueId({ id }, idEl, e) {
   if (id.includes(idEl)) {
-    console.log('Такой фильм уже добавлен в список просмотренных');
+    resetNotify();
+    renderNotyfiWarn(favorWarn);
+    console.log('Такой фильм уже добавлен в список избранных');
     return;
   }
+  resetNotify();
+  renderNotyfi(favorSucsess);
   const parseObj = getObject();
   parseObj.id.push(idEl);
   pushToLs(parseObj);

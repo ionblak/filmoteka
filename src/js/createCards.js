@@ -1,4 +1,5 @@
 import itemsTemplate from '../templates/cardsTemplate.hbs';
+import itemTemplateMyLibrary from '../templates/cardsTemplatesMyLibrary.hbs';
 import modalCard from '../templates/modalCard.hbs';
 import { addWatchedFilm } from './add-to-watch.js';
 import { addFavoriteFilm } from './add-to-favorite.js';
@@ -8,7 +9,13 @@ import refs from './refs';
 export default function createCards(data) {
   // перед созданием карточек чистим filmsList
   refs.filmsListHome.innerHTML = '';
-  const markup = itemsTemplate(data);
+  let markup = '';
+  if (location.pathname === '/my-lib.html') {
+    markup = itemTemplateMyLibrary(data);
+  } else {
+    markup = itemsTemplate(data);
+  }
+
   refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
   refs.cardFilm.addEventListener('click', openModal);
 
