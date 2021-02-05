@@ -121,6 +121,25 @@ export const markupStudents = img =>
         
           </div>
         </li>
+        <li class="slider-item">
+          <div class="picture-wrapper">
+
+              <img
+                class="sim-slider-element"
+
+                src="./images/students/alexandr.png"
+                alt="фото клиента"
+              />
+
+          </div>
+          <p class="slider-item-name">Alexandr Shalimov</p>
+          <div class="wrapper">
+            <p class="slider-text">
+              Если у вас есть проблема - он её решит!)) </br> Warrior
+            </p>
+        
+          </div>
+        </li>
        
          
       </ul>
@@ -137,6 +156,7 @@ export const markupStudents = img =>
         <li class="slider-dots_item" data-onclick="4"></li>
         <li class="slider-dots_item" data-onclick="5"></li>
         <li class="slider-dots_item" data-onclick="6"></li>
+        <li class="slider-dots_item" data-onclick="7"></li>
       </ul>
     </div>
   </div>`;
