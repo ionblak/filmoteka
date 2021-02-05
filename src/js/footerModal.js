@@ -70,6 +70,12 @@ const showModalFooter = function (event) {
         } else if (e.target.dataset.onclick === '5') {
           currentSlide(5);
           sliderStart(5);
+        } else if (e.target.dataset.onclick === '6') {
+          currentSlide(6);
+          sliderStart(6);
+        } else if (e.target.dataset.onclick === '7') {
+          currentSlide(7);
+          sliderStart(7);
         }
       }
     }
@@ -123,7 +129,7 @@ const showModalFooter = function (event) {
       }
 
       intervalId = setInterval(() => {
-        if (numActive !== 6) {
+        if (numActive !== 7) {
           numActive++;
         } else {
           numActive = 1;
