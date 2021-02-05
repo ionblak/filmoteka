@@ -20,6 +20,7 @@ export default function createCards(data) {
   refs.cardFilm.addEventListener('click', openModal);
 
   function openModal(e) {
+    const backdropModal = document.querySelector('.backdrop');
     e.preventDefault();
     const currentCard = e.target;
     if (currentCard.nodeName !== 'IMG') {
@@ -29,14 +30,20 @@ export default function createCards(data) {
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
     refs.mainConteiner.classList.add('backdrop_close');
+    refs.backdrop.classList.add('is-opened');
+    backdropModal.classList.add('is-open');
 
     const markup = modalCard(data[arrayIndex]);
     refs.lightboxDiv.innerHTML = markup;
 
     addWatchedFilm();
     addFavoriteFilm();
+    const closeBtnModal = document.querySelector('.close-btn-modal');
 
     window.addEventListener('keydown', onEscapePress);
+    refs.backdrop.addEventListener('click', hanlderCloseModal);
+    closeBtnModal.addEventListener('click', handlerBtnCloseModal);
+
     // document.addEventListener('click', closeModal);
   }
 
@@ -45,7 +52,17 @@ export default function createCards(data) {
       onCloseModal();
     }
   });
+  function hanlderCloseModal(e) {
+    if (e.target.classList.contains('is-opened')) {
+      onCloseModal();
+    }
+  }
 
+  function handlerBtnCloseModal(e) {
+    if (e.target.nodeName === 'I') {
+      onCloseModal();
+    }
+  }
   function onCloseModal() {
     // refs.filmsListHome.innerHTML = '';
     // const markup = itemsTemplate(data);
@@ -53,6 +70,7 @@ export default function createCards(data) {
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
     refs.mainConteiner.classList.remove('backdrop_close');
+    refs.backdrop.classList.remove('is-opened');
   }
 
   function onEscapePress(event) {
@@ -67,8 +85,8 @@ export default function createCards(data) {
 //     refs.filmsListHome.innerHTML = '';
 //     const markup = itemsTemplate(data);
 //     refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
-//     window.removeEventListener('keydown', closeModalHandler);
-//     refs.mainConteiner.classList.remove("backdrop_close");
+// window.removeEventListener('keydown', closeModalHandler);
+// refs.mainConteiner.classList.remove('backdrop_close');
 //     refs.lightboxDiv.classList.remove("is-open");
 //   // }
 

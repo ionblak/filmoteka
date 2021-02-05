@@ -16,6 +16,7 @@ const refs = {
   mainConteiner: document.querySelector('.main-conteiner'),
   libraryWatchedBtn: document.querySelector('.lib-watched-js'),
   libraryQueueBtn: document.querySelector('.lib-queue-js'),
+  backdrop: document.querySelector('.backdrop-background'),
 };
 
 export default refs;

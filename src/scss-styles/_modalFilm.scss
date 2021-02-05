@@ -113,8 +113,8 @@ img.image {
 }
 
 .backdrop_close {
-  opacity: 0;
-  display: none;
+  opacity: 1;
+  // display: none;
   padding-top: 60px;
 }
 .backdrop_close.is-open {
@@ -127,7 +127,39 @@ img.image {
   background-color: #e5e5e5;
   display: block;
 }
+.backdrop {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  // opacity: 1;
+  // display: none;
+  padding: 60px;
+  transform: translate(-50%, -50%);
+}
 
+.backdrop-background.is-opened {
+  position: fixed;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // z-index: 100;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: background-color, opacity 250ms ease-in-out;
+}
+.backdrop-background {
+  opacity: 0;
+}
+.close-btn-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .container_modal {
     max-width: 280px;
@@ -180,7 +212,7 @@ img.image {
     padding-left: 30px;
   }
   .backdrop_close {
-    max-width: 1600px;
+    // max-width: 1600px;
     margin: auto;
     padding-bottom: 60px;
   }
