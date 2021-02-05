@@ -15,10 +15,32 @@ function markQueue(lokalStorage) {
   const queueListId = localStorage.getItem(lokalStorage);
   const queueList = JSON.parse(queueListId);
   const idListQueue = queueList.id;
+
     getMovieByIdArray(idListQueue).then(data => {
       createCards(data);
     });
   
+
+  // for (const id of idListQueue) {
+  // getMovieById(id);
+//   getMoviesByIdArray(idListQueue)
+//     .then(data => {
+//       console.log(data);
+//       data.forEach(item => (item.vote_average = item.vote_average.toFixed(1)));
+//       return data;
+//     })
+//     .then(data => {
+//       console.log(data);
+//       createCards(data);
+//     });
+
+//   // export default function createCards(data) {
+//   //   // перед созданием карточек чистим filmsList
+//   //   refs.filmsListHome.innerHTML = '';
+//   //   const markup = itemsTemplate(data);
+//   //   refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
+//   // }
+
 }
 if (location.pathname === '/my-lib.html') {
   markQueue('favorite');
