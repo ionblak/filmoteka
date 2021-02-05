@@ -925,9 +925,9 @@ img.image {
 
 .slider-text {
   color: white;
-  font-size: 24px;
+  font-size: 18px;
   text-align: center;
-  line-height: 40px;
+  line-height: 30px;
   animation-name: fadeText;
   animation-duration: 3s;
 }
@@ -936,7 +936,7 @@ img.image {
   color: wheat;
   margin-bottom: 10px;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 24px;
   text-align: center;
 }
 
@@ -964,6 +964,14 @@ img.image {
   .sim-slider-element {
     width: 320px;
     height: 320px;
+  }
+  .slider-text {
+    font-size: 24px;
+    line-height: 40px;
+  }
+  .slider-item-name {
+    font-weight: 700;
+    font-size: 30px;
   }
 }
 /*# sourceMappingURL=main.css.map */
