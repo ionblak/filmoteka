@@ -25,15 +25,14 @@ export default function createCards(data) {
     if (currentCard.nodeName !== 'IMG') {
       return;
     }
-    // refs.filmsListHome.innerHTML = '';
+
+    
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
     refs.lightboxDiv.classList.add('lightbox');
    
 
-    // refs.lightboxDiv.classList.remove('close');
-    // refs.mainConteiner.classList.add('backdrop_close');
-
+   
     const markup = modalCard(data[arrayIndex]);
     refs.lightboxDiv.innerHTML = markup;
 
@@ -41,9 +40,14 @@ export default function createCards(data) {
     addFavoriteFilm();
 
     window.addEventListener('keydown', onEscapePress);
-    // document.addEventListener('click', closeModal);
     
+
+    
+    const butClose = document.querySelector('button[data-action="close-lightbox"]');
+    butClose.addEventListener('click',onCloseModal)
   }
+  
+ 
 
   refs.lightboxDiv.addEventListener('click', events => {
     if (events.target === events.currentTarget) {
@@ -54,14 +58,11 @@ export default function createCards(data) {
    
     function onCloseModal() {
     
-    // refs.filmsListHome.innerHTML = '';
-    // const markup = itemsTemplate(data);
-    // refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
-    // refs.mainConteiner.classList.remove('backdrop_close');
     refs.lightboxDiv.classList.remove('lightbox');
     refs.lightboxDiv.classList.add('close');
+   
   }
 
   function onEscapePress(event) {
