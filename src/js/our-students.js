@@ -65,6 +65,26 @@ export const markupStudents = img =>
 
         <li class="slider-item">
           <div class="picture-wrapper">
+
+              <img
+                class="sim-slider-element"
+
+                src="./images/students/liliia2.png"
+                alt="фото клиента"
+              />
+
+          </div>
+          <p class="slider-item-name">Liliia Pedorych</p>
+          <div class="wrapper">
+            <p class="slider-text">
+             Красота на страничке - обратитесь к ней!) </br> Warrior
+            </p>
+        
+          </div>
+        </li>
+
+        <li class="slider-item">
+          <div class="picture-wrapper">
         
               <img
                 class="sim-slider-element"

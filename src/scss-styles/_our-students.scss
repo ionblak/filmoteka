@@ -97,6 +97,11 @@
   width: 320px;
   height: 240px;
 }
+.item-element {
+  background-image: url(./images/students/liliia2.png);
+  width: 320px;
+  height: 240px;
+}
 .item-element-2 {
   background-image: url(./images/students/neliia.png);
   width: 320px;
@@ -118,8 +123,8 @@
   height: 240px;
 }
 .sim-slider-element {
-  width: 320px;
-  height: 320px;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
 }
 .basicLightbox__placeholder {
@@ -158,5 +163,11 @@
   }
   75% {
     opacity: 1;
+  }
+}
+@media screen and (min-width: 768px) {
+  .sim-slider-element {
+    width: 320px;
+    height: 320px;
   }
 }

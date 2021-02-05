@@ -123,7 +123,7 @@ const showModalFooter = function (event) {
       }
 
       intervalId = setInterval(() => {
-        if (numActive !== 5) {
+        if (numActive !== 6) {
           numActive++;
         } else {
           numActive = 1;
