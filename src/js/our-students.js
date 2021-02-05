@@ -136,6 +136,7 @@ export const markupStudents = img =>
         <li class="slider-dots_item" data-onclick="3"></li>
         <li class="slider-dots_item" data-onclick="4"></li>
         <li class="slider-dots_item" data-onclick="5"></li>
+        <li class="slider-dots_item" data-onclick="6"></li>
       </ul>
     </div>
   </div>`;
