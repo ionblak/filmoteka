@@ -29,7 +29,7 @@ export default function createCards(data) {
     
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
-    refs.lightboxDiv.classList.add('lightbox');
+    
    
 
    
@@ -60,8 +60,8 @@ export default function createCards(data) {
     
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
-    refs.lightboxDiv.classList.remove('lightbox');
-    refs.lightboxDiv.classList.add('close');
+    
+    
    
   }
 
