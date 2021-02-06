@@ -290,12 +290,13 @@ img.image {
 
 
 
-span {
+.btn-text {
   opacity: 0;
-  transition: all 0.4s ease;
-}
+  transition: all 0.45 cubic-bezier(0.79, 0.33, 0.14, 0.53);
 
-span.fade {
+  &.fade {
   opacity: 1;
 }
+}
+
 
