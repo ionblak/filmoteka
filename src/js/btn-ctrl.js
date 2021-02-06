@@ -12,7 +12,6 @@ export function checkWatchedBtn() {
 
 
 export function checkFavoriteBtn() {
-    console.log('Im here to check favorite btn');
   const addToListBtnRef = document.querySelector('.btn-favorite');
   if (isIDAlreadyInList('favorite', addToListBtnRef.dataset.action))
   {
