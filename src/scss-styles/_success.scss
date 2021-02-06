@@ -1,0 +1,93 @@
+svg.am_Success_Icon,
+svg.am_Error_Icon {
+  width: 40px; /* Размер иконок */
+  margin: auto auto;
+}
+.am_sdp_Header_Status {
+  color: #fff;
+  font-size: 140%;
+}
+
+svg.am_Error_Icon path,
+svg.am_Error_Icon polyline,
+svg.am_Error_Icon line {
+  fill: none;
+  stroke: rgb(105, 5, 5); /* Цвет иконок */
+  stroke-width: 30; /* Толщина линий */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+svg.am_Success_Icon path,
+svg.am_Success_Icon polyline,
+svg.am_Success_Icon line {
+  fill: none;
+  stroke: rgb(1, 196, 34); /* Цвет иконок */
+  stroke-width: 30; /* Толщина линий */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+svg.am_Success_Icon .am_SVG_circle,
+svg.am_Error_Icon .am_SVG_circle {
+  stroke-dasharray: 1460;
+  animation: am_SVG_circle 1s ease-in;
+}
+
+svg.am_Success_Icon .am_SVG_check {
+  stroke-dasharray: 630;
+  animation: am_SVG_check 1s ease-in;
+}
+
+svg.am_Error_Icon .am_SVG_error1 {
+  stroke-dasharray: 630;
+  animation: am_SVG_error1 2s ease-in;
+}
+svg.am_Error_Icon .am_SVG_error2 {
+  stroke-dasharray: 630;
+  animation: am_SVG_error2 2s ease-in;
+}
+
+.hidden-success {
+  display: none;
+}
+.success-btn {
+  pointer-events: none;
+  width: 40px;
+  height: 40px;
+}
+.delete-btn {
+  pointer-events: none;
+}
+@keyframes am_SVG_circle {
+  0%,
+  60% {
+    stroke-dashoffset: -1460;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes am_SVG_check {
+  0% {
+    stroke-dashoffset: 630;
+  }
+  40% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes am_SVG_error1 {
+  0% {
+    stroke-dashoffset: 630;
+  }
+  20% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes am_SVG_error2 {
+  0%,
+  20% {
+    stroke-dashoffset: 630;
+  }
+  40% {
+    stroke-dashoffset: 0;
+  }
+}
