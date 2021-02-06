@@ -26,7 +26,6 @@ module.exports = env => ({
               name: '[path][name].[ext]',
               limit: 8192,
               esModule: false,
-              publicPath: '/',
             },
           },
           'img-loader',

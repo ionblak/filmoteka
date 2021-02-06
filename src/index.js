@@ -67,9 +67,10 @@ window.addEventListener('scroll', debounce(() =>
   if (window.innerWidth > 1024) {
     if (window.scrollY > 900) refs.upButton.style.opacity = 1;
     else refs.upButton.style.opacity = 0
-  }
-}, 500));
-
+window.addEventListener(
+  'scroll',
+  debounce(() => {
+    if (window.innerWidth > 1024) {
 
 if (refs.upButton) {
   refs.upButton.addEventListener('click', event => {
