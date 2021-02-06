@@ -1,3 +1,13 @@
+@keyframes animation-open{
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes animation-out {
+  0%   { opacity: 1; }
+ 100% { opacity: 0; }
+}
+
 .image {
   display: block;
   height: 416px;
@@ -95,12 +105,12 @@ img.image {
   color: #000000;
   border-radius: 5px;
   outline: none;
-
+  background-color: #fff;
   border: 1px solid #000000;
   padding-left: 7px;
   padding-right: 7px;
-
   transition: 250ms ease-in-out;
+
 
 }
 .btn-watched:hover,
@@ -116,63 +126,152 @@ img.image {
 .container_modal {
   margin-left: auto;
   margin-right: auto;
+  position: absolute;
+  width: 100vw;
+  background-color: #fff;
+  padding-top: 60px;
+  border-radius: 10px;
+  box-shadow: 1px 4px 6px rgb(0 0 0 / 16%), 0px 4px 4px rgb(0 0 0 / 6%), 0px 1px 1px rgb(0 0 0 / 12%);
+  
 }
 
-.backdrop_close {
-  opacity: 0;
-  display: none;
-  padding-top: 60px;
+.close{
+  opacity: 1;
+  animation-name: animation-out;
+  animation-duration: 5000ms;
+
 }
+
+
+// .backdrop_close{
+//   opacity: 0;
+//   animation-name: animation-out;
+//   animation-duration: 5000ms;
+// }
+
+// .backdrop_close {
+
+// // display: none;
+// // display: flex;
+// //     align-items: center;
+// //     justify-content: center;
+// //     position: fixed;
+// //     top: 0;
+// //     left: 0;
+// //     width: 100vw;
+// //     height: 100vh;
+// animation-name: animation-out;
+// animation-duration: 1500ms;
+  
+// }
 .backdrop_close.is-open {
   opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-name: animation-open;
+  animation-duration: 1000ms;
+  
+    
+    
   // position: absolute;
-  // // top: 0;
+  // top: 0;
   // left: 0;
   // width: 100vw;
   // height: 100vh;
-  background-color: #e5e5e5;
-  display: block;
+  // background-color: #e5e5e5;
+  // display: block;
+}
+
+.lightbox{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    opacity: 1;
+    animation-name: animation-out;
+    animation-duration: 5000ms;
+   }
+
+
+.lightbox__button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  background-image: url("./images/icon-close.svg");
+  background-position: center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-color: transparent;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .container_modal {
-    max-width: 280px;
+    max-width: 320px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .cardItem__image {
     margin-bottom: 30px;
   }
-  .backdrop_close {
-    padding-top: 20px;
-    padding-bottom: 40px;
+  
+
+  .lightbox__button{
+
+    top: -9px;
+    right: -8px;
+    width: 40px;
+    height: 40px;
   }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .container_modal {
     display: flex;
-    max-width: 618px;
+    max-width: 768px;
+    padding-bottom: 98px;
+    padding-left: 75px;
+    padding-right: 75px;
   }
+
+
 
   .modal-card {
     display: flex;
     gap: 30px;
   }
-  // .image {
-  //   // width: 294px;
-  // }
+  
 
   .cardItem__wrapper {
     padding-left: 30px;
   }
-  .backdrop_close {
-    padding-bottom: 98px;
-  }
+  
 }
 
 @media screen and (min-width: 1024px) {
   .container_modal {
-    max-width: 874px;
+    max-width: 1024px;
     display: flex;
+    padding-bottom: 60px;
+    padding-left: 71px;
+    padding-right: 71px;
   }
   .modal-card {
     display: flex;
@@ -185,12 +284,9 @@ img.image {
   .cardItem__wrapper {
     padding-left: 30px;
   }
-  .backdrop_close {
-    max-width: 1600px;
-    margin: auto;
-    padding-bottom: 60px;
-  }
+ 
 }
+
 
 
 
@@ -202,3 +298,4 @@ span {
 span.fade {
   opacity: 1;
 }
+
