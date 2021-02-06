@@ -61,3 +61,9 @@ window.addEventListener(
   }, 1000),
   false,
 );
+
+refs.upButton.addEventListener('click', event => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+})})
