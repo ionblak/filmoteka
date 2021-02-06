@@ -2,7 +2,7 @@ import refs from './refs';
 import { getMovieByIdArray } from '../js/apiServices';
 import createCards from './createCards';
 
-function markQueue(lokalStorage) {
+export function markQueue(lokalStorage) {
   const queueListId = localStorage.getItem(lokalStorage);
   if (queueListId === null) {
     return;
@@ -12,6 +12,8 @@ function markQueue(lokalStorage) {
 
   getMovieByIdArray(idListQueue).then(data => {
     createCards(data);
+    if (data.length === 0) refs.upButton.style.opacity = 0;
+    else  refs.upButton.style.opacity = 1;
   });
 }
 // При deploy изменить на /filmoteka/my-lib.html
