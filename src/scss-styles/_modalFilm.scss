@@ -95,9 +95,13 @@ img.image {
   color: #000000;
   border-radius: 5px;
   outline: none;
+
   border: 1px solid #000000;
   padding-left: 7px;
   padding-right: 7px;
+
+  transition: 250ms ease-in-out;
+
 }
 .btn-watched:hover,
 .btn-watched:focus,
