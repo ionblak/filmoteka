@@ -725,6 +725,11 @@ import { paginateObj } from '../toPaginateWithApi';
           // After page button clicked
           self.callHook('afterPageOnClick', event, pageNumber);
 
+          window.scrollTo({
+              top: 200,
+              behavior: "smooth"
+          });
+
           if (!attributes.pageLink) return false;
         });
 
