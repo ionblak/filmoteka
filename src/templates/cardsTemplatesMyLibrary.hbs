@@ -1,8 +1,11 @@
 {{#each this}}
 <li class="film-list-item">
   <div class="film-card">
-    <img class="film-picture" data-index="{{@index}}" src="https://image.tmdb.org/t/p/w500{{poster_path}}"
-      alt="film card" />
+        {{#if poster_path}}
+  <img class="film-picture" data-index="{{@index}}" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="film card" />
+{{else}}
+<img  class="film-picture" data-index="{{@index}}" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png" alt="content photo">
+{{/if}}
   </div>
   <div class="film-info">
 

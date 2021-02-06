@@ -55,9 +55,10 @@ export default function createCards(data) {
     }
   });
 
-   
+
     function onCloseModal() {
     
+
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
     refs.lightboxDiv.classList.remove('lightbox');
