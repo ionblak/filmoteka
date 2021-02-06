@@ -59,11 +59,11 @@ module.exports = env => ({
       },
       {
         test: /\.html$/,
-        use: 'html-loader',
+        use: ['html-loader'],
       },
       {
         test: /\.hbs$/,
-        use: 'handlebars-loader',
+        use: ['handlebars-loader'],
       },
     ],
   },

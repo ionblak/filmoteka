@@ -1,17 +1,25 @@
-@keyframes animation-open{
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes animation-open {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes animation-out {
-  0%   { opacity: 1; }
- 100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .image {
   display: block;
   height: 416px;
-  
+  width: 280px;
 }
 img.image {
   width: unset;
@@ -24,7 +32,7 @@ img.image {
   color: rgb(0, 0, 0);
   margin-bottom: 20px;
   text-transform: uppercase;
-  white-space:normal;
+  white-space: normal;
 }
 
 .cardItem_text {
@@ -125,6 +133,10 @@ margin-bottom: 20px;
   border-radius: 5px;
   outline: none;
   background-color: #fff;
+  border: 1px solid #000000;
+  padding-left: 7px;
+  padding-right: 7px;
+  transition: 250ms ease-in-out;
 }
 .btn-watched:hover,
 .btn-watched:focus,
@@ -137,31 +149,28 @@ margin-bottom: 20px;
 }
 
 .container_modal {
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   position: absolute;
   width: 100vw;
   // height: 100vh;
   background-color: #fff;
   padding-top: 60px;
   border-radius: 10px;
-  box-shadow: 1px 4px 6px rgb(0 0 0 / 16%), 0px 4px 4px rgb(0 0 0 / 6%), 0px 1px 1px rgb(0 0 0 / 12%);
-  
+  box-shadow: 1px 4px 6px rgb(0 0 0 / 16%), 0px 4px 4px rgb(0 0 0 / 6%),
+    0px 1px 1px rgb(0 0 0 / 12%);
 }
 
-.close{
+.close {
   opacity: 1;
   animation-name: animation-out;
   animation-duration: 5000ms;
-
 }
 
-
-.backdrop_close{
-opacity: 0;
-display: none;
-
- }
+.backdrop_close {
+  opacity: 0;
+  display: none;
+  overflow-y: scroll;
+}
 
 // .backdrop_close {
 
@@ -176,12 +185,13 @@ display: none;
 // //     height: 100vh;
 // animation-name: animation-out;
 // animation-duration: 1500ms;
-  
+
 // }
 .backdrop_close.is-open {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.5);
   animation-name: animation-open;
+
   animation-duration: 500ms;
   
     display: flex;
@@ -195,6 +205,7 @@ display: none;
     
     
  
+
 }
 
 // .lightbox{
@@ -213,7 +224,6 @@ display: none;
 //  animation-duration: 5000ms;
 // }
 
-
 .lightbox__button {
   position: absolute;
   top: 8px;
@@ -229,20 +239,23 @@ display: none;
   border-radius: 50%;
   cursor: pointer;
   outline: none;
-  background-image: url("./images/icon-close.svg");
+  background-image: url('./images/icon-close.svg');
   background-position: center;
   background-size: 60%;
   background-repeat: no-repeat;
   background-color: transparent;
 
+
   // .cardItem__wrapper{
   //   width: unset;
 
   // }
+
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .container_modal {
+    margin-top: 430px;
     max-width: 320px;
     padding-top: 20px;
     padding-bottom: 40px;
@@ -252,10 +265,8 @@ display: none;
   .cardItem__image {
     margin-bottom: 30px;
   }
-  
 
-  .lightbox__button{
-
+  .lightbox__button {
     top: -9px;
     right: -8px;
     width: 40px;
@@ -275,20 +286,16 @@ display: none;
     padding-right: 75px;
   }
 
-
-
   .modal-card {
     display: flex;
     gap: 30px;
   }
-  
 
   .cardItem__wrapper {
     padding-left: 30px;
     // width: 294px;
     // width: unset;
   }
-  
 }
 
 @media screen and (min-width: 1024px) {
@@ -312,7 +319,13 @@ display: none;
     // width: 426px;
     // width: unset;
   }
- 
 }
 
+.btn-text {
+  opacity: 0;
+  transition: all 0.45 cubic-bezier(0.79, 0.33, 0.14, 0.53);
 
+  &.fade {
+    opacity: 1;
+  }
+}

@@ -4,7 +4,6 @@ import spinner from '../js/utils/spiner';
 // keywordSearch(keyword) - для поиска по сключевому слову
 // getPopular() - получить список популярных фильмов
 // getNextPage(page) - возвращает данные для страницы page
-// Пока другие методы не юзаем. оказывается приватные свойства это экспериментальная тема, и ничего не компилится
 
 const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
 
@@ -46,19 +45,20 @@ export const getMovieById = id => {
   return axios.get(url).then(res => res.data);
 };
 
-  // 
-  export const getMoviesByIdArray = (idArray) => {
+//
+export const getMovieByIdArray = idArray => {
   const promiseRes = new Promise((resolve, reject) => {
-    resolve(Promise.all(idArray.map(item => getMovieById(item))).then(data => {
+    resolve(
+      Promise.all(idArray.map(item => getMovieById(item))).then(data => {
+        genreIdsConverting(data);
+        releaseDataCut(data);
 
-      genreIdsConverting(data);
-      releaseDataCut(data);
-      
-      return data;
-    }));
+        return data;
+      }),
+    );
   });
-  return promiseRes; 
-}
+  return promiseRes;
+};
 
 // Константа кол-во фильмов на каждой странице от API
 const API_RESULTS_PER_PAGE = 20;
@@ -83,13 +83,19 @@ function getGenreById(id) {
 function genreIdsConverting(data) {
   try {
     data.forEach(
-    item =>
-      (item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(', ')),
-  );
+      item =>
+        (item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(
+          ', ',
+        )),
+    );
   } catch {
-    return data.forEach(item => (item.genres = Array.from(item.genres.map(item => item.name)).join(', ')));
+    return data.forEach(
+      item =>
+        (item.genres = Array.from(item.genres.map(item => item.name)).join(
+          ', ',
+        )),
+    );
   }
-  
 }
 
 function releaseDataCut(filteringArray) {

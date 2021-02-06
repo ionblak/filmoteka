@@ -1,10 +1,10 @@
- {{!-- <div class="modal-card">  --}}
+
    <div class="container_modal">
       <div class="cardItem__image">
             {{#if poster_path}}
   <img class="image" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="{{title}}" />
 {{else}}
-<img  class="image" src="../images/1fe4275159989b1b96c166aec797b5cb.jpg" alt="content photo">
+<img  class="image" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png" alt="content photo">
 {{/if}}
       </div>
 
@@ -68,15 +68,23 @@
         </p>
 
         <p class="cardItem__genre cardItem_text">
-          Genre<span class="cardItem__genreList">{{genre_ids}}</span>
-        </p> --}}
+
+          Genre
+          {{#if genre_ids }}
+          <span class="cardItem__genreList">{{genre_ids}}</span>
+          {{else}}
+          <span class="cardItem__genreList">{{genres}}</span>
+          {{/if}}
+
+        </p>
+
 
         <p class="cardItem__about">About</p>
         <p class="cardItem__description">{{overview}}
         </p>
         <div class="history-btn-wrapper">
-          <button class="btn-watched" data-action="{{id}}">ADD TO WATCHED</button>
-          <button class="btn-favorite" data-action="{{id}}">ADD TO QUEUE</button>
+          <button type="button" class="btn-watched" data-action="{{id}}">ADD TO WATCHED</button>
+          <button type="button" class="btn-favorite" data-action="{{id}}">ADD TO QUEUE</button>
         </div>
         </div>
         
@@ -89,5 +97,4 @@
        
               </div>
                  
-      <!-- <div class="modal-close-btn">Close</div> -->
-     {{!-- </div> --}}
+   

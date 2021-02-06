@@ -1,0 +1,186 @@
+/* Собственно сам слайдер */
+.slider {
+  // max-width: 80%;
+  position: relative;
+
+  height: 300px;
+  margin-bottom: 130px;
+  margin: auto;
+}
+/* Картинка мастабируется по отношению к родительскому элементу */
+.slider .item img {
+  object-fit: cover;
+  width: 100%;
+  // height: 300px;
+}
+
+/* Кнопки вперед и назад */
+.slider .prev,
+.slider .next {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+.slider .next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* При наведении на кнопки добавляем фон кнопок */
+
+.slider .prev:hover,
+.slider .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Заголовок слайда */
+.slideText {
+  position: absolute;
+  color: #fff;
+  font-size: 35px;
+  /* Выравнивание текста по горизонтали и по вертикали*/
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* Тень*/
+  text-shadow: 1px 1px 1px #000, 0 0 1em #000;
+}
+
+/* Кружочки */
+
+.slider-dots {
+  text-align: center;
+}
+.slider-dots_item {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 2px;
+  background-color: #ddd;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.slider-dots_item:hover {
+  background-color: #aaa;
+}
+
+/* Анимация слайдов */
+
+.slider .slider-item {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+.item-element {
+  background-image: url(./images/students/anton.png);
+  width: 320px;
+  height: 240px;
+}
+.item-element {
+  background-image: url(./images/students/liliia2.png);
+  width: 320px;
+  height: 240px;
+}
+.item-element-2 {
+  background-image: url(./images/students/neliia.png);
+  width: 320px;
+  height: 240px;
+}
+.item-element-2 {
+  background-image: url(./images/students/alexandr.png);
+  width: 320px;
+  height: 240px;
+}
+.item-element-3 {
+  background-image: url(./images/students/vlad.png);
+  width: 320px;
+  height: 240px;
+}
+.item-element-4 {
+  background-image: url(./images/students/ion.png);
+  width: 320px;
+  height: 240px;
+}
+.item-element-5 {
+  background-image: url(./images/students/olha.png);
+  width: 320px;
+  height: 240px;
+}
+.sim-slider-element {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+.basicLightbox__placeholder {
+  position: absolute;
+  top: 85px;
+}
+.slider-text {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  line-height: 30px;
+  animation-name: fadeText;
+  animation-duration: 3s;
+  // animation-delay: 1.5s;
+}
+.slider-item-name {
+  color: wheat;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+}
+.picture-wrapper {
+  margin-bottom: 30px;
+}
+.slider-list {
+  margin-bottom: 40px;
+}
+
+@keyframes fadeText {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+@media screen and (min-width: 768px) {
+  .sim-slider-element {
+    width: 320px;
+    height: 320px;
+  }
+  .slider-text {
+    font-size: 24px;
+    line-height: 40px;
+  }
+  .slider-item-name {
+    font-weight: 700;
+    font-size: 30px;
+  }
+}
