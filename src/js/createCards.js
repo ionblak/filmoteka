@@ -3,6 +3,7 @@ import itemTemplateMyLibrary from '../templates/cardsTemplatesMyLibrary.hbs';
 import modalCard from '../templates/modalCard.hbs';
 import { addWatchedFilm } from './add-to-watch.js';
 import { addFavoriteFilm } from './add-to-favorite.js';
+import { markQueue } from './myLibrary';
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/dist/basicLightbox.min.css';
 import refs from './refs';
@@ -56,9 +57,12 @@ export default function createCards(data) {
   });
 
 
-    function onCloseModal() {
-    
-
+  function onCloseModal() {
+    if (location.pathname === '/my-lib.html') {
+      if (refs.libraryWatchedBtn.classList.contains('is-active')) markQueue('watched');
+      else if (refs.libraryQueueBtn.classList.contains('is-active')) markQueue('favorite');
+    }
+      
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
     
