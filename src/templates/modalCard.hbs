@@ -1,5 +1,6 @@
 
    <div class="container_modal">
+      
       <div class="cardItem__image">
             {{#if poster_path}}
   <img class="image" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="{{title}}" />
@@ -7,48 +8,55 @@
 <img  class="image" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png" alt="content photo">
 {{/if}}
       </div>
+ 
+      <div class="cardeItem__modal-wrapper">
+             <h2 class="cardItem__name">{{title}}</h2>
 
-      <div class="cardItem__wrapper">
-        <h2 class="cardItem__name">{{title}}</h2>
-        <p class="cadrItem__vote cardItem_text">
-          Vote / Votes
-          <span class="cardItem__vote_average">{{vote_average}}</span> / <span
-            class="cardItem__vote_count"
-          >{{vote_count}}</span
-          >
-        </p>
-        <p class="cardItem__popularity cardItem_text">
-          Popularity<span class="cardItem___data">{{popularity}}</span>
-        </p>
-        <p class="cardItem-Title cardItem_text">
-          Original Title<span class="cardItem__title_data"
-            >{{original_title}}</span
-          >
-        </p>
+           <div class="cardItem__wrapper">
+              <div class="vote-wrapper">
+              <p class="cadrItem__vote cardItem_text">Vote / Votes</p>
+              <span class="cardItem__vote_average">{{vote_average}}</span> / <span  class="cardItem__vote-value">{{vote_count}}</span >
+            </div>
 
-        <p class="cardItem__genre cardItem_text">
-          Genre
-          {{#if genre_ids }}
-          <span class="cardItem__genreList">{{genre_ids}}</span>
-          {{else}}
-          <span class="cardItem__genreList">{{genres}}</span>
-          {{/if}}
+            <div class="cardPop-wrapper">
+              <p class="cardItem__popularity cardItem_text pop">Popularity</p>
+              <span class="cardItem___data pop">{{popularity}}</span>
+           </div>
 
-        </p>
 
-        <p class="cardItem__about">About</p>
-        <p class="cardItem__description">{{overview}}
-        </p>
-        <div class="history-btn-wrapper">
+           <div class="cardItem__origin-wrapper">
+              <p class="cardItem-Title cardItem_text">Original Title</p>
+              <span class="cardItem__title_data">{{original_title}}</span>
+          </div>
+
+          
+           
+           
+          <div class="genre-wrapper">
+              <p class="cardItem__genre cardItem_text">Genre</p>
+              {{#if genre_ids }}<span class="cardItem__genreList">{{genre_ids}}</span>
+               {{else}}<span class="cardItem__genreList">{{genres}}</span>{{/if}}
+          </div>
+
+    </div>
+<div class="cardItem__about-wrapper">
+
+           <p class="cardItem__about">About</p>
+            <p class="cardItem__description">{{overview}}</p>
+
+           </div>
+        
+         <div class="history-btn-wrapper">
           <button type="button" class="btn-watched" data-action="{{id}}">ADD TO WATCHED</button>
-          <button type="button" class="btn-favorite" data-action="{{id}}">ADD TO QUEUE</button>
+          <button type="button" class="btn-favorite" data-action="{{id}}">ADD TO QUEUE<span class="success-btn hidden-success"> <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" class="am_Success_Icon "> <path class="am_SVG_circle" d="m443.0136,114.07007a236.95276,236.95276 0 0 1 44.1553,137.73747c0,129.97005 -106.94772,236.96443 -236.91777,236.96443s-236.91777,-106.94772 -236.91777,-236.91777s106.94772,-236.96443 236.91777,-236.96443a236.99941,236.99941 0 0 1 168.72548,70.59483"></path> <polyline class="am_SVG_check" points="104.4892349243164,309.2001647949219 195.57406616210938,402.9600524902344 418.9292297363281,85.03718566894531 "></polyline> </svg></span></button>
         </div>
-        </div>
-       <button
+        <button
         type="button"
         class="lightbox__button"
         data-action="close-lightbox"
-      ></button>
+      ><i class="material-icons back">keyboard_backspace</i>Back</button>
+        </div>
+       
        
        
               </div>

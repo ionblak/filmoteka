@@ -36,7 +36,15 @@ export default function createCards(data) {
    
     const markup = modalCard(data[arrayIndex]);
     refs.lightboxDiv.innerHTML = markup;
-
+    // const cardTitle = document.querySelector('.cardItem__title_data');
+    // const cardTitleName = document.querySelector('.cardItem-Title');
+    // function titleSizeBLock() {
+    //   if (cardTitle.textContent.length > 50) {
+    //     cardTitle.style.height = '70px';
+    //     cardTitleName.style.height = '67px';
+    //   }
+    // }
+    // titleSizeBLock();
     addWatchedFilm();
     addFavoriteFilm();
 
