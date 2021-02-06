@@ -27,15 +27,21 @@
         </p>
 
         <p class="cardItem__genre cardItem_text">
-          Genre<span class="cardItem__genreList">{{genre_ids}}</span>
+          Genre
+          {{#if genre_ids }}
+          <span class="cardItem__genreList">{{genre_ids}}</span>
+          {{else}}
+          <span class="cardItem__genreList">{{genres}}</span>
+          {{/if}}
+
         </p>
 
         <p class="cardItem__about">About</p>
         <p class="cardItem__description">{{overview}}
         </p>
         <div class="history-btn-wrapper">
-          <button class="btn-watched" data-action="{{id}}">ADD TO WATCHED</button>
-          <button class="btn-favorite" data-action="{{id}}">ADD TO QUEUE</button>
+          <button type="button" class="btn-watched" data-action="{{id}}">ADD TO WATCHED</button>
+          <button type="button" class="btn-favorite" data-action="{{id}}">ADD TO QUEUE</button>
         </div>
         </div>
        <button

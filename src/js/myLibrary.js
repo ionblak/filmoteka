@@ -17,6 +17,7 @@ export function markQueue(lokalStorage) {
   });
 }
 // При deploy изменить на /filmoteka/my-lib.html
+// if (location.pathname === '/filmoteka/my-lib.html') {
 if (location.pathname === '/my-lib.html') {
   markQueue('favorite');
 
