@@ -1,30 +1,24 @@
-// import itemsTemplate from '../templates/cardsTemplate.hbs';
 import refs from './refs';
 import 'jquery/dist/jquery';
 import 'jquery/src/jquery';
 import './utils/paginator';
-
-import {dataProccessing, keySearch } from '../index';
+import { getMovieByIdArray } from './apiServices';
+import { dataProccessing, keySearch } from '../index';
+import { myLibraryRequest,  libraryListLength,  idListQueue } from './myLibrary';
 import createCards from './createCards';
-          
 export const paginateObj = {
    paginate() {
-   $(refs.paginatorWrapper).pagination({
-         dataSource: `https://#`, //заглушка
-
-// import { dataProccessing } from '../index';
-// import createCards from './createCards';
-
-// export default function paginate() {
-//   $(refs.paginatorWrapper).pagination({
-//     dataSource: `https://#`, //заглушка
-
+    $(refs.paginatorWrapper).pagination({
+      dataSource: `https://#`, //заглушка
+            // dataSource: this.getDataSource(),
+  
     //    locator: 'results',
     //    totalNumberLocator: function (response) {
     //         return response.total_results;
     //   },
-    pageSize: 1, //заглушка
-
+    pageSize: 9, //заглушка
+ autoHidePrevious: true,
+    autoHideNext: true,
     // ajax: {
     //   beforeSend: function () {
     //     refs.filmsListinnerHTML ='Loading data from flickr.com ...';
@@ -38,23 +32,38 @@ export const paginateObj = {
   });
   },
   chooseFn(pageNumber) {
-       if (!keySearch)
-    { return dataProccessing.getNextPage(pageNumber) }
-    else {
-      return dataProccessing.keywordSearch(refs.searchInput.value)
+    if (myLibraryRequest) {
+      return getMovieByIdArray(idListQueue)
     }
+      else {
+      if (!keySearch) {
+        return dataProccessing.getNextPage(pageNumber)
+      }
+      else {
+        return dataProccessing.keywordSearch(refs.searchInput.value)
+      }
+    }
+  },
+  // getDataSource: function( ){
+  //   if (myLibraryRequest) {
+  //     this.dataSource = [];
+  //     console.log(libraryListLengt);
+  //     this.dataSource.length = libraryListLengt;
+  //     // getMovieByIdArray(idListQueue)
+  //     //   .then(data => { this.dataSource = data});
+  //        }
+  //     else {
+  //     return this.dataSource = `https://#`;
+  //      }
+  //      } ,
+  getTotalAppPages() {
+
+    if (myLibraryRequest) {
+      return Math.ceil(libraryListLength / 9);
+    }
+    else 
+    { return dataProccessing.getAppPages; }
+  }
   }
 
-//     callback: function (data, pagination) {
-//       createCards(data);
-//       // console.log(pageNumber);
-//       // console.log(this.totalNumber);
-//       // console.log(refs.filmsListHome.pagination('getSelectedPageNum'));
-//     },
-//   });
-  // console.log(pagination.getSelectedPageNum);
-  //   refs.paginationPageList.addEventListener('click', onPageClick);
-
-}
-
-export { dataProccessing };
+export { dataProccessing};

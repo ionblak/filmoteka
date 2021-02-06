@@ -1,7 +1,9 @@
 import refs from './refs';
-import { getMovieByIdArray } from '../js/apiServices';
-import createCards from './createCards';
-
+// import { getMovieByIdArray } from '../js/apiServices';
+// import createCards from './createCards';
+import { paginateObj } from '../js/toPaginateWithApi';
+// import { myLibraryRequest } from '../index';
+// import { from } from 'core-js/fn/array';
 // function loadLokalStorage(lokalStorage) {
 //   try {
 //     const queueListId = localStorage.getItem(lokalStorage);
@@ -10,16 +12,20 @@ import createCards from './createCards';
 //     console.error('error: ', err);
 //   }
 // }
-
+let libraryListLength = 0;
+let idListQueue = [];
+let myLibraryRequest = false;
 function markQueue(lokalStorage) {
   const queueListId = localStorage.getItem(lokalStorage);
   const queueList = JSON.parse(queueListId);
-  const idListQueue = queueList.id;
-
-    getMovieByIdArray(idListQueue).then(data => {
-      createCards(data);
-    });
-  
+  idListQueue = queueList.id;
+  libraryListLength = idListQueue.length;
+  myLibraryRequest = true;
+    paginateObj.paginate();
+    // getMovieByIdArray(idListQueue).then(data => {
+    //   createCards(data);
+    // });
+  // myLibraryRequest = false;
 
   // for (const id of idListQueue) {
   // getMovieById(id);
@@ -69,3 +75,4 @@ if (location.pathname === '/my-lib.html') {
     refs.libraryQueueBtn.removeEventListener('click', libraryQueue);
   }
 }
+export {myLibraryRequest,  libraryListLength, idListQueue };
