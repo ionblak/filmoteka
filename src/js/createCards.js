@@ -3,6 +3,7 @@ import itemTemplateMyLibrary from '../templates/cardsTemplatesMyLibrary.hbs';
 import modalCard from '../templates/modalCard.hbs';
 import { addWatchedFilm } from './add-to-watch.js';
 import { addFavoriteFilm } from './add-to-favorite.js';
+import { markQueue } from './myLibrary';
 // import * as basicLightbox from 'basiclightbox';
 // import 'basiclightbox/dist/basicLightbox.min.css';
 import refs from './refs';
@@ -10,9 +11,6 @@ export default function createCards(data) {
   // перед созданием карточек чистим filmsList
   refs.filmsListHome.innerHTML = '';
   let markup = '';
-  // для продакшена
-  // if (location.pathname === '/filmoteka/my-lib.html') {
-  // для девелоперов
   if (location.pathname === '/my-lib.html') {
     markup = itemTemplateMyLibrary(data);
   } else {
@@ -29,9 +27,13 @@ export default function createCards(data) {
       return;
     }
 
+    
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
+    
+   
 
+   
     const markup = modalCard(data[arrayIndex]);
     refs.lightboxDiv.innerHTML = markup;
     // const cardTitle = document.querySelector('.cardItem__title_data');
@@ -47,12 +49,14 @@ export default function createCards(data) {
     addFavoriteFilm();
 
     window.addEventListener('keydown', onEscapePress);
+    
 
-    const butClose = document.querySelector(
-      'button[data-action="close-lightbox"]',
-    );
-    butClose.addEventListener('click', onCloseModal);
+    
+    const butClose = document.querySelector('button[data-action="close-lightbox"]');
+    butClose.addEventListener('click',onCloseModal)
   }
+  
+ 
 
   refs.lightboxDiv.addEventListener('click', events => {
     if (events.target === events.currentTarget) {
@@ -60,9 +64,18 @@ export default function createCards(data) {
     }
   });
 
+
   function onCloseModal() {
+    if (location.pathname === '/my-lib.html') {
+      if (refs.libraryWatchedBtn.classList.contains('is-active')) markQueue('watched');
+      else if (refs.libraryQueueBtn.classList.contains('is-active')) markQueue('favorite');
+    }
+      
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
+    
+    
+   
   }
 
   function onEscapePress(event) {
@@ -70,4 +83,8 @@ export default function createCards(data) {
       onCloseModal();
     }
   }
+
+  
 }
+
+
