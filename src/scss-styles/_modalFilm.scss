@@ -131,8 +131,7 @@ img.image {
 }
 
 .container_modal {
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   position: absolute;
   width: 100vw;
   background-color: #fff;
@@ -229,6 +228,7 @@ img.image {
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .container_modal {
+    margin-top: 430px;
     max-width: 320px;
     padding-top: 20px;
     padding-bottom: 40px;
