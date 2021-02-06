@@ -21,10 +21,15 @@ import { paginateObj } from './js/toPaginateWithApi';
 const dataProccessing = new DataProccessing();
 
 // для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/my-lib.html
+// if (
+//   location.pathname === '/filmoteka/index.html' ||
+//   location.pathname === '/filmoteka/'
+// ) {
 if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
+  window.addEventListener('resize', debounce(lisenWindowwidth, 1000), false);
 }
 let keySearch = 0;
 
@@ -47,30 +52,25 @@ function searchFilm(event) {
 export { dataProccessing, keySearch };
 
 // Слушатель на изменение окна
+function lisenWindowwidth() {
+  if (dataProccessing.isResolutionChanged())
+    dataProccessing
+      .updResolution()
+      .then(data => {
+        createCards(data);
+      })
+      .catch();
+}
 
-window.addEventListener(
-  'resize',
-  debounce(() => {
-    if (dataProccessing.isResolutionChanged())
-      dataProccessing
-        .updResolution()
-        .then(data => {
-          createCards(data);
-        })
-        .catch();
-  }, 1000),
-  false,
-);
-
-window.addEventListener('scroll', debounce(() => 
-{
-  if (window.innerWidth > 1024) {
-    if (window.scrollY > 900) refs.upButton.style.opacity = 1;
-    else refs.upButton.style.opacity = 0
 window.addEventListener(
   'scroll',
   debounce(() => {
     if (window.innerWidth > 1024) {
+      if (window.scrollY > 900) refs.upButton.style.opacity = 1;
+      else refs.upButton.style.opacity = 0;
+    }
+  }, 500),
+);
 
 if (refs.upButton) {
   refs.upButton.addEventListener('click', event => {
