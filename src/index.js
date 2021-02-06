@@ -73,8 +73,9 @@ window.addEventListener('scroll', debounce(() =>
 
 if (refs.upButton) {
   refs.upButton.addEventListener('click', event => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-})})
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  });
 }
