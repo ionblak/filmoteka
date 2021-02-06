@@ -18,13 +18,13 @@ function textAnimation(btnRef) {
     const splitText = strText.split("");
     btnRef.textContent = "";
     for (let i = 0; i < splitText.length; i++) {
-        btnRef.innerHTML += "<span>" + splitText[i] + "</span>";
+        btnRef.innerHTML += `<span class="btn-text">${splitText[i]}</span>`;
     }
     let char = 0;
-    let timer = setInterval(onTick, 30);
+    let timer = setInterval(onTick, 50);
     
     function onTick() {
-        const span = btnRef.querySelectorAll('span')[char];
+        const span = btnRef.querySelectorAll('.btn-text')[char];
         span.classList.add('fade');
         char++
         if (char === splitText.length) {
@@ -36,7 +36,7 @@ function textAnimation(btnRef) {
     function complete() {
         clearInterval(timer);
         timer = null;
-        const span =  Array.from(btnRef.querySelectorAll('span'));
+        const span =  Array.from(btnRef.querySelectorAll('.btn-text'));
         const spanSplit = span.map(item => item.innerHTML);
         btnRef.innerHTML = spanSplit.join('');
     }
