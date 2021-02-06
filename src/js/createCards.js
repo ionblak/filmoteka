@@ -28,7 +28,7 @@ export default function createCards(data) {
     if (currentCard.nodeName !== 'IMG') {
       return;
     }
-
+    refs.body.classList.add('modal-open');
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
 
@@ -63,10 +63,12 @@ export default function createCards(data) {
   function onCloseModal() {
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
+    refs.body.classList.remove('modal-open');
   }
 
   function onEscapePress(event) {
     if (event.code === 'Escape') {
+      refs.body.classList.remove('modal-open');
       onCloseModal();
     }
   }
