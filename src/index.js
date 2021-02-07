@@ -12,6 +12,7 @@ import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
 import './js/notification.js';
 import './js/our-students.js';
+import { listenScroll, scrollUp } from './js/utils/scroll';
 
 // import toPaginateWithApi from './js/toPaginateWithApi';
 import { paginateObj } from './js/toPaginateWithApi';
@@ -30,6 +31,8 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
   window.addEventListener('resize', debounce(lisenWindowwidth, 1000), false);
+  window.addEventListener('scroll', debounce(listenScroll, 500));
+  scrollUp();
 }
 let keySearch = 0;
 
@@ -60,23 +63,4 @@ function lisenWindowwidth() {
         createCards(data);
       })
       .catch();
-}
-
-window.addEventListener(
-  'scroll',
-  debounce(() => {
-    if (window.innerWidth > 1024) {
-      if (window.scrollY > 900) refs.upButton.style.opacity = 1;
-      else refs.upButton.style.opacity = 0;
-    }
-  }, 500),
-);
-
-if (refs.upButton) {
-  refs.upButton.addEventListener('click', event => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  });
 }

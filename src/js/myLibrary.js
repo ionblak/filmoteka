@@ -1,6 +1,8 @@
 import refs from './refs';
 import { getMovieByIdArray } from '../js/apiServices';
 import createCards from './createCards';
+import debounce from 'lodash.debounce';
+import { listenScroll, scrollUp } from './utils/scroll';
 
 export function markQueue(lokalStorage) {
   const queueListId = localStorage.getItem(lokalStorage);
@@ -27,6 +29,8 @@ if (location.pathname === '/my-lib.html') {
   if (refs.libraryQueueBtn.classList.contains('is-active')) {
     refs.libraryQueueBtn.removeEventListener('click', libraryQueue);
   }
+  window.addEventListener('scroll', debounce(listenScroll, 500));
+  scrollUp();
 }
 
 function libraryWatched(event) {
