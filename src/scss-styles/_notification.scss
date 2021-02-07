@@ -8,8 +8,8 @@
   transition: opacity 500ms ease-in-out;
 }
 .notifycation__title {
+  display: none;
   padding: 20px 20px 20px 20px;
-  display: block;
   background-color: rgba(49, 218, 113, 0.74);
   width: 287px;
   text-align: center;
@@ -27,6 +27,7 @@
   background-color: rgba(201, 198, 33, 0.74);
 }
 .film-name-error {
+  display: none;
   position: absolute;
   top: 70%;
   left: 50%;
@@ -38,4 +39,9 @@
   font-size: 14px;
   line-height: 16px;
   color: #ff001b;
+}
+@media screen and (min-width: 768px) {
+  .notifycation__title {
+    display: block;
+  }
 }

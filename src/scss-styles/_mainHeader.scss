@@ -8,7 +8,7 @@
   background-size: cover;
 
   background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
-    url(./images/headerImgHome.jpg);
+    url('./images/headerImgHome.jpg');
 }
 .header-home__conteiner {
   position: relative;
@@ -38,12 +38,40 @@
 }
 
 .link {
+  position: relative;
   font-weight: 500;
   font-size: 12px;
   line-height: 14px;
   text-transform: uppercase;
   color: $primaryTextColor;
+
+  position: relative;
+  display: inline-block;
 }
+
+.link::after {
+  display: block;
+  content: '';
+  background-color: $hoverAndIsActivebackGroundColor;
+  height: 3px;
+  width: 0%;
+  left: 50%;
+  position: absolute;
+  transition: width 0.3s ease-in-out;
+  transform: translateX(-50%);
+}
+.link:hover:after {
+  width: 100%;
+}
+
+.link-active::after {
+  display: block;
+  content: '';
+  width: 100%;
+  height: 3px;
+  background-color: $hoverAndIsActivebackGroundColor;
+}
+
 .search-form {
   width: 100%;
 
@@ -56,6 +84,8 @@
   width: 100%;
   background: transparent;
   border: none;
+  font-size: 14px;
+  line-height: 16px;
 
   outline: none;
   color: $primaryTextColor;

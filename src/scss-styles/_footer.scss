@@ -1,4 +1,5 @@
 .footer-container {
+  position: relative;
   height: 100px;
   background: #f7f7f7;
 
@@ -14,9 +15,47 @@
 }
 
 .link-footer {
+  padding-left: 5px;
+  padding-right: 5px;
   color: #545454;
   text-decoration: underline;
-  cursor: pointer;
+  transition: background-color 250ms ease-in-out;
+}
+.link-footer:hover,
+.link-footer:focus {
+  background-color: #ff6b01;
+  border-radius: 5px;
+}
+
+
+.up-button {
+  position: absolute;
+  right: 20px;
+  bottom: 95px;
+  border-radius:40px;
+  background-color: transparent;
+  border: none;
+  transition: opacity 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover{
+     cursor: pointer;
+  }
+  &:focus{
+    outline: none;
+  }
+}
+.up-button-svg {
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.6;
+  transition: opacity 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover{
+    opacity: 1;
+    box-shadow: 7px 6px 12px -4px rgba(108,108,108,0.74);
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -35,7 +74,14 @@
   height: 12px;
   fill: #ff6b08;
 }
-
+.paginationjs-next,
+.paginationjs-prev {
+  transition: background-color 250ms ease-in-out;
+}
+.paginationjs-next:hover,
+.paginationjs-prev:hover {
+  background-color: #fc9652;
+}
 @media screen and (min-width: 768px) {
   .footer-container {
     height: 77px;
@@ -46,4 +92,19 @@
     max-width: 1600px;
     margin: auto;
   }
+
+  .up-button{
+     bottom: 80px;
+  }
 }
+
+@media screen and (min-width: 1024px) {
+  .up-button{
+     right: 30px;
+  }
+.up-button-svg {
+  width: 50px;
+  height: 50px;
+}
+}
+

@@ -1,70 +1,20 @@
-import axios from 'axios';
-import spinner from '../js/utils/spiner';
-// Для работы с API используем объект и его методы DataProccessing
-// keywordSearch(keyword) - для поиска по сключевому слову
-// getPopular() - получить список популярных фильмов
-// getNextPage(page) - возвращает данные для страницы page
-// Пока другие методы не юзаем. оказывается приватные свойства это экспериментальная тема, и ничего не компилится
+import { getPage, getGenres, getMovieById } from './utils/apiReqst';
 
-const API_KEY = '15ccc9a8c676c1c9b5477fb06b4d7b82';
+// Возвращает массив инфо фильмов по входному массиву ID
+export const getMovieByIdArray = idArray => {
+  const promiseRes = new Promise((resolve, reject) => {
+    resolve(
+      Promise.all(idArray.map(item => getMovieById(item))).then(data => {
+        genreIdsConverting(data);
+        releaseDataCut(data);
 
-axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
-
-// ------ Запросы к API ------
-
-// Сформировать путь запроса к популярным
-const getPopularPath = pageNum => {
-  spinner.stop();
-  return `movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNum}&region=UA`;
+        return data;
+      }),
+    );
+  });
+  return promiseRes;
 };
 
-// Сформировать путь запроса для поиска по ключевому слову
-const getKeywordPath = (keyword, pageNum) => {
-  return `search/movie?api_key=${API_KEY}&language=en-US&query=${keyword.replace(
-    ' ',
-    '+',
-  )}&page=${pageNum}&include_adult=false`;
-};
-
-// Получить страницу по номеру
-const getPage = (keyword, pageNum) => {
-  let url;
-  if (keyword === '') url = getPopularPath(pageNum);
-  else url = getKeywordPath(keyword, pageNum);
-  return axios.get(url).then(res => res.data);
-};
-
-// Получить перечень жанров фильмов
-const getGenres = () => {
-  const url = `/genre/movie/list?api_key=${API_KEY}&language=en-US`;
-  return axios.get(url).then(res => res.data);
-};
-
-// Получить данные о фильму по id
-export const getMovieById = id => {
-  const url = `movie/${id}?api_key=${API_KEY}`;
-  return axios.get(url).then(res => res.data);
-};
-
-  // 
-  export const getMovieByIdArray = idArray => {
-    const promiseRes = new Promise((resolve, reject) => {
-      resolve(
-        Promise.all(idArray.map(item => getMovieById(item))).then(data => {
-          genreIdsConverting(data);
-          releaseDataCut(data);
-
-          return data;
-        }),
-      );
-    });
-    return promiseRes;
-  };
-
-// Константа кол-во фильмов на каждой странице от API
-const API_RESULTS_PER_PAGE = 20;
-
-let genresList = [];
 
 // ------ Функции для обработки массива жанров ------
 
@@ -84,13 +34,19 @@ function getGenreById(id) {
 function genreIdsConverting(data) {
   try {
     data.forEach(
-    item =>
-      (item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(', ')),
-  );
+      item =>
+        (item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(
+          ', ',
+        )),
+    );
   } catch {
-    return data.forEach(item => (item.genres = Array.from(item.genres.map(item => item.name)).join(', ')));
+    return data.forEach(
+      item =>
+        (item.genres = Array.from(item.genres.map(item => item.name)).join(
+          ', ',
+        )),
+    );
   }
-  
 }
 
 function releaseDataCut(filteringArray) {
@@ -104,6 +60,16 @@ function changeMovieRating(filteringArray) {
     item => (item.vote_average = item.vote_average.toFixed(1)),
   );
 }
+
+// Для работы с API используем объект и его методы DataProccessing
+// keywordSearch(keyword) - для поиска по сключевому слову
+// getPopular() - получить список популярных фильмов
+// getNextPage(page) - возвращает данные для страницы page
+
+// Константа кол-во фильмов на каждой странице от API
+const API_RESULTS_PER_PAGE = 20;
+
+let genresList = [];
 
 // Объект для формирования, отправки запроса и дальнейшей обработки данных
 class ApiRequest {
@@ -167,15 +133,6 @@ export class DataProccessing {
     // Обновить ключевое слово
     this.apiData.updKeyword(keyword);
     // Получить первую страницу по ключевому слову
-    return this.getNextPage(1);
-  }
-
-  async getPopular() {
-    // Если массив жанров пуст - запросить его у api
-    if (genresList.length === 0) {
-      await getGenres().then(data => (genresList = Array.from(data.genres)));
-    }
-    // Затем отправить запрос на получение 1й страницы
     return this.getNextPage(1);
   }
 

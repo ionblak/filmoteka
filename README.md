@@ -1,7 +1,4 @@
 filmoteka
 
-axios подключен в файл apiServices.js
-
-basiclightbox для работы с модалкой
-
-Roboto 400,500
+Для работы разработчиков нужно поменять условие location.pathname в файлах
+createCards.js, myLibrary.js и index.js!!!

@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
   </head>
   <body>
     <div id="spinner"></div>
@@ -31,7 +32,9 @@
             </li>
             <li>
               <!-- <button type="button" class="library-btn"> -->
-              <a class="link focus" href="./my-lib.html">my library</a>
+              <a class="link focus link-active" href="./my-lib.html"
+                >my library</a
+              >
               <!-- </button> -->
             </li>
           </ul>
@@ -40,7 +43,12 @@
           <button type="button" class="my-Library-button lib-watched-js">
             Watched
           </button>
-          <button type="button" class="my-Library-button lib-queue-js is-active">queue</button>
+          <button
+            type="button"
+            class="my-Library-button lib-queue-js is-active"
+          >
+            queue
+          </button>
         </div>
       </div>
     </header>
@@ -53,6 +61,11 @@
     </main>
     <footer class="footer">
       <div class="footer-container">
+        <button class="up-button">
+          <svg class="up-button-svg">
+            <use href="./images/sprite.svg#circle-up"></use>
+          </svg>
+        </button>
         <p class="coperate-text">&copy; 2020 | All Rights Reserved |</p>
         <p>
           Developed with
