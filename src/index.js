@@ -13,8 +13,6 @@ import './js/add-to-favorite.js';
 import './js/notification.js';
 import './js/our-students.js';
 import { listenScroll, scrollUp } from './js/utils/scroll';
-
-// import toPaginateWithApi from './js/toPaginateWithApi';
 import { paginateObj } from './js/toPaginateWithApi';
 
 // дожлен быть только один объект для всех запросов
@@ -34,22 +32,28 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   window.addEventListener('scroll', debounce(listenScroll, 500));
   scrollUp();
 }
-let keySearch = 0;
+let keySearch = false;
+// let myLibraryRequest = false;
 
 function getHomePage() {
-  refs.filmsListHome.innerHTML = '';
+  // refs.filmsListHome.innerHTML = '';
   spinner.spin(refs.target);
   paginateObj.paginate();
 }
 
 function searchFilm(event) {
+  keySearch = true;
+
   refs.errorNotafication.classList.add('is-hidden');
-  keySearch = 1;
+
   spinner.spin(refs.target);
   event.preventDefault();
 
   paginateObj.paginate();
-  keySearch = 0;
+
+  spinner.stop();
+  keySearch = false;
+
 }
 
 export { dataProccessing, keySearch };

@@ -1,5 +1,3 @@
-import {dataProccessing } from '../toPaginateWithApi';
-import createCards from '../createCards';
 /*
  * pagination.js 2.1.5
  * A jQuery plugin to provide simple yet fully customisable pagination.
@@ -111,7 +109,9 @@ import { paginateObj } from '../toPaginateWithApi';
         var currentPage = model.pageNumber || attributes.pageNumber;
         var pageRange = attributes.pageRange || 0;
         // var totalPage = self.getTotalPage();
-        var totalPage = dataProccessing.getAppPages;
+        // var totalPage = dataProccessing.getAppPages;
+        var totalPage = paginateObj.getTotalAppPages();
+
          var rangeStart = currentPage - pageRange;
         var rangeEnd = currentPage + pageRange;
 
@@ -148,7 +148,8 @@ import { paginateObj } from '../toPaginateWithApi';
         var self = this;
         var currentPage = args.currentPage;
         // var totalPage = self.getTotalPage();
-        var totalPage = dataProccessing.getAppPages;
+        // var totalPage = dataProccessing.getAppPages;
+        var totalPage = paginateObj.getTotalAppPages();
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
         var html = '';
@@ -216,7 +217,8 @@ import { paginateObj } from '../toPaginateWithApi';
         var self = this;
         var currentPage = args.currentPage;
         // var totalPage = self.getTotalPage();
- var totalPage =dataProccessing.getAppPages;
+        // var totalPage = dataProccessing.getAppPages;
+        var totalPage = paginateObj.getTotalAppPages();
         var totalNumber = self.getTotalNumber();
         
         // var totalNumber = dataProccessing.getData.length;
@@ -279,7 +281,7 @@ import { paginateObj } from '../toPaginateWithApi';
                 html += '<li class="' + classPrefix + '-prev ' + disableClassName + '"><a>' + prevText + '<\/a><\/li>';
               }
             } else {
-              html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="' + pageLink + '">' + prevText + '<\/a><\/li>';
+              html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="">' + pageLink  + prevText + '<\/a><\/li>';
             }
           }
 
@@ -375,7 +377,8 @@ import { paginateObj } from '../toPaginateWithApi';
         var pageSize = attributes.pageSize;
         var totalNumber = self.getTotalNumber();
         // var totalPage = self.getTotalPage();
-        var totalPage = dataProccessing.getAppPages;
+        // var totalPage = dataProccessing.getAppPages;
+        var totalPage = paginateObj.getTotalAppPages();
         // Page number is out of bounds
         if (totalNumber > 0) {
           if (pageNumber > totalPage) return;
@@ -429,9 +432,7 @@ import { paginateObj } from '../toPaginateWithApi';
         // $.ajax(formatAjaxParams);
 
         paginateObj.chooseFn(pageNumber)
-        // dataProccessing.getNextPage(pageNumber)
-        .then(data => {
-        // // dataProccessing.getPopular().then(data => {
+         .then(data => {
           var finalData = data;
           render(finalData);
           return;
@@ -479,8 +480,9 @@ import { paginateObj } from '../toPaginateWithApi';
 
           // pageNumber now is the last page
           // if (pageNumber == self.getTotalPage()) {
-            if (pageNumber == dataProccessing.getAppPages) { 
-            self.callHook('afterIsLastPage');
+            // if (pageNumber == dataProccessing.getAppPages) { 
+               if (pageNumber == paginateObj.getTotalAppPages()) { 
+                         self.callHook('afterIsLastPage');
           }
         }
       },
@@ -842,7 +844,7 @@ import { paginateObj } from '../toPaginateWithApi';
 
         // Whether to load the default page
         // var validTotalPage = Math.max(self.getTotalPage(), 1)
-         var validTotalPage = Math.max(dataProccessing.getAppPages, 1)
+        var validTotalPage = Math.max(paginateObj.getTotalAppPages(), 1)
         var defaultPageNumber = attributes.pageNumber;
         // Default pageNumber should be 1 when totalNumber is dynamic
         if (self.isDynamicTotalNumber) {
@@ -885,8 +887,8 @@ import { paginateObj } from '../toPaginateWithApi';
               return container.data('pagination').attributes.pageNumber;
             }
           // Get total page
-          // case 'getTotalPage':
-          //   return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
+          case 'getTotalPage':
+            return Math.ceil(container.data('pagination').model.totalNumber / container.data('pagination').model.pageSize);
           // Get data of selected page
           case 'getSelectedPageData':
             return container.data('pagination').currentPageData;
@@ -960,10 +962,11 @@ import { paginateObj } from '../toPaginateWithApi';
     pageLink: '',
 
     // 'Previous' text
-    prevText: '&laquo;',
-
+    // prevText: '&laquo;',
+prevText: '',
     // 'Next' text
-    nextText: '&raquo;',
+    // nextText: '&raquo;',
+nextText: '',
 
     // Ellipsis text
     ellipsisText: '...',
