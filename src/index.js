@@ -42,14 +42,11 @@ function getHomePage() {
 function searchFilm(event) {
   keySearch = true;
 
-  refs.errorNotafication.classList.add('is-hidden');
-
   spinner.spin(refs.target);
   event.preventDefault();
 
   paginateObj.paginate();
 
-  // spinner.stop();
   keySearch = false;
 }
 

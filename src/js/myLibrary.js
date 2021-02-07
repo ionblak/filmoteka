@@ -1,14 +1,13 @@
 import refs from './refs';
-
+// import { getMovieByIdArray } from '../js/apiServices';
+// import createCards from './createCards';
+import debounce from 'lodash.debounce';
+import { listenScroll, scrollUp } from './utils/scroll';
 import { paginateObj } from '../js/toPaginateWithApi';
+
 let libraryListLength = 0;
 let idListQueue = [];
 let myLibraryRequest = false;
-
-import { getMovieByIdArray } from '../js/apiServices';
-import createCards from './createCards';
-import debounce from 'lodash.debounce';
-import { listenScroll, scrollUp } from './utils/scroll';
 
 export function markQueue(lokalStorage) {
   const queueListId = localStorage.getItem(lokalStorage);
