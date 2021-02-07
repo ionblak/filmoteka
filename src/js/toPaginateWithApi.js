@@ -6,17 +6,12 @@ import { getMovieByIdArray } from './apiServices';
 import { dataProccessing, keySearch } from '../index';
 import { myLibraryRequest,  libraryListLength,  idListQueue } from './myLibrary';
 import createCards from './createCards';
+import { data } from 'jquery';
 export const paginateObj = {
    paginate() {
     $(refs.paginatorWrapper).pagination({
       dataSource: `https://#`, //заглушка
-            // dataSource: this.getDataSource(),
-  
-    //    locator: 'results',
-    //    totalNumberLocator: function (response) {
-    //         return response.total_results;
-    //   },
-    pageSize: 9, //заглушка
+      pageSize: 9, //заглушка
  autoHidePrevious: true,
     autoHideNext: true,
     // ajax: {
@@ -33,30 +28,27 @@ export const paginateObj = {
   },
   chooseFn(pageNumber) {
     if (myLibraryRequest) {
-      return getMovieByIdArray(idListQueue)
+        return getMovieByIdArray(idListQueue).then((data) => {
+        let j = 0;
+        const dataPerPage = [];
+        for (let i = (9 * pageNumber - 9); i < Math.min(data.length, 9 * pageNumber); i+=1) {
+          dataPerPage[j] = data[i];
+          j += 1; 
+        }
+        return (dataPerPage);
+        })
     }
       else {
-      if (!keySearch) {
-        return dataProccessing.getNextPage(pageNumber)
-      }
+      if (!keySearch) {     
+        
+      return dataProccessing.getNextPage(pageNumber);
+       }
       else {
         return dataProccessing.keywordSearch(refs.searchInput.value)
       }
     }
   },
-  // getDataSource: function( ){
-  //   if (myLibraryRequest) {
-  //     this.dataSource = [];
-  //     console.log(libraryListLengt);
-  //     this.dataSource.length = libraryListLengt;
-  //     // getMovieByIdArray(idListQueue)
-  //     //   .then(data => { this.dataSource = data});
-  //        }
-  //     else {
-  //     return this.dataSource = `https://#`;
-  //      }
-  //      } ,
-  getTotalAppPages() {
+   getTotalAppPages() {
 
     if (myLibraryRequest) {
       return Math.ceil(libraryListLength / 9);

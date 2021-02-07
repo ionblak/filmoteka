@@ -1,9 +1,6 @@
 import refs from './refs';
-// import { getMovieByIdArray } from '../js/apiServices';
-// import createCards from './createCards';
 import { paginateObj } from '../js/toPaginateWithApi';
-// import { myLibraryRequest } from '../index';
-// import { from } from 'core-js/fn/array';
+
 // function loadLokalStorage(lokalStorage) {
 //   try {
 //     const queueListId = localStorage.getItem(lokalStorage);
@@ -25,7 +22,6 @@ function markQueue(lokalStorage) {
     // getMovieByIdArray(idListQueue).then(data => {
     //   createCards(data);
     // });
-  // myLibraryRequest = false;
 
   // for (const id of idListQueue) {
   // getMovieById(id);

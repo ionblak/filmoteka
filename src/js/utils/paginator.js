@@ -281,7 +281,7 @@ import { paginateObj } from '../toPaginateWithApi';
                 html += '<li class="' + classPrefix + '-prev ' + disableClassName + '"><a>' + prevText + '<\/a><\/li>';
               }
             } else {
-              html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="' + pageLink + '">' + prevText + '<\/a><\/li>';
+              html += '<li class="' + classPrefix + '-prev J-paginationjs-previous" data-num="' + (currentPage - 1) + '" title="Previous page"><a href="">' + pageLink  + prevText + '<\/a><\/li>';
             }
           }
 
@@ -432,9 +432,7 @@ import { paginateObj } from '../toPaginateWithApi';
         // $.ajax(formatAjaxParams);
 
         paginateObj.chooseFn(pageNumber)
-        // dataProccessing.getNextPage(pageNumber)
-        .then(data => {
-        // // dataProccessing.getPopular().then(data => {
+         .then(data => {
           var finalData = data;
           render(finalData);
           return;
@@ -959,10 +957,11 @@ import { paginateObj } from '../toPaginateWithApi';
     pageLink: '',
 
     // 'Previous' text
-    prevText: '&laquo;',
-
+    // prevText: '&laquo;',
+prevText: '',
     // 'Next' text
-    nextText: '&raquo;',
+    // nextText: '&raquo;',
+nextText: '',
 
     // Ellipsis text
     ellipsisText: '...',

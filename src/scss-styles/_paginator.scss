@@ -28,25 +28,20 @@
 .paginationjs-next a {
   height: 40px;
   width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .favorite-test {
   width: 16px;
   height: 16px;
   color: black;
 }
-
-// .arrow-icon {
-//   width: 16px;
-//   height: 16px;
-//   color: black;
-// // }
-// .prev-a {
-//   background-image: url(../images/arrow-left.svg);
-//   //   width: 16px;
-//   //   height: 16px;
-//   //   color: black;
-// }
-
+.paginationjs-prev a {
+  background-image: url('./images/arrow-left.svg');
+}
+.paginationjs-next a {
+  background-image: url('./images/arrow-right.svg');
+}
 .paginationjs-page.active,
 .paginationjs-prev,
 .paginationjs-next {
