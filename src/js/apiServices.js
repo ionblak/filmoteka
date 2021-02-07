@@ -175,15 +175,6 @@ export class DataProccessing {
     return this.getNextPage(1);
   }
 
-  async getPopular() {
-    // Если массив жанров пуст - запросить его у api
-    if (genresList.length === 0) {
-      await getGenres().then(data => (genresList = Array.from(data.genres)));
-    }
-    // Затем отправить запрос на получение 1й страницы
-    return this.getNextPage(1);
-  }
-
   async getNextPage(page) {
     // Если массив жанров пуст - запросить его у api
     if (genresList.length === 0) {
