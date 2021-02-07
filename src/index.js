@@ -33,10 +33,8 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   scrollUp();
 }
 let keySearch = false;
-// let myLibraryRequest = false;
 
 function getHomePage() {
-  // refs.filmsListHome.innerHTML = '';
   spinner.spin(refs.target);
   paginateObj.paginate();
 }
@@ -51,9 +49,8 @@ function searchFilm(event) {
 
   paginateObj.paginate();
 
-  spinner.stop();
+  // spinner.stop();
   keySearch = false;
-
 }
 
 export { dataProccessing, keySearch };
