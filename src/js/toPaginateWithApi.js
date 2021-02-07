@@ -2,6 +2,7 @@ import refs from './refs';
 import 'jquery/dist/jquery';
 import 'jquery/src/jquery';
 import './utils/paginator';
+import vars from './utils/variables';
 
 import { getMovieByIdArray } from './apiServices';
 import { dataProccessing, keySearch } from '../index';
@@ -10,6 +11,7 @@ import createCards from './createCards';
 import spinner from './utils/spiner';
 
 import { data } from 'jquery';
+ let pageSizeNum = 1; //default
 export const paginateObj = {
   paginate() {
     $(refs.paginatorWrapper).pagination({
@@ -17,33 +19,11 @@ export const paginateObj = {
       pageSize: 9, //заглушка
       autoHidePrevious: true,
       autoHideNext: true,
-      // ajax: {
-      //   beforeSend: function () {
-      //     refs.filmsListinnerHTML ='Loading data from flickr.com ...';
-      //   }
-      // },
-
-      // import { dataProccessing, keySearch } from '../index';
-      // import createCards from './createCards';
-
-      // export const paginateObj = {
-      //   paginate() {
-      //     $(refs.paginatorWrapper).pagination({
-      //       dataSource: `https://#`, //заглушка
-
-      // import { dataProccessing } from '../index';
-      // import createCards from './createCards';
-
-      // export default function paginate() {
-      //   $(refs.paginatorWrapper).pagination({
-      //     dataSource: `https://#`, //заглушка
-
-      //    locator: 'results',
+       //    locator: 'results',
       //    totalNumberLocator: function (response) {
       //         return response.total_results;
       //   },
-      //       pageSize: 1, //заглушка
-
+ 
       // ajax: {
       //   beforeSend: function () {
       //     refs.filmsListinnerHTML ='Loading data from flickr.com ...';
@@ -57,12 +37,13 @@ export const paginateObj = {
   },
   chooseFn(pageNumber) {
     if (myLibraryRequest) {
-      return getMovieByIdArray(idListQueue).then(data => {
+        return getMovieByIdArray(idListQueue).then(data => {
+         defineResultsPerPage();
         let j = 0;
         const dataPerPage = [];
         for (
-          let i = 9 * pageNumber - 9;
-          i < Math.min(data.length, 9 * pageNumber);
+          let i =  pageSizeNum * (pageNumber - 1);
+          i < Math.min(data.length,  pageSizeNum  * pageNumber);
           i += 1
         ) {
           dataPerPage[j] = data[i];
@@ -93,7 +74,8 @@ export const paginateObj = {
   },
   getTotalAppPages() {
     if (myLibraryRequest) {
-      return Math.ceil(libraryListLength / 9);
+        defineResultsPerPage();
+           return Math.ceil(libraryListLength / pageSizeNum);
     } else {
       return dataProccessing.getAppPages;
     }
@@ -110,5 +92,11 @@ export const paginateObj = {
 //   // console.log(pagination.getSelectedPageNum);
 //   //   refs.paginationPageList.addEventListener('click', onPageClick);
 // };
-
+function defineResultsPerPage() {
+ 
+  if (window.innerWidth >= 1024) { pageSizeNum = vars.desktopPageSize; }
+  else if (window.innerWidth >= 768 && window.innerWidth < 1024) { pageSizeNum = vars.tabletPageSize; }
+  else if (window.innerWidth < 768) { pageSizeNum = vars.mobilePageSize; };
+  return pageSizeNum;
+};
 export { dataProccessing };

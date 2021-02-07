@@ -1,6 +1,4 @@
 import refs from './refs';
-// import { getMovieByIdArray } from '../js/apiServices';
-// import createCards from './createCards';
 import debounce from 'lodash.debounce';
 import { listenScroll, scrollUp } from './utils/scroll';
 import { paginateObj } from '../js/toPaginateWithApi';

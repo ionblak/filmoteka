@@ -1,5 +1,5 @@
 import { getPage, getGenres, getMovieById } from './utils/apiReqst';
-
+import vars from './utils/variables';
 // Возвращает массив инфо фильмов по входному массиву ID
 export const getMovieByIdArray = idArray => {
   const promiseRes = new Promise((resolve, reject) => {
@@ -255,9 +255,9 @@ export class DataProccessing {
 
   // По расширению экрана определить количество выводимых элементов
   defineResultsPerPage() {
-    if (window.innerWidth >= 1024) return 9;
-    else if (window.innerWidth >= 768 && window.innerWidth < 1024) return 8;
-    else if (window.innerWidth < 768) return 4;
+    if (window.innerWidth >= 1024) return vars.desktopPageSize;
+    else if (window.innerWidth >= 768 && window.innerWidth < 1024) return vars.tabletPageSize;
+    else if (window.innerWidth < 768) return vars.mobilePageSize;
   }
 
   // Определить страницу нового расширения учитывая текущие элементы на странице
