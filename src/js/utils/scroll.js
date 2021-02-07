@@ -1,7 +1,7 @@
 import refs from '../refs';
 
 export function listenScroll() {
-    if (window.innerWidth > 1024) {
+    if (window.innerWidth >= 1024) {
       if (window.scrollY > 600) {
         refs.upButton.style.opacity = 1;
         refs.upButton.disabled = false;
