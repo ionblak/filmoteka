@@ -109,8 +109,7 @@ import { paginateObj } from '../toPaginateWithApi';
         var currentPage = model.pageNumber || attributes.pageNumber;
         var pageRange = attributes.pageRange || 0;
         // var totalPage = self.getTotalPage();
-        // var totalPage = dataProccessing.getAppPages;
-        var totalPage = paginateObj.getTotalAppPages();
+              var totalPage = paginateObj.getTotalAppPages();
 
          var rangeStart = currentPage - pageRange;
         var rangeEnd = currentPage + pageRange;
@@ -148,8 +147,7 @@ import { paginateObj } from '../toPaginateWithApi';
         var self = this;
         var currentPage = args.currentPage;
         // var totalPage = self.getTotalPage();
-        // var totalPage = dataProccessing.getAppPages;
-        var totalPage = paginateObj.getTotalAppPages();
+             var totalPage = paginateObj.getTotalAppPages();
         var rangeStart = args.rangeStart;
         var rangeEnd = args.rangeEnd;
         var html = '';
@@ -217,14 +215,9 @@ import { paginateObj } from '../toPaginateWithApi';
         var self = this;
         var currentPage = args.currentPage;
         // var totalPage = self.getTotalPage();
-        // var totalPage = dataProccessing.getAppPages;
         var totalPage = paginateObj.getTotalAppPages();
         var totalNumber = self.getTotalNumber();
-        
-        // var totalNumber = dataProccessing.getData.length;
-        // var totalNumber = 2340;
-
-        var showPrevious = attributes.showPrevious;
+         var showPrevious = attributes.showPrevious;
         var showNext = attributes.showNext;
         var showPageNumbers = attributes.showPageNumbers;
         var showNavigator = attributes.showNavigator;
@@ -377,8 +370,7 @@ import { paginateObj } from '../toPaginateWithApi';
         var pageSize = attributes.pageSize;
         var totalNumber = self.getTotalNumber();
         // var totalPage = self.getTotalPage();
-        // var totalPage = dataProccessing.getAppPages;
-        var totalPage = paginateObj.getTotalAppPages();
+          var totalPage = paginateObj.getTotalAppPages();
         // Page number is out of bounds
         if (totalNumber > 0) {
           if (pageNumber > totalPage) return;
@@ -480,8 +472,7 @@ import { paginateObj } from '../toPaginateWithApi';
 
           // pageNumber now is the last page
           // if (pageNumber == self.getTotalPage()) {
-            // if (pageNumber == dataProccessing.getAppPages) { 
-               if (pageNumber == paginateObj.getTotalAppPages()) { 
+                        if (pageNumber == paginateObj.getTotalAppPages()) { 
                          self.callHook('afterIsLastPage');
           }
         }

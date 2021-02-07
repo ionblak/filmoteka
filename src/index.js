@@ -15,7 +15,7 @@ import './js/our-students.js';
 import { listenScroll, scrollUp } from './js/utils/scroll';
 import { paginateObj } from './js/toPaginateWithApi';
 
-// дожлен быть только один объект для всех запросов
+// должен быть только один объект для всех запросов
 
 const dataProccessing = new DataProccessing();
 
