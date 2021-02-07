@@ -141,15 +141,26 @@ img.image {
   padding-left: 7px;
   padding-right: 7px;
   transition: 250ms ease-in-out;
-}
-.btn-watched:hover,
-.btn-watched:focus,
-.btn-favorite:focus,
-.btn-favorite:hover {
-  color: #ffffff;
-  background: #ff6b01;
-  border: none;
-  cursor: pointer;
+
+  &:hover,
+  &:focus{
+      color: #ffffff;
+      background: #ff6b01;
+      border: none;
+      cursor: pointer;
+  }
+
+  &.inactive{
+      background: #cccccc;
+      border: none;
+      color: #858585;
+
+      &:hover{
+        background: #cccccc;
+        color: #858585;
+        cursor: unset;
+      }
+  }
 }
 
 .container_modal {

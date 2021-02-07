@@ -27,10 +27,14 @@ export default function createCards(data) {
       return;
     }
 
+
+    
+
     refs.body.classList.add('modal-open');
 
 
     
+
 
     const arrayIndex = currentCard.dataset.index;
     refs.lightboxDiv.classList.add('is-open');
@@ -78,10 +82,15 @@ export default function createCards(data) {
     window.removeEventListener('keydown', onEscapePress);
     refs.lightboxDiv.classList.remove('is-open');
 
+    
+    
+   
+
     refs.body.classList.remove('modal-open');
 
     
     
+
   }
 
   function onEscapePress(event) {

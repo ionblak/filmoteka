@@ -1,3 +1,62 @@
+export function checkWatchedBtn() {
+  const addToListBtnRef = document.querySelector('.btn-watched');
+    if (isIDAlreadyInList('watched', addToListBtnRef.dataset.action)) {
+        changeBtnText('watched', 'remove');
+        disableButton('favorite');
+    }
+    else {
+        changeBtnText('watched', 'add');
+        enableButton('favorite');
+    }
+}
+
+
+export function checkFavoriteBtn() {
+  const addToListBtnRef = document.querySelector('.btn-favorite');
+  if (isIDAlreadyInList('favorite', addToListBtnRef.dataset.action))
+  {
+      changeBtnText('favorite', 'remove');
+      disableButton('watched');
+  }
+  else {
+      changeBtnText('favorite', 'add');
+      enableButton('watched');
+  }
+}
+
+function getList(list) {
+    const reqList = localStorage.getItem(list);
+    const parse = JSON.parse(reqList);
+    if (parse === null) return;
+    return parse;
+}
+
+// Проверить объект уже в списке
+function isIDAlreadyInList(list, id) {
+    const data = getList(list);
+    if (data !== null && data.id.indexOf(id) !== -1) return true;
+   return false;
+}
+
+export function disableButton(button) {
+    const btnRef = getBtnRef(button);
+    btnRef.classList.add('inactive');
+    btnRef.disabled = true;
+}
+
+export function enableButton(button) {
+    const btnRef = getBtnRef(button);
+    btnRef.classList.remove('inactive');
+    btnRef.disabled = false;
+}
+
+
+function getBtnRef(button) {
+    if (button === 'favorite') return document.querySelector('.btn-favorite');
+    else if (button === 'watched') return document.querySelector('.btn-watched');
+}
+
+
 export function changeBtnText(list, mode) {
     if (list === 'watched') {
         const refWatchedBtn = document.querySelector('.btn-watched');
@@ -13,7 +72,7 @@ export function changeBtnText(list, mode) {
 }
 
 
-function textAnimation(btnRef) {        
+function textAnimation(btnRef) {   
     const strText = btnRef.textContent;
     const splitText = strText.split("");
     btnRef.textContent = "";
@@ -25,12 +84,15 @@ function textAnimation(btnRef) {
     
     function onTick() {
         const span = btnRef.querySelectorAll('.btn-text')[char];
-        span.classList.add('fade');
-        char++
-        if (char === splitText.length) {
-            complete();
-            return;
-        }
+        if (span) {
+            span.classList.add('fade');
+            char++
+            if (char === splitText.length) {
+                complete();
+                return;
+            }
+        } else return;
+        
     }
 
     function complete() {
@@ -41,8 +103,5 @@ function textAnimation(btnRef) {
         btnRef.innerHTML = spanSplit.join('');
     }
 }
-
-
-
 
 
