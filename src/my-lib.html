@@ -10,12 +10,48 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="spinner"></div>
     <header class="header__My-libbrary">
       <div class="conteiner my-library__conteiner">
+        <div class="toolbar">
+          <!-- Разметка переключателя темы -->
+          <div class="theme-switch">
+            <svg
+              class="theme-switch__icon"
+              role="img"
+              aria-label="Иконка солнца"
+            >
+              <use href="./images/spritetwo.svg#sun"></use>
+            </svg>
+
+            <div class="theme-switch__control">
+              <input
+                class="theme-switch__toggle"
+                type="checkbox"
+                name="theme"
+                id="theme-switch-toggle"
+                aria-label="Переключить между тёмной и светлой темой"
+              />
+              <label
+                aria-hidden="true"
+                class="theme-switch__track"
+                for="theme-switch-toggle"
+              >
+              </label>
+              <div aria-hidden="true" class="theme-switch__marker"></div>
+            </div>
+
+            <svg class="theme-switch__icon" aria-label="Иконка луны">
+              <use href="./images/spritetwo.svg#moon"></use>
+            </svg>
+          </div>
+        </div>
         <nav class="novigation">
           <a class="logo-block" href="./index.html">
             <svg class="icon-film">

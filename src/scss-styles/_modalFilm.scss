@@ -143,23 +143,23 @@ img.image {
   transition: 250ms ease-in-out;
 
   &:hover,
-  &:focus{
-      color: #ffffff;
-      background: #ff6b01;
-      border: none;
-      cursor: pointer;
+  &:focus {
+    color: #ffffff;
+    background: #ff6b01;
+    border: none;
+    cursor: pointer;
   }
 
-  &.inactive{
-      background: #cccccc;
-      border: none;
-      color: #858585;
+  &.inactive {
+    background: #cccccc;
+    border: none;
+    color: #858585;
 
-      &:hover{
-        background: #cccccc;
-        color: #858585;
-        cursor: unset;
-      }
+    &:hover {
+      background: #cccccc;
+      color: #858585;
+      cursor: unset;
+    }
   }
 }
 
@@ -167,6 +167,7 @@ img.image {
   margin: auto;
   position: absolute;
   top: 0;
+
   padding-top: 10px;
   max-width: calc(100% - 40px);
   background-color: #fff;
@@ -184,6 +185,7 @@ img.image {
 }
 
 .backdrop_close {
+  z-index: 999;
   opacity: 0;
   display: none;
   overflow-y: scroll;

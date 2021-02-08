@@ -19,9 +19,42 @@
     <div id="spinner"></div>
     <header class="header-home">
       <div class="conteiner header-home__conteiner">
+        <div class="toolbar">
+          <!-- Разметка переключателя темы -->
+          <div class="theme-switch">
+            <svg
+              class="theme-switch__icon"
+              role="img"
+              aria-label="Иконка солнца"
+            >
+              <use href="./images/spritetwo.svg#sun"></use>
+            </svg>
+
+            <div class="theme-switch__control">
+              <input
+                class="theme-switch__toggle"
+                type="checkbox"
+                name="theme"
+                id="theme-switch-toggle"
+                aria-label="Переключить между тёмной и светлой темой"
+              />
+              <label
+                aria-hidden="true"
+                class="theme-switch__track"
+                for="theme-switch-toggle"
+              >
+              </label>
+              <div aria-hidden="true" class="theme-switch__marker"></div>
+            </div>
+
+            <svg class="theme-switch__icon" aria-label="Иконка луны">
+              <use href="./images/spritetwo.svg#moon"></use>
+            </svg>
+          </div>
+        </div>
         <nav class="novigation">
           <a class="logo-block" href="./index.html">
-            <svg class="icon-film">
+            <svg class="icon-film" aria-label="logo">
               <use href="./images/sprite.svg#film"></use>
             </svg>
             <p class="logo">Filmoteka</p>
@@ -59,13 +92,10 @@
         <ul class="film-list film-list__home card__colection"></ul>
         <div id="pagination-container"></div>
       </div>
-      <div class="backdrop_close">   
-      </div>
-      
+      <div class="backdrop_close"></div>
     </main>
     <footer class="footer">
-      
-      <div class="footer-container">          
+      <div class="footer-container">
         <div class="up-button-container">
           <button class="up-button">
             <svg class="up-button-svg">

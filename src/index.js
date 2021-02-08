@@ -12,6 +12,7 @@ import './js/add-to-watch.js';
 import './js/add-to-favorite.js';
 import './js/notification.js';
 import './js/our-students.js';
+import './js/utils/chenge-theme';
 import { listenScroll, scrollUp } from './js/utils/scroll';
 import { paginateObj } from './js/toPaginateWithApi';
 

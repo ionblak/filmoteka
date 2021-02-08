@@ -19,6 +19,7 @@ const refs = {
   libraryQueueBtn: document.querySelector('.lib-queue-js'),
   upButton: document.querySelector('.up-button'),
   body: document.querySelector('body'),
+  input: document.querySelector('#theme-switch-toggle'),
 };
 
 export default refs;
