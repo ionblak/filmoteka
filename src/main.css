@@ -276,14 +276,27 @@ img.image {
   transition: 250ms ease-in-out;
 }
 
-.btn-watched:hover,
-.btn-watched:focus,
-.btn-favorite:focus,
-.btn-favorite:hover {
+.btn-watched:hover, .btn-watched:focus,
+.btn-favorite:hover,
+.btn-favorite:focus {
   color: #ffffff;
   background: #ff6b01;
   border: none;
   cursor: pointer;
+}
+
+.btn-watched.inactive,
+.btn-favorite.inactive {
+  background: #cccccc;
+  border: none;
+  color: #858585;
+}
+
+.btn-watched.inactive:hover,
+.btn-favorite.inactive:hover {
+  background: #cccccc;
+  color: #858585;
+  cursor: unset;
 }
 
 .container_modal {
@@ -411,6 +424,10 @@ img.image {
 
 .back {
   margin-right: 10px;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 @media screen and (min-width: 768px) {
@@ -642,7 +659,6 @@ img.image {
 }
 
 .film-name-error {
-  display: none;
   position: absolute;
   top: 70%;
   left: 50%;
@@ -767,6 +783,7 @@ img.image {
 }
 
 .footer-container {
+  position: relative;
   height: 100px;
   background: #f7f7f7;
   font-style: normal;
@@ -792,31 +809,38 @@ img.image {
   border-radius: 5px;
 }
 
-.up-button-container {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 20px;
-}
-
 .up-button {
-  width: 75px;
-  height: 75px;
-  border: none;
+  position: absolute;
+  right: 20px;
+  bottom: 95px;
   border-radius: 40px;
-  background: url(/images/circle-up.svg);
-  background-repeat: no-repeat;
-  background-size: 75px 75px;
-  opacity: 1;
-  transition: box-shadow 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: transparent;
+  border: none;
+  transition: opacity 450ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .up-button:hover {
   cursor: pointer;
-  box-shadow: 7px 6px 12px -4px rgba(108, 108, 108, 0.74);
 }
 
 .up-button:focus {
   outline: none;
+}
+
+.up-button-svg {
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.6;
+  transition: opacity 450ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.up-button-svg:hover {
+  opacity: 1;
+  box-shadow: 7px 6px 12px -4px rgba(108, 108, 108, 0.74);
 }
 
 @media screen and (max-width: 767px) {
@@ -855,20 +879,18 @@ img.image {
     max-width: 1600px;
     margin: auto;
   }
-  .up-button-container {
-    max-width: 1600px;
-    margin: auto;
+  .up-button {
+    bottom: 80px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .up-button-container {
-    justify-content: flex-end;
-    padding-right: 50px;
-  }
   .up-button {
-    opacity: 0;
-    transition: opacity 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+    right: 30px;
+  }
+  .up-button-svg {
+    width: 50px;
+    height: 50px;
   }
 }
 
@@ -951,12 +973,22 @@ img.image {
 .paginationjs-next a {
   height: 40px;
   width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .favorite-test {
   width: 16px;
   height: 16px;
   color: black;
+}
+
+.paginationjs-prev a {
+  background-image: url("./images/arrow-left.svg");
+}
+
+.paginationjs-next a {
+  background-image: url("./images/arrow-right.svg");
 }
 
 .paginationjs-page.active,
@@ -1013,7 +1045,6 @@ img.image {
 }
 
 .film-name-error {
-  display: none;
   position: absolute;
   top: 70%;
   left: 50%;
@@ -1161,6 +1192,12 @@ img.image {
 
 .item-element-5 {
   background-image: url(./images/students/olha.png);
+  width: 320px;
+  height: 240px;
+}
+
+.item-element-7 {
+  background-image: url(./images/students/maksim.png);
   width: 320px;
   height: 240px;
 }
