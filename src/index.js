@@ -14,6 +14,8 @@ import './js/notification.js';
 import './js/our-students.js';
 import { listenScroll, scrollUp } from './js/utils/scroll';
 import { paginateObj } from './js/toPaginateWithApi';
+import './js/sign-up-modal.js';
+import './js/sign-up.js';
 
 // должен быть только один объект для всех запросов
 
