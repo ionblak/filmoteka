@@ -1,13 +1,4 @@
 /* Индекс слайда по умолчанию */
-
-const image = [
-  `./images/students/anton.png`,
-  `./images/students/vlad.png`,
-  `./images/students/neliia.png`,
-  `./images/students/anton.png`,
-  `./images/students/ion.png`,
-];
-
 export const slider = () => {
   let slideIndex = 1;
   const list = document.querySelector('.slider-dots');
@@ -24,7 +15,7 @@ export const slider = () => {
   }
   function handlerActive(e) {
     if (e.target.nodeName === 'LI') {
-      console.log(e);
+      console.log(e.target.dataset.onclick === '1');
       if (e.target.dataset.onclick === '1') {
         currentSlide(1);
         sliderStart(1);
@@ -40,28 +31,18 @@ export const slider = () => {
       } else if (e.target.dataset.onclick === '5') {
         currentSlide(5);
         sliderStart(5);
+      } else if (e.target.dataset.onclick === '6') {
+        currentSlide(6);
+        sliderStart(6);
+      } else if (e.target.dataset.onclick === '7') {
+        currentSlide(7);
+        sliderStart(7);
+      } else if (e.target.dataset.onclick === '8') {
+        console.log('8');
+        currentSlide(8);
+        sliderStart(8);
       }
     }
-
-    // [...dots].forEach(element => {
-    //   console.dir(element);
-    // });
-    // let active = [...dots];
-    // active.forEach(node => {
-    //   node.forEach(nodeEl => {
-    //     nodeEl.classList.remove('active');
-    //   });
-    // });
-    // e.target.dataset.active = '';
-    // function nodesActive(active) {
-    //   console.log(active);
-    //   active.classList.contains('active') === '';
-    //   // node.getAttribute('data-active') === '';
-    //   currentSlide(active);
-    //   sliderStart();
-    // }
-    // active = active.findIndex(nodesActive);
-    // console.log('тут акстив', active) + 1;
   }
 
   list.addEventListener('click', handlerActive);
@@ -83,9 +64,9 @@ export const slider = () => {
   /* Основная функция слайдера */
   function showSlides(n) {
     console.log('showlides', n);
-    var i;
+    let i;
     const slides = document.getElementsByClassName('slider-item');
-    var dots = document.getElementsByClassName('slider-dots_item');
+    const dots = document.getElementsByClassName('slider-dots_item');
     if (n > slides.length) {
       slideIndex = 1;
     }
@@ -103,7 +84,6 @@ export const slider = () => {
   }
   // функция запускает слайдер
   function sliderStart(number) {
-    console.log('выше ', intervalId);
     if (intervalId) {
       clearInterval(intervalId);
     }
@@ -116,7 +96,7 @@ export const slider = () => {
     }
 
     intervalId = setInterval(() => {
-      if (numActive !== 5) {
+      if (numActive !== 8) {
         numActive++;
       } else {
         numActive = 1;

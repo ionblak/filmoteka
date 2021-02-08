@@ -121,6 +121,7 @@ export const markupStudents = img =>
         
           </div>
         </li>
+
         <li class="slider-item">
           <div class="picture-wrapper">
 
@@ -140,7 +141,25 @@ export const markupStudents = img =>
         
           </div>
         </li>
-       
+        <li class="slider-item">
+          <div class="picture-wrapper">
+
+              <img
+                class="sim-slider-element"
+
+                src="./images/students/maksim.png"
+                alt="фото клиента"
+              />
+
+          </div>
+          <p class="slider-item-name">Maksym Chubarov</p>
+          <div class="wrapper">
+            <p class="slider-text">
+              Что-то суету навести охота!))) </br> Warrior
+            </p>
+        
+          </div>
+        </li>
          
       </ul>
 
@@ -157,6 +176,7 @@ export const markupStudents = img =>
         <li class="slider-dots_item" data-onclick="5"></li>
         <li class="slider-dots_item" data-onclick="6"></li>
         <li class="slider-dots_item" data-onclick="7"></li>
+        <li class="slider-dots_item" data-onclick="8"></li>
       </ul>
     </div>
   </div>`;
