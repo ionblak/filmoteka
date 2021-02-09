@@ -19,7 +19,7 @@ const refs = {
   libraryQueueBtn: document.querySelector('.lib-queue-js'),
   upButton: document.querySelector('.up-button'),
   body: document.querySelector('body'),
-  signUp: document.querySelector('.sign-up'),
+  signUpModal: document.querySelector('.sign-up'),
   headerHome: document.querySelector('.header-home'),
 };
 

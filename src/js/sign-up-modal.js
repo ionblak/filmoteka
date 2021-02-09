@@ -1,12 +1,14 @@
 import refs from './refs.js';
-import { handlerLoginFn } from './login.js';
-
+import { LoginFn } from './login.js';
+import { SignUpFn } from './sign-up.js';
+import { logout, logoutConfirm } from './logout.js';
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 const API_KEY_APP = `AIzaSyBMCQtR51zm0k7g2lNEh8Aamr - jVKTpG8k`;
 
+// Разметка модалки
 const signUpMarkup = () =>
-  `  <div class="modal-backdrop">
+  `  <div class="modal-backdrop" data-modal="open">
       <div class="sign-up-modal">
         <h2 class=" sign-up-title">Введите логин и пароль</h2>
         <form action="" class="form-sign-up">
@@ -24,35 +26,46 @@ const signUpMarkup = () =>
       </div>
     </div>`;
 
+// Если в LS есть idTOken
 if (getDataFromLS() !== null) {
-  refs.signUp.textContent = 'Logged';
+  refs.signUpModal.textContent = 'Logout';
 }
 
+//Функция окрытие модалки
 function openModal() {
   let email = '';
   let password = '';
 
-  refs.signUp.addEventListener('click', handlerSignUp, { once: true });
-  function handlerSignUp(e) {
+  // Слушает кнопку Sign Up
+  refs.signUpModal.addEventListener('click', handlerSignUpOpenMOdal);
+  function handlerSignUpOpenMOdal(e) {
     e.preventDefault();
-    refs.headerHome.insertAdjacentHTML('beforeend', signUpMarkup());
 
-    const emailInput = document.querySelector('#login');
-    const passwordInput = document.querySelector('#password');
-    const btnSubmit = document.querySelector('.btn-sign-up');
-    const btnLogin = document.querySelector('.btn-login');
-    const modalAuth = document.querySelector('.modal-backdrop');
+    // Если залогинелись, то открыть модалку выхода из аккаунта
+    if (getDataFromLS() !== null) {
+      refs.headerHome.insertAdjacentHTML('beforeend', logout());
+      logoutConfirm();
+    } else {
+      refs.headerHome.insertAdjacentHTML('beforeend', signUpMarkup());
 
-    emailInput.addEventListener('input', handlerGetEmail);
-    passwordInput.addEventListener('input', handlerGetPassword);
-    btnLogin.addEventListener('click', handlerLogin);
-    btnSubmit.addEventListener('click', handlerSubmit);
+      const emailInput = document.querySelector('#login');
+      const passwordInput = document.querySelector('#password');
+      const btnRegister = document.querySelector('.btn-sign-up');
+      const btnLogin = document.querySelector('.btn-login');
+      const modalAuth = document.querySelector('.modal-backdrop');
 
-    window.addEventListener('keydown', onEscapePress);
+      modalAuth.classList.remove('modal-hidden');
 
-    function onEscapePress(event) {
-      if (event.code === 'Escape') {
-        modalAuth.classList.add('modal-hidden');
+      emailInput.addEventListener('input', handlerGetEmail);
+      passwordInput.addEventListener('input', handlerGetPassword);
+      btnLogin.addEventListener('click', handlerLogin);
+      btnRegister.addEventListener('click', handlerRegister);
+
+      window.addEventListener('keydown', onEscapePress);
+      function onEscapePress(event) {
+        if (event.code === 'Escape') {
+          modalAuth.remove();
+        }
       }
     }
   }
@@ -65,13 +78,52 @@ function openModal() {
   }
 
   function handlerLogin(e) {
-    obj(e, { email, password });
+    objLogin(e, { email, password });
+  }
+  function handlerRegister(e) {
+    objRegister(e, { email, password });
   }
 }
 
 openModal();
 
-function obj(e, object) {
+function objLogin(e, object) {
+  const modalAuth = document.querySelector('.modal-backdrop');
+
+  LoginFn(e, API_KEY_APP, options(object)).then(data => {
+    const idToken = data.idToken;
+
+    if (idToken) {
+      console.log('Успешный вход');
+      localStorage.setItem('idToken', idToken);
+      modalAuth.remove();
+      refs.signUpModal.textContent = 'Logout';
+      refs.signUpModal.classList.remove('is-open');
+    }
+  });
+}
+
+function objRegister(e, object) {
+  const modalAuth = document.querySelector('.modal-backdrop');
+
+  SignUpFn(e, API_KEY_APP, options(object)).then(data => {
+    const idToken = data.idToken;
+    if (idToken) {
+      console.log('Успешная регистрация');
+      localStorage.setItem('idToken', idToken);
+      modalAuth.remove();
+      refs.signUpModal.textContent = 'Logout';
+      refs.signUpModal.classList.remove('is-open');
+    }
+  });
+}
+
+function getDataFromLS() {
+  const save = localStorage.getItem('idToken');
+  return save;
+}
+
+function options(object) {
   const options = {
     method: 'POST',
     body: JSON.stringify(object),
@@ -79,31 +131,5 @@ function obj(e, object) {
       'Content-Type': 'application/json',
     },
   };
-  handlerLoginFn(e, API_KEY_APP, options).then(data => {
-    const modalAuth = document.querySelector('.modal-backdrop');
-    const idToken = data.idToken;
-
-    if (idToken) {
-      console.log('Успешный вход');
-      localStorage.setItem('idToken', idToken);
-      modalAuth.classList.add('modal-hidden');
-      refs.signUp.textContent = 'Logged';
-    }
-  });
-}
-
-function getDataFromLS() {
-  const save = localStorage.getItem('idToken');
-  console.log(save);
-  return save;
-}
-
-function handlerSubmit(e) {
-  e.preventDefault();
-  //   return fetch(
-  //     `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY_APP}`,
-  //     options,
-  //   )
-  //     .then(response => response.json())
-  //     .then(data => console.log(data));
+  return options;
 }
