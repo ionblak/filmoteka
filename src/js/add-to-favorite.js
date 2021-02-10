@@ -81,7 +81,7 @@ function getUniqueId({ id }, idEl, e) {
 }
 
 // Забирает данные с LS
-function getObject() {
+export function getObject() {
   const save = localStorage.getItem('favorite');
   const parse = JSON.parse(save);
   return parse;
