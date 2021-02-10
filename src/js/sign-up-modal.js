@@ -78,9 +78,11 @@ function openModal() {
   }
 
   function handlerLogin(e) {
+    e.target.disabled = true;
     objLogin(e, { email, password });
   }
   function handlerRegister(e) {
+    e.target.disabled = true;
     objRegister(e, { email, password });
   }
 }
@@ -91,6 +93,10 @@ function objLogin(e, object) {
   const modalAuth = document.querySelector('.modal-backdrop');
 
   LoginFn(e, API_KEY_APP, options(object)).then(data => {
+    if (data.error.code === 400) {
+      e.target.disabled = false;
+      return console.log(data.error.message);
+    }
     const idToken = data.idToken;
 
     if (idToken) {
@@ -107,6 +113,10 @@ function objRegister(e, object) {
   const modalAuth = document.querySelector('.modal-backdrop');
 
   SignUpFn(e, API_KEY_APP, options(object)).then(data => {
+    if (data.error.code === 400) {
+      e.target.disabled = false;
+      return console.log(data.error.message);
+    }
     const idToken = data.idToken;
     if (idToken) {
       console.log('Успешная регистрация');
