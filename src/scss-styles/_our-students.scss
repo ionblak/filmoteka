@@ -148,6 +148,7 @@
   line-height: 30px;
   animation-name: fadeText;
   animation-duration: 3s;
+  margin-bottom: 10px;
   // animation-delay: 1.5s;
 }
 .slider-item-name {
@@ -163,7 +164,29 @@
 .slider-list {
   margin-bottom: 40px;
 }
+.social-icons {
+  width: 40px;
+  height: 40px;
+  fill: black;
+}
 
+.footer-icon-social-svg {
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  fill: white;
+  border: solid 1px;
+  border-color: white;
+  border-radius: 40%;
+}
+.social-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.social-item:not(:last-child) {
+  margin-right: 20px;
+}
 @keyframes fadeText {
   0% {
     opacity: 0;

@@ -318,6 +318,7 @@ img.image {
 }
 
 .backdrop_close {
+  z-index: 999;
   opacity: 0;
   display: none;
   overflow-y: scroll;
@@ -1220,6 +1221,7 @@ body.modal-open {
   line-height: 30px;
   animation-name: fadeText;
   animation-duration: 3s;
+  margin-bottom: 10px;
 }
 
 .slider-item-name {
@@ -1236,6 +1238,32 @@ body.modal-open {
 
 .slider-list {
   margin-bottom: 40px;
+}
+
+.social-icons {
+  width: 40px;
+  height: 40px;
+  fill: black;
+}
+
+.footer-icon-social-svg {
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  fill: white;
+  border: solid 1px;
+  border-color: white;
+  border-radius: 40%;
+}
+
+.social-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-item:not(:last-child) {
+  margin-right: 20px;
 }
 
 @keyframes fadeText {
@@ -1372,5 +1400,116 @@ svg.am_Error_Icon .am_SVG_error2 {
   40% {
     stroke-dashoffset: 0;
   }
+}
+
+body.light-theme {
+  background-color: #fff;
+  color: #333333;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.theme-switch {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch__icon {
+  color: #ff6b01;
+  height: 16px;
+  width: 16px;
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.theme-switch__control {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  width: 40px;
+  height: 16px;
+  border-radius: 50em;
+  padding: 3px 0;
+}
+
+.theme-switch__toggle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.theme-switch__track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  user-select: none;
+  background-color: transparent;
+  border-radius: inherit;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.theme-switch__marker {
+  position: relative;
+  background-color: #fff;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  transform: translateX(3px);
+  transition: transform 250ms var(--timing-function);
+}
+
+.theme-switch__toggle:checked + .theme-switch__track {
+  background-color: transparent;
+}
+
+.theme-switch__toggle:checked ~ .theme-switch__marker {
+  transform: translateX(25px);
+}
+
+.theme-switch__toggle:focus + .theme-switch__track,
+.theme-switch__toggle:active + .theme-switch__track {
+  box-shadow: 0 0 0 3px #ff6b01;
+}
+
+body.dark-theme {
+  background-color: #333333;
+  color: #fff;
+}
+
+body.dark-theme .container_modal {
+  background-color: #333333;
+  color: #fff;
+}
+
+body.dark-theme .lightbox__button,
+body.dark-theme .film-name,
+body.dark-theme .cardItem__description,
+body.dark-theme .cardItem__title_data,
+body.dark-theme .cardItem___data,
+body.dark-theme .cardItem__genreList,
+body.dark-theme .cardItem__name,
+body.dark-theme .paginationjs-page a {
+  color: #fff;
+}
+
+body.dark-theme .cardItem__vote-value {
+  color: black;
 }
 /*# sourceMappingURL=main.css.map */
