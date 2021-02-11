@@ -20,6 +20,8 @@ const refs = {
   upButton: document.querySelector('.up-button'),
   body: document.querySelector('body'),
   input: document.querySelector('#theme-switch-toggle'),
+  signUpModal: document.querySelector('.sign-up'),
+  headerHome: document.querySelector('.header-home'),
 };
 
 export default refs;

@@ -44,11 +44,12 @@
   line-height: 14px;
   text-transform: uppercase;
   color: $primaryTextColor;
-
   position: relative;
   display: inline-block;
 }
-
+.sign-up {
+  margin-left: 40px;
+}
 .link::after {
   display: block;
   content: '';
