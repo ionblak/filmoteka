@@ -127,6 +127,7 @@ img.image {
 .btn-watched,
 .btn-favorite {
   position: relative;
+
   font-family: inherit;
   width: 136px;
   height: 44px;
@@ -148,6 +149,7 @@ img.image {
     background: #ff6b01;
     border: none;
     cursor: pointer;
+    box-shadow: 0 0 10px #ff6b01;
   }
 
   &.inactive {
@@ -167,7 +169,7 @@ img.image {
   margin: auto;
   position: absolute;
   top: 0;
-
+  box-shadow: 0 0 10px $hoverAndIsActivebackGroundColor;
   padding-top: 10px;
   max-width: calc(100% - 40px);
   background-color: #fff;
@@ -254,6 +256,7 @@ img.image {
   display: flex;
   align-items: center;
   justify-content: center;
+
   height: 44px;
   padding: 0;
   padding-right: 50px;
@@ -265,7 +268,7 @@ img.image {
   border-color: $hoverAndIsActivebackGroundColor;
   cursor: pointer;
   outline: none;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   transition: background-color 250ms ease-in-out;
 
   // background-image: url('./images/icon-close.svg');
@@ -276,6 +279,7 @@ img.image {
 }
 .lightbox__button:hover,
 .lightbox__button:focus {
+  box-shadow: 0 0 10px #ff6b01;
   background-color: $hoverAndIsActivebackGroundColor;
 }
 .cardItem__modal-wrapper {
@@ -331,6 +335,7 @@ img.image {
 }
 .back {
   margin-right: 10px;
+  font-size: 18px;
 }
 body.modal-open {
   overflow: hidden;
@@ -346,6 +351,7 @@ body.modal-open {
     padding-left: 75px;
     padding-right: 75px;
     transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px $hoverAndIsActivebackGroundColor;
   }
   .history-btn-wrapper {
     justify-content: unset;
@@ -366,6 +372,7 @@ body.modal-open {
     height: 25px;
     padding-right: 5px;
     padding-left: 5px;
+    font-size: 10px;
   }
   .image {
     width: 294px;
