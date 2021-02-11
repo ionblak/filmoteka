@@ -283,6 +283,7 @@ img.image {
   background: #ff6b01;
   border: none;
   cursor: pointer;
+  box-shadow: 0 0 10px #ff6b01;
 }
 
 .btn-watched.inactive,
@@ -303,6 +304,7 @@ img.image {
   margin: auto;
   position: absolute;
   top: 0;
+  box-shadow: 0 0 10px #ff6b01;
   padding-top: 10px;
   max-width: calc(100% - 40px);
   background-color: #fff;
@@ -354,12 +356,12 @@ img.image {
   border-color: #ff6b01;
   cursor: pointer;
   outline: none;
-  text-transform: uppercase;
   transition: background-color 250ms ease-in-out;
 }
 
 .lightbox__button:hover,
 .lightbox__button:focus {
+  box-shadow: 0 0 10px #ff6b01;
   background-color: #ff6b01;
 }
 
@@ -425,6 +427,7 @@ img.image {
 
 .back {
   margin-right: 10px;
+  font-size: 18px;
 }
 
 body.modal-open {
@@ -442,6 +445,7 @@ body.modal-open {
     padding-left: 75px;
     padding-right: 75px;
     transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px #ff6b01;
   }
   .history-btn-wrapper {
     justify-content: unset;
@@ -461,6 +465,7 @@ body.modal-open {
     height: 25px;
     padding-right: 5px;
     padding-left: 5px;
+    font-size: 10px;
   }
   .image {
     width: 294px;
@@ -531,6 +536,10 @@ body.modal-open {
   color: white;
   position: relative;
   display: inline-block;
+}
+
+.sign-up {
+  margin-left: 40px;
 }
 
 .link::after {
@@ -1511,5 +1520,105 @@ body.dark-theme .paginationjs-page a {
 
 body.dark-theme .cardItem__vote-value {
   color: black;
+}
+
+.modal-backdrop {
+  position: fixed;
+  background-color: rgba(32, 32, 32, 0.7);
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.sign-up-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  margin: 0 auto;
+  border: orangered solid 1px;
+  background-color: #b3b3b3;
+  border-radius: 5px;
+  padding: 20px 0 20px 0;
+  transform: translate(-50%, -50%);
+}
+
+.sign-up-title {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.login {
+  display: block;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.password {
+  display: block;
+  margin-bottom: 15px;
+}
+
+#login,
+#password {
+  display: block;
+  margin: 0 auto;
+  height: 30px;
+  width: 200px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+#login::placeholder,
+#password::placeholder {
+  padding-left: 10px;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-sign-up {
+  height: 30px;
+  width: 90px;
+  border-radius: 5px;
+}
+
+.btn-login {
+  margin-right: 20px;
+  border-radius: 5px;
+  height: 30px;
+  width: 90px;
+}
+
+.modal-hidden {
+  display: none;
+}
+
+.logout {
+  padding: 20px;
+  width: 400px;
+}
+
+.logout-yes,
+.logout-no {
+  width: 70px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.logout-yes {
+  margin-right: 20px;
+}
+
+.logout-title {
+  margin-bottom: 20px;
+}
+
+.logout-yes:hover,
+.logout-no:hover {
+  background-color: orangered;
 }
 /*# sourceMappingURL=main.css.map */
