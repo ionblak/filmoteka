@@ -1591,4 +1591,29 @@ body.dark-theme .cardItem__vote-value {
 .modal-hidden {
   display: none;
 }
+
+.logout {
+  padding: 20px;
+  width: 400px;
+}
+
+.logout-yes,
+.logout-no {
+  width: 70px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.logout-yes {
+  margin-right: 20px;
+}
+
+.logout-title {
+  margin-bottom: 20px;
+}
+
+.logout-yes:hover,
+.logout-no:hover {
+  background-color: orangered;
+}
 /*# sourceMappingURL=main.css.map */
