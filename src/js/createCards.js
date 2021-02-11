@@ -4,7 +4,6 @@ import modalCard from '../templates/modalCard.hbs';
 import { addWatchedFilm } from './add-to-watch.js';
 import { addFavoriteFilm } from './add-to-favorite.js';
 import { markQueue } from './myLibrary';
-
 import refs from './refs';
 export default function createCards(data) {
   // перед созданием карточек чистим filmsList
@@ -21,6 +20,29 @@ export default function createCards(data) {
   refs.filmsListHome.insertAdjacentHTML('beforeend', markup);
   refs.cardFilm.addEventListener('click', openModal);
 
+  // Стиль тень при загрузке страницы
+  function loadingTheme() {
+    const filmListItem = document.querySelectorAll('.film-list-item');
+    const savedThem = localStorage.getItem('Theme');
+    filmListItem.forEach(el => {
+      if (savedThem === 'dark-theme') {
+        el.classList.add('dark');
+      } else {
+        el.classList.remove('dark');
+      }
+    });
+    refs.input.addEventListener('change', changeTheme);
+    function changeTheme(e) {
+      filmListItem.forEach(el => {
+        if (e.target.checked === true) {
+          el.classList.add('dark');
+        } else {
+          el.classList.remove('dark');
+        }
+      });
+    }
+  }
+  loadingTheme();
   function openModal(e) {
     e.preventDefault();
     const currentCard = e.target;
@@ -31,6 +53,7 @@ export default function createCards(data) {
     refs.body.classList.add('modal-open');
 
     const arrayIndex = currentCard.dataset.index;
+
     refs.lightboxDiv.classList.add('is-open');
 
     const markup = modalCard(data[arrayIndex]);
