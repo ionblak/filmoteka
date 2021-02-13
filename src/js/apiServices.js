@@ -33,7 +33,7 @@ function getGenreById(id) {
 // Из массива жанров объекта возвращет строковое название жанра
 function getGenreIdName(genre) {
   const searchGenreId = genresList.find(item => item.name === genre);
-  if (searchGenreId) return searchGenre.id;
+  if (searchGenreId) return searchGenreId.id;
   else return 0;
 }
 

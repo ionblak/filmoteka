@@ -52,7 +52,6 @@
 .film-info-mark,
 .film-year {
   margin-right: 3px;
-
   //   margin: 0;
   font-weight: 500;
   font-size: 12px;
@@ -60,30 +59,25 @@
   color: $hoverAndIsActivebackGroundColor;
 }
 
-.film-genre-item{
-  display: inline;
-   &:hover{
-    text-decoration: underline;
-  }
-  
-
-
-.film-genre-link{
-color: $hoverAndIsActivebackGroundColor;
-transition: text-decoration 450ms cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: 0px;
-  margin-right: 0px;
-  
+.film-genre
+{
+  display: inline-flex;
+  flex-wrap: wrap;
 }
 
-  &:visited{
-    color: $hoverAndIsActivebackGroundColor;
-  }
-  &:hover{
+.film-genre-item{
+  display: inline;
+  text-decoration: none;
+  transition: text-decoration 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover{
     text-decoration: underline;
   }
-
-  &:not(:last-child)::after{
+  &:not(:last-child){
+    margin-right: 3px;
+  }
+  
+    &:not(:last-child)::after{
     content: ',';
     color: $hoverAndIsActivebackGroundColor;
   }
