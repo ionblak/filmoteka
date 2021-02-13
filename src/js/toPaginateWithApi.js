@@ -5,7 +5,7 @@ import './utils/paginator';
 import vars from './utils/variables';
 
 import { getMovieByIdArray } from './apiServices';
-import { dataProccessing, keySearch } from '../index';
+import { dataProccessing, keySearch,  searchByGenre, genreName  } from '../index';
 import { myLibraryRequest, libraryListLength, idListQueue } from './myLibrary';
 import createCards from './createCards';
 import spinner from './utils/spiner';
@@ -52,11 +52,26 @@ export const paginateObj = {
         return dataPerPage;
       });
     } else {
-      if (!keySearch) {
+      if (!keySearch && !searchByGenre) {
         return dataProccessing.getNextPage(pageNumber);
-      } else {
+      } else if (keySearch) {
         return dataProccessing
           .keywordSearch(refs.searchInput.value)
+          .then(data => {
+            refs.errorNotafication.classList.add('is-hidden');
+            if (data.length === 0) throw new Error('Whoops!');
+            spinner.stop();
+
+            return data;
+          })
+          .catch(e => {
+            console.log('catch e', e);
+            spinner.stop();
+            refs.errorNotafication.classList.remove('is-hidden');
+          });
+      } else if (searchByGenre) {
+        return dataProccessing
+          .genreSearch(genreName)
           .then(data => {
             refs.errorNotafication.classList.add('is-hidden');
             if (data.length === 0) throw new Error('Whoops!');

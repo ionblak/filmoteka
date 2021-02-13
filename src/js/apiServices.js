@@ -30,21 +30,24 @@ function getGenreById(id) {
   else return '';
 }
 
+// Из массива жанров объекта возвращет строковое название жанра
+function getGenreIdName(genre) {
+  const searchGenreId = genresList.find(item => item.name === genre);
+  if (searchGenreId) return searchGenreId.id;
+  else return 0;
+}
+
 // ------ Функции для обработки объектов с инфо о фильмах от API ------
 function genreIdsConverting(data) {
   try {
     data.forEach(
       item =>
-        (item.genre_ids = Array.from(getGenresArray(item.genre_ids)).join(
-          ', ',
-        )),
+        (item.genre_ids = Array.from(getGenresArray(item.genre_ids))),
     );
   } catch {
     return data.forEach(
       item =>
-        (item.genres = Array.from(item.genres.map(item => item.name)).join(
-          ', ',
-        )),
+        (item.genres = Array.from(item.genres.map(item => item.name))),
     );
   }
 }
@@ -72,27 +75,29 @@ const API_RESULTS_PER_PAGE = 20;
 let genresList = [];
 
 // Объект для формирования, отправки запроса и дальнейшей обработки данных
-class ApiRequest {
-  constructor(keyword, apiPage, filmIndex, films) {
+class ApiRequest {  
+  constructor(keyword, genreId, apiPage, filmIndex, films) {
     this.keyword = keyword;
     this.apiPage = apiPage;
     this.filmIndex = filmIndex;
     this.films = films;
+    this.genreId = genreId;
     this.promise = new Promise((resolve, reject) => {});
   }
 
   getData() {
-    this.promise = getPage(this.keyword, this.apiPage);
+    this.promise = getPage(this.keyword, this.apiPage, this.genreId);
     return this.promise;
   }
 }
 
 // Объект хранит в себе "служебные" результаты запроса (нужны для посчета кол-ва страниц)
 class ApiData {
-  constructor(keyword, totalResults, totalPages) {
+  constructor(keyword, genre, totalResults, totalPages) {
     this.keyword = keyword;
     this.totalResults = totalResults;
     this.totalPages = totalPages;
+    this.genreId = getGenreIdName(genre);
   }
 
   updData(totalResults, totalPages) {
@@ -103,6 +108,9 @@ class ApiData {
   updKeyword(keyword) {
     this.keyword = keyword;
   }
+  updGenreId(genre) {
+    this.genreId = getGenreIdName(genre);
+  }
 }
 
 // Объект хранит в себе данные о запросе в API (ключевое слово, общее кол-во результатов, кол-во страниц по запросу в API)
@@ -110,8 +118,8 @@ class ApiData {
 // массив жанров от API в представлении id : Name
 // количество выводимых объектов на страницу для текущего расширения
 export class DataProccessing {
-  constructor(keyword = '', totalResults, totalPages) {
-    this.apiData = new ApiData(keyword, totalResults, totalPages);
+  constructor(keyword = '', genre, totalResults, totalPages) {
+    this.apiData = new ApiData(keyword, genre, totalResults, totalPages);
     this.apiRequests = [];
     this.appPages = 1;
     this.appCurrentPage = 1;
@@ -133,6 +141,13 @@ export class DataProccessing {
     // Обновить ключевое слово
     this.apiData.updKeyword(keyword);
     // Получить первую страницу по ключевому слову
+    return this.getNextPage(1);
+  }
+
+  genreSearch(genre) {
+    // Обновить ключевое слово
+    this.apiData.updKeyword('');
+    this.apiData.updGenreId(genre);
     return this.getNextPage(1);
   }
 
@@ -175,6 +190,8 @@ export class DataProccessing {
 
     return this.promise;
   }
+
+
 
   // Отслеживает изменилось ли разрешение экрана
 
@@ -222,7 +239,7 @@ export class DataProccessing {
 
   defineApiRequests() {
     // Создаем объект запроса
-    const firstRequest = new ApiRequest(this.apiData.keyword);
+    const firstRequest = new ApiRequest(this.apiData.keyword, this.apiData.genreId);
     const resArray = [];
     // Рассчитываем какую страницу от API нужно запросить
     firstRequest.apiPage = Math.ceil(
@@ -243,7 +260,7 @@ export class DataProccessing {
 
     // Если количество фильмов на странице будет меньше this.resultsPerPage - нам нужен второй запрос
     if (firstRequest.films < this.resultsPerPage) {
-      const secondRequest = new ApiRequest(this.apiData.keyword);
+      const secondRequest = new ApiRequest(this.apiData.keyword, this.apiData.genreId);
       secondRequest.apiPage = firstRequest.apiPage + 1;
       secondRequest.filmIndex = 0;
       secondRequest.films = this.resultsPerPage - firstRequest.films;
