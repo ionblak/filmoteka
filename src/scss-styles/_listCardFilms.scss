@@ -22,7 +22,9 @@
     cursor: pointer;
   }
 }
-
+.dark:hover {
+  box-shadow: 8px -6px 16px -2px #ff6b01;
+}
 .film-picture {
   border-radius: 5px;
   max-width: 280px;
@@ -32,7 +34,10 @@
 
 .film-info {
   display: block;
+
   margin-left: 5px;
+  padding-left: 5px;
+
 }
 
 .film-info-wrap {

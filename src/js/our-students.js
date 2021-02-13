@@ -114,7 +114,39 @@ export const markupStudents = img =>
         </li>
 
 
-         <li class="slider-item">
+         
+        <li class="slider-item">
+          <div class="picture-wrapper">
+
+              <img
+                class="sim-slider-element"
+
+                src="./images/students/olha.png"
+                alt="фото клиента"
+              />
+
+          </div>
+          <p class="slider-item-name">Olga Brekhuntsova</p>
+          <div class="wrapper slider-text">
+            <p class="slider-text">
+             Порвала пагинатор, как Тузик - грелку!) </br> Warrior
+            </p>
+         <ul class="social-list">
+      
+        <li class="social-item">
+          <a class="icon-container-link footer-social"
+                    href="https://www.facebook.com/profile.php?id=100017462564897y"
+                    aria-label="Facebook">
+                    <svg class="footer-icon-social-svg">
+                      <use href="${sprite}#icon-facebook"></use>
+                    </svg>
+        </a>
+        </li>
+        </ul>
+          </div>
+        </li>
+
+          <li class="slider-item">
           <div class="picture-wrapper">
         
               <img
@@ -160,36 +192,6 @@ export const markupStudents = img =>
         <li class="social-item">
           <a class="icon-container-link footer-social"
                     href="https://www.facebook.com/antoxabomba"
-                    aria-label="Facebook">
-                    <svg class="footer-icon-social-svg">
-                      <use href="${sprite}#icon-facebook"></use>
-                    </svg>
-        </a>
-        </li>
-        </ul>
-          </div>
-        </li>
-        <li class="slider-item">
-          <div class="picture-wrapper">
-
-              <img
-                class="sim-slider-element"
-
-                src="./images/students/olha.png"
-                alt="фото клиента"
-              />
-
-          </div>
-          <p class="slider-item-name">Olga Brekhuntsova</p>
-          <div class="wrapper slider-text">
-            <p class="slider-text">
-             Порвала пагинатор, как Тузик - грелку!) </br> Warrior
-            </p>
-         <ul class="social-list">
-      
-        <li class="social-item">
-          <a class="icon-container-link footer-social"
-                    href="https://www.facebook.com/profile.php?id=100017462564897y"
                     aria-label="Facebook">
                     <svg class="footer-icon-social-svg">
                       <use href="${sprite}#icon-facebook"></use>
