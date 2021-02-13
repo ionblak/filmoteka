@@ -32,6 +32,7 @@
 
 .film-info {
   display: block;
+  margin-left: 5px;
 }
 
 .film-info-wrap {
@@ -57,6 +58,35 @@
   font-size: 12px;
   line-height: 16px;
   color: $hoverAndIsActivebackGroundColor;
+}
+
+.film-genre-item{
+  display: inline;
+   &:hover{
+    text-decoration: underline;
+  }
+  
+
+
+.film-genre-link{
+color: $hoverAndIsActivebackGroundColor;
+transition: text-decoration 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0px;
+  margin-right: 0px;
+  
+}
+
+  &:visited{
+    color: $hoverAndIsActivebackGroundColor;
+  }
+  &:hover{
+    text-decoration: underline;
+  }
+
+  &:not(:last-child)::after{
+    content: ',';
+    color: $hoverAndIsActivebackGroundColor;
+  }
 }
 
 .vote {
