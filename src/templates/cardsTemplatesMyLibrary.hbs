@@ -16,7 +16,7 @@
     <div class="film-info-wrap">
       <ul class="film-genre">
         {{#each genres}}
-        <li class="film-genre-item"><a class="film-genre-link" href="">{{this}}</a></li>
+        <li class="film-genre-item" data-index="{{this}}">{{this}}</li>
         {{/each}}
       </ul>
       <span class="film-info-mark">|</span>
