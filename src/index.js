@@ -33,7 +33,7 @@ if (location.pathname === '/index.html' || location.pathname === '/') {
   refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));
   refs.cardFilm.addEventListener('click', genreSearch);
   window.addEventListener('resize', debounce(lisenWindowwidth, 1000), false);
-  window.addEventListener('scroll', debounce(listenScroll, 500));  
+  window.addEventListener('scroll', debounce(listenScroll, 500));
   scrollUp();
 }
 
@@ -56,16 +56,16 @@ function searchFilm(event) {
 
   keySearch = false;
 }
-  
+
 function genreSearch(event) {
-    if (event.target.classList.contains('film-genre-item')) {
-      searchByGenre = true;    
-      spinner.spin(refs.target);
-      genreName = event.target.getAttribute('data-index');
-      paginateObj.paginate();
-      searchByGenre = false;
-    }
+  if (event.target.classList.contains('film-genre-item')) {
+    searchByGenre = true;
+    spinner.spin(refs.target);
+    genreName = event.target.getAttribute('data-index');
+    paginateObj.paginate();
+    searchByGenre = false;
   }
+}
 
 export { dataProccessing, keySearch, searchByGenre, genreName };
 
