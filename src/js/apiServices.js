@@ -260,12 +260,14 @@ export class DataProccessing {
 
     // Если количество фильмов на странице будет меньше this.resultsPerPage - нам нужен второй запрос
     if (firstRequest.films < this.resultsPerPage) {
+      if ( firstRequest.apiPage + 1 <= this.apiData.totalPages){
       const secondRequest = new ApiRequest(this.apiData.keyword, this.apiData.genreId);
       secondRequest.apiPage = firstRequest.apiPage + 1;
       secondRequest.filmIndex = 0;
       secondRequest.films = this.resultsPerPage - firstRequest.films;
       // Добавляем созданный объект в массив данных для запроса
       resArray.push(secondRequest);
+      }
     }
     return resArray;
   }
