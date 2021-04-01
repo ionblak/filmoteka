@@ -23,11 +23,11 @@ import './js/sign-up.js';
 const dataProccessing = new DataProccessing();
 
 // для деплоя /filmoteka/ и /filmoteka/index.html или /filmoteka/my-lib.html
-// if (
-//   location.pathname === '/filmoteka/index.html' ||
-//   location.pathname === '/filmoteka/'
-// ) {
-if (location.pathname === '/index.html' || location.pathname === '/') {
+if (
+  location.pathname === '/filmoteka/index.html' ||
+  location.pathname === '/filmoteka/'
+) {
+  // if (location.pathname === '/index.html' || location.pathname === '/') {
   getHomePage();
   refs.searchForm.addEventListener('submit', searchFilm);
   refs.searchInput.addEventListener('input', debounce(searchFilm, 1000));

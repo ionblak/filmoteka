@@ -10,8 +10,8 @@ export default function createCards(data) {
   refs.filmsListHome.innerHTML = '';
   let markup = '';
   // При deploy изменить на /filmoteka/my-lib.html
-  // if (location.pathname === '/filmoteka/my-lib.html') {
-  if (location.pathname === '/my-lib.html') {
+  if (location.pathname === '/filmoteka/my-lib.html') {
+    // if (location.pathname === '/my-lib.html') {
     markup = itemTemplateMyLibrary(data);
   } else {
     markup = itemsTemplate(data);

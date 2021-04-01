@@ -3,10 +3,10 @@ import refs from './refs';
 export const logout = () => `
   <div class="modal-backdrop logout-backdrop data-modal="open">
       <div class="sign-up-modal logout">
-        <h2 class=" sign-up-title logout-title">Вы действительно хотите выйти?</h2>
+        <h2 class=" sign-up-title logout-title">Do you really want to leave?</h2>
         <div class="btn-wrapper">
-        <button class="logout-yes" type="button">Да</button>
-        <button class="logout-no" type="button">Нет</button>
+        <button class="logout-yes" type="button">Yes</button>
+        <button class="logout-no" type="button">No</button>
         </div>
       </div>
     </div>

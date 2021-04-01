@@ -10,7 +10,7 @@ const API_KEY_APP = `AIzaSyBMCQtR51zm0k7g2lNEh8Aamr - jVKTpG8k`;
 const signUpMarkup = () =>
   `  <div class="modal-backdrop" data-modal="open">
       <div class="sign-up-modal">
-        <h2 class=" sign-up-title">Введите логин и пароль</h2>
+        <h2 class=" sign-up-title">Enter login and password</h2>
         <form action="" class="form-sign-up">
           <label for="login" class="login">
             <input type="login" id="login" placeholder="login">
@@ -19,8 +19,8 @@ const signUpMarkup = () =>
             <input type="password" id="password" placeholder="password">
           </label>
           <div class="btn-wrapper">
-          <button class="btn-login" type="button">Логин</button>
-          <button class="btn-sign-up" type="button">Регистрация</button>
+          <button class="btn-login" type="button">Login</button>
+          <button class="btn-sign-up" type="button">Check in</button>
           </div>
         </form>
       </div>
